@@ -17,7 +17,6 @@ lychee.define('game.Main').requires([
 		lychee.game.Main.call(this, settings);
 
 		this.fonts = {};
-		this.sprite = null;
 
 		this.__offset = { x: 0, y: 0 };
 
@@ -47,9 +46,7 @@ lychee.define('game.Main').requires([
 			var urls = [
 				base + '/img/font_48_white.png',
 				base + '/img/font_32_white.png',
-				base + '/img/font_16_white.png',
-				base + '/img/sprite.png',
-				base + '/json/sprite.json'
+				base + '/img/font_16_white.png'
 			];
 
 
@@ -78,13 +75,6 @@ lychee.define('game.Main').requires([
 					spacing: 8,
 					map: [9,11,14,17,13,18,15,10,12,12,13,12,10,12,11,14,14,11,14,13,13,13,14,12,14,14,10,10,19,12,19,13,22,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,12,14,12,19,14,10,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,16,11,16,19]
 				});
-
-
-				this.config = {
-					sprite: assets[urls[4]]
-				};
-
-				this.config.sprite.image = assets[urls[3]];
 
 
 				this.init();
@@ -133,6 +123,10 @@ lychee.define('game.Main').requires([
 		},
 
 		init: function() {
+
+			// Remove Preloader Progress Bar
+			lychee.Preloader.prototype._progress(null, null);
+
 
 			lychee.game.Main.prototype.init.call(this);
 

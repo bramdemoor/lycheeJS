@@ -1,25 +1,47 @@
 
 lychee.define('lychee.ui.Entity').includes([
-	'lychee.game.Entity'
+	'lychee.event.Emitter'
 ]).exports(function(lychee, global) {
 
-	var Class = function(data) {
+	var Class = function(id, data) {
 
 		var settings = lychee.extend({}, data);
 
 
-		this.__layout = null;
-		this.__value = null;
-		this.___events = {};
+		this.width  = typeof settings.width === 'number' ? settings.width : 0;
+		this.height = typeof settings.height === 'number' ? settings.height : 0;
 
 
-		if (settings.layout) {
-			this.setLayout(settings.layout);
-			delete settings.layout;
+		this.__clock    = null;
+		this.__opacity  = 0;
+		this.__position = { x: 0, y: 0 };
+		this.__state    = 'default';
+		this.__states   = { 'default' : null };
+		this.__visibility  = {
+			active:   false,
+			start:    null,
+			duration: 0,
+			from:     0,
+			to:       0
+		};
+
+
+		if (settings.states instanceof Object) {
+
+			for (var id in settings.states) {
+				if (settings.states.hasOwnProperty(id)) {
+					this.__states[id] = settings.states[id];
+				}
+			}
+
 		}
 
 
-		lychee.game.Entity.call(this, settings);
+		this.setPosition(settings.position);
+		this.setState(settings.state);
+
+
+		lychee.event.Emitter.call(this, id);
 
 		settings = null;
 
@@ -28,176 +50,139 @@ lychee.define('lychee.ui.Entity').includes([
 
 	Class.prototype = {
 
-		/*
-		 * PUBLIC API
-		 */
+		// Allows sync(null, true) for reset
+		sync: function(clock, force) {
 
-		hasEvent: function(type) {
+			force = force === true;
 
-			if (this.___events[type] === undefined) {
-				return false;
+			if (force === true) {
+				this.__clock = clock;
 			}
 
-			if (this.___events[type].length === 0) {
-				return false;
-			}
 
-			return true;
+			if (this.__clock === null) {
+
+
+				if (this.__visibility.active === true && this.__visibility.start === null) {
+					this.__visibility.start = clock;
+				}
+
+				this.__clock = clock;
+
+			}
 
 		},
 
-		bind: function(type, callback, scope) {
+		update: function(clock, delta) {
 
-			if (this.___events[type] === undefined) {
-				this.___events[type] = [];
+			// 1. Sync clocks initially
+			// (if Entity was created before loop started)
+			if (this.__clock === null) {
+				this.sync(clock);
 			}
 
 
-			this.___events[type].push({
-				callback: callback,
-				scope: scope || global
-			});
+			// 2. Visibility (show/hide)
+			var visibility = this.__visibility;
+
+			if (
+				visibility.active === true
+				&& visibility.start !== null
+			) {
+
+				var t = (this.__clock - visibility.start) / visibility.duration;
+
+				if (t <= 1) {
+					this.__opacity = visibility.from + t * (visibility.to - visibility.from);
+				} else {
+					this.__opacity = visibility.to;
+					visibility.active = false;
+				}
+
+			}
+
+
+			this.__clock = clock;
 
 		},
 
-		unbind: function(type, callback, scope) {
+		show: function(duration) {
 
-			callback = callback instanceof Function ? callback : null;
-			scope = scope !== undefined ? scope : null;
+			duration = typeof duration === 'number' ? duration : 500;
 
-			if (this.___events[type] === undefined) {
+
+			var visibility = this.__visibility;
+
+			visibility.active   = true;
+			visibility.start    = this.__clock;
+			visibility.duration = duration;
+			visibility.from     = this.__opacity;
+			visibility.to       = 1;
+
+		},
+
+		hide: function(duration) {
+
+			duration = typeof duration === 'number' ? duration : 500;
+
+
+			var visibility = this.__visibility;
+
+			visibility.active   = true;
+			visibility.start    = this.__clock;
+			visibility.duration = duration;
+			visibility.from     = this.__opacity;
+			visibility.to       = 0;
+
+		},
+
+		isVisible: function() {
+			return this.__opacity > 0;
+		},
+
+		getOpacity: function() {
+			return this.__opacity;
+		},
+
+		getPosition: function() {
+			return this.__position;
+		},
+
+		setPosition: function(position) {
+
+			if (position instanceof Object) {
+
+				this.__position.x = typeof position.x === 'number' ? position.x : this.__position.x;
+				this.__position.y = typeof position.y === 'number' ? position.y : this.__position.y;
+
+				return true;
+
+			}
+
+
+			return false;
+
+		},
+
+		getStateMap: function() {
+			return this.__states[this.__state];
+		},
+
+		getState: function() {
+			return this.__state;
+		},
+
+		setState: function(id) {
+
+			id = typeof id === 'string' ? id : null;
+
+			if (id !== null && this.__states[id] !== undefined) {
+				this.__state = id;
 				return true;
 			}
 
-			var found = false;
 
-			for (var i = 0, l = this.___events[type].length; i < l; i++) {
-
-				var entry = this.___events[type][i];
-
-				if (
-					(callback === null || entry.callback === callback)
-					&& (scope === null || entry.scope === scope)
-				) {
-					found = true;
-					this.___events[type].splice(i, 1);
-					l--;
-				}
-
-			}
-
-
-			return found;
-
-		},
-
-		trigger: function(type, data) {
-
-			var passData = data;
-			if (data === undefined || Object.prototype.toString.call(data) !== '[object Array]') {
-				passData = [ this, this.__value ];
-			}
-
-
-			var success = false;
-
-			if (this.___events[type] !== undefined) {
-
-				for (var i = 0, l = this.___events[type].length; i < l; i++) {
-
-					var entry = this.___events[type][i];
-					entry.callback.apply(entry.scope, passData);
-
-				}
-
-				success = true;
-
-			}
-
-
-			return success;
-
-		},
-
-		relayout: function(parent) {
-
-			var cache = this.__cache.position;
-
-			var hwidth = parent.width / 2;
-			var hheight = parent.height / 2;
-
-
-			var layout = this.__layout;
-			if (layout !== null) {
-
-				if (layout.position === 'relative') {
-
-					if (layout.x >= -1 && layout.x <= 1) {
-						cache.x = layout.x * hwidth;
-					}
-
-					if (layout.y >= -1 && layout.y <= 1) {
-						cache.y = layout.y * hheight;
-					}
-
-				} else if (layout.position === 'absolute') {
-
-					if (layout.x >= -hwidth && layout.x <= hwidth) {
-						cache.x = layout.x;
-					}
-
-					if (layout.y >= -hheight && layout.y <= hheight) {
-						cache.y = layout.y;
-					}
-
-				}
-
-
-				this.setPosition(cache);
-
-			}
-
-		},
-
-		getValue: function() {
-			return this.__value;
-		},
-
-		setValue: function(value) {
-			this.__value = value;
-		},
-
-		getLabel: function() {
-			return null;
-		},
-
-		getLayout: function() {
-			return this.__layout;
-		},
-
-		setLayout: function(layout) {
-
-			if (this.__layout === null) {
-
-				this.__layout = {
-					position: 'absolute',
-					x: 0, y: 0
-				};
-
-			}
-
-
-			if (Object.prototype.toString.call(layout) !== '[object Object]') {
-				return false;
-			}
-
-
-			this.__layout.position = typeof layout.position === 'string' ? layout.position : this.__layout.position;
-			this.__layout.x        = typeof layout.x === 'number' ? layout.x : this.__layout.x;
-			this.__layout.y        = typeof layout.y === 'number' ? layout.y : this.__layout.y;
-
-
-			return true;
+			return false;
 
 		}
 
@@ -207,3 +192,4 @@ lychee.define('lychee.ui.Entity').includes([
 	return Class;
 
 });
+

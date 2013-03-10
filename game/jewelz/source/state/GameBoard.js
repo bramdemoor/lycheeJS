@@ -122,13 +122,21 @@ lychee.define('game.state.GameBoard').requires([
 			this.__renderer.clear();
 
 
-			this.__game.render(clock, delta);
-
 			if (this.__overlay.isVisible() === true) {
-				this.__overlay.render(clock, delta);
-			}
 
-			this.__ui.render(clock, delta);
+				this.__renderer.setAlpha(0.5);
+				this.__game.render(clock, delta);
+				this.__ui.render(clock, delta);
+				this.__renderer.setAlpha(1.0);
+
+				this.__overlay.render(clock, delta);
+
+			} else {
+
+				this.__game.render(clock, delta);
+				this.__ui.render(clock, delta);
+
+			}
 
 
 			this.__renderer.flush();

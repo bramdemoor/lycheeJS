@@ -88,13 +88,22 @@
 			xhr.open('GET', url, true);
 			xhr.onreadystatechange = function() {
 
-				if (xhr.readyState === 4 && xhr.status === 200 || xhr.status === 304) {
+				if (xhr.readyState === 4) {
 
-					var data = xhr.responseText || xhr.responseXML || null;
+					if (xhr.status === 200 || xhr.status === 304) {
 
-					that.__pending[url] = false;
-					_cache[url] = data;
-					that._progress(url, _cache);
+						var data = xhr.responseText || xhr.responseXML || null;
+
+						that.__pending[url] = false;
+						_cache[url] = data;
+						that._progress(url, _cache);
+
+					} else {
+
+						that.__pending[url] = false;
+						_cache[url] = null;
+
+					}
 
 				}
 

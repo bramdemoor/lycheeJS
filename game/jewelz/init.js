@@ -28,9 +28,6 @@ lychee.rebase({
 
 lychee.build(function(lychee, global) {
 
-	lychee.Preloader.prototype._progress(null, null);
-
-
 	var settings = {
 		base: './asset',
 		music: true,

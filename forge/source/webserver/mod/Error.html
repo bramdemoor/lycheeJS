@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+	<title>Error <%=code%></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<style>
+	body{color:#444;background:#999;}
+	h1 {margin:0;padding:0;}
+	.description {margin:10px;padding:2px 4px;font-size:0.8em;font-weight:bold;text-align:center;background:#ddd;border:1px solid #888;border-radius:4px;}
+	#wrapper {width:80%;max-width:500px;height:auto;margin:10% auto;padding:30px;border:4px solid #ccc;border-radius:30px;box-shadow:0px 0px 20px #000;background:#fff;}
+	#wrapper-left, #wrapper-right {display:inline-block;vertical-align:top;}
+	#wrapper-left{min-width:120px;max-width:49%;}
+	#wrapper-right{min-width:200px;max-width:50%;}
+	#kirby{width:120px;height:105px;margin:0 auto;position:relative;z-index:1;}
+	#kirby .body{background:#F093A8;width:100px;height:100px;border-radius:100px;margin-left:10px;}
+	#kirby .mouth{background:#6E3136;width:15px;height:10px;position:absolute;left:43%;top:50%;border-radius:5px 5px 15px 15px;overflow:hidden;}
+	#kirby .tongue{background:#FC827D;height:6px;margin-top:4px;border-radius:15px;}
+	#kirby .leftfoot,#kirby .rightfoot{background:#95294D;height:20px;width:40px;position:absolute;z-index:-1;}
+	#kirby .leftfoot{left:5px;bottom:0;border-radius:30px 10px 10px 10px;}
+	#kirby .rightfoot{right:5px;bottom:0;border-radius:10px 30px 10px 10px;}
+	#kirby .lefthand,#kirby .righthand{background:#F093A8;height:30px;width:30px;position:absolute;z-index:-1;border-radius:30px;}
+	#kirby .lefthand{left:0;top:35%;}#kirby .righthand{right:0;top:35%;}
+	#kirby .leftcheek,#kirby .rightcheek{background:#DC5E84;height:8px;width:20px;position:absolute;border-radius:20px;top:40%;}
+	#kirby .leftcheek{left:15%;}#kirby .rightcheek{right:15%;}
+	#kirby .lefteye,#kirby .righteye{background:#000;height:30px;width:10px;position:absolute;border-radius:20px;top:16%;}
+	#kirby .lefteye{left:35%;}#kirby .righteye{right:35%;}
+	#kirby .white{height:12px;margin:1px;background:#FFF;border-radius:20px;}
+	#kirby .blue{height:15px;margin:1px;background:#4A4690;border-radius:20px;}
+	#kirby .bluecover{height:7px;background:#000;border-radius:20px;}
+	</style>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="wrapper-left">
+			<div id="kirby"><div class="body"><div class="lefteye"><div class="white"></div><div class="blue"><div class="bluecover"></div></div></div><div class="righteye"><div class="white"></div><div class="blue"><div class="bluecover"></div></div></div><div class="leftcheek"></div><div class="rightcheek"></div><div class="mouth"><div class="tongue"></div></div></div><div class="lefthand"></div><div class="righthand"></div><div class="leftfoot"></div><div class="rightfoot"></div></div>
+			<p class="description">Kirby is happy to see you :)</p>
+		</div>
+		<div id="wrapper-right">
+			<h1>Error <%=code%></h1>
+			<p><%=message%></p>
+			<p>Alternatively, you can go back to the <a href="/">index</a></p>
+		</div>
+		<hr>
+		<small><%=webserver_version%></small>
+	</div>
+</body>
+</html>

@@ -67,6 +67,11 @@
 
 		},
 
+		"data": {
+			"BitON": [ "js" ],
+			"PO": [ "js" ]
+		},
+
 		"event": {
 			"Bus": [ "js" ],
 			"Emitter": [ "js" ],
@@ -90,6 +95,18 @@
 			"Vector4": [ "js" ]
 		},
 
+		"net": {
+
+			"client": {
+				"RoomService": [ "js" ]
+			},
+
+			"remote": {
+				"RoomService": [ "js" ]
+			}
+
+		},
+
 		"physics": {
 			"Particle": [ "js" ],
 			"ParticleEmitter": [ "js" ],
@@ -97,13 +114,11 @@
 		},
 
 		"ui": {
-			"Entity": [ "js" ],
-			"Graph": [ "js" ],
-			"Renderer": [ "js" ],
+			"Area": [ "js" ],
 			"Button": [ "js" ],
-			"Sprite": [ "js" ],
-			"Text": [ "js" ],
-			"Tile": [ "js" ]
+			"Entity": [ "js" ],
+			"Renderer": [ "js" ],
+			"Wizard": [ "js" ]
 		},
 
 		"Font": [ "js" ]

@@ -109,6 +109,8 @@ lychee.define('lychee.event.Emitter').exports(function(lychee, global) {
 
 					if (entry.once === true) {
 						this.unbind(type, entry.callback, entry.scope);
+						e--;
+						el--;
 					}
 
 				}

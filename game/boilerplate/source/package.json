@@ -3,6 +3,10 @@
 
 	"tree": {
 
+		"entity": {
+			"Text": [ "js" ]
+		},
+
 		"state": {
 			"Game": [ "js" ],
 			"Menu": [ "js" ]
@@ -11,8 +15,7 @@
 		"DeviceSpecificHacks": [ "js" ],
 		"Jukebox": [ "js" ],
 		"Main": [ "js", "css" ],
-		"Renderer": [ "js" ],
-		"Scene": [ "js" ]
+		"Renderer": [ "js" ]
 
 	}
 }

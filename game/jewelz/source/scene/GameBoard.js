@@ -1,5 +1,6 @@
 
 lychee.define('game.scene.GameBoard').requires([
+	'game.entity.Deco',
 	'game.entity.Jewel'
 ]).includes([
 	'lychee.game.Graph'
@@ -235,7 +236,7 @@ lychee.define('game.scene.GameBoard').requires([
 
 		destroyJewelz: function(jewelz) {
 
-			if (Object.prototype.toString.call(jewelz) === '[object Array]') {
+			if (jewelz instanceof Array) {
 
 				this.__locked = true;
 

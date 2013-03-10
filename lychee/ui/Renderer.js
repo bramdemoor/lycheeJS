@@ -1,11 +1,14 @@
 
 lychee.define('lychee.ui.Renderer').requires([
-	'lychee.ui.Button',
-	'lychee.ui.Text',
-	'lychee.ui.Tile'
+	'lychee.ui.Area',
+	'lychee.ui.Button'
 ]).includes([
 	'lychee.Renderer'
 ]).exports(function(lychee, global) {
+
+	var _area   = lychee.ui.Area;
+	var _button = lychee.ui.Button;
+
 
 	var Class = function(id) {
 
@@ -16,16 +19,32 @@ lychee.define('lychee.ui.Renderer').requires([
 
 	Class.prototype = {
 
-		renderUIEntity: function(entity, offsetX, offsetY) {
+		__renderUIEntity: function(entity, offsetX, offsetY) {
 
-			if (entity instanceof lychee.ui.Button) {
+			if (entity instanceof _area) {
+				this.renderUIArea(entity, offsetX, offsetY);
+			} else if (entity instanceof _button) {
 				this.renderUIButton(entity, offsetX, offsetY);
-			} else if (entity instanceof lychee.ui.Sprite) {
-				this.renderUISprite(entity, offsetX, offsetY);
-			} else if (entity instanceof lychee.ui.Text) {
-				this.renderUIText(entity, offsetX, offsetY);
-			} else if (entity instanceof lychee.ui.Tile) {
-				this.renderUITile(entity, offsetX, offsetY);
+			}
+
+		},
+
+		renderUIArea: function(entity, offsetX, offsetY) {
+
+			offsetX = offsetX || 0;
+			offsetY = offsetY || 0;
+
+
+			var position = entity.getPosition();
+
+			var realX = position.x + offsetX;
+			var realY = position.y + offsetY;
+
+
+			var children = entity.getChildren();
+
+			for (var c = 0, cl = children.length; c < cl; c++) {
+				this.__renderUIEntity(children[c], realX, realY);
 			}
 
 		},
@@ -36,89 +55,56 @@ lychee.define('lychee.ui.Renderer').requires([
 			offsetY = offsetY || 0;
 
 
-			var pos = entity.getPosition();
+			var position = entity.getPosition();
+
+			var realX = position.x + offsetX;
+			var realY = position.y + offsetY;
 
 
-			var background = entity.getBackground();
-			if (background !== null) {
+			if (
+				realX >= 0 && realX <= this.__width
+				&& realY >= 0 && realY <= this.__height
+			) {
 
-				this.renderUISprite(
-					background,
-					pos.x + offsetX,
-					pos.y + offsetY
-				);
+				var label = entity.getLabel();
+				var font  = entity.getFont();
+				if (label !== null && font !== null) {
+
+					this.drawText(
+						realX, realY,
+						label, font,
+						true
+					);
+
+				}
 
 			}
 
+		},
 
-			var label = entity.getLabel();
-			if (label !== null) {
+		renderUIWizard: function(entity, offsetX, offsetY) {
 
-				this.renderUIText(
-					label,
-					pos.x + offsetX,
-					pos.y + offsetY
-				);
+			offsetX = offsetX || 0;
+			offsetY = offsetY || 0;
+
+
+			var position = entity.getPosition();
+
+			var realX = position.x + offsetX;
+			var realY = position.y + offsetY;
+
+
+			if (
+				realX >= 0 && realX <= this.__width
+				&& realY >= 0 && realY <= this.__height
+			) {
+
+				var area = entity.getArea();
+				if (area !== null) {
+					this.renderUIArea(area, realX, realY);
+				}
 
 			}
-
-		},
-
-		renderUISprite: function(entity, offsetX, offsetY) {
-
-			offsetX = offsetX || 0;
-			offsetY = offsetY || 0;
-
-
-			var map = entity.getMap();
-			var pos = entity.getPosition();
-			var image = entity.getImage();
-
-
-			this.drawSprite(
-				pos.x + offsetX - entity.width / 2,
-				pos.y + offsetY - entity.height / 2,
-				image,
-				map
-			);
-
-		},
-
-		renderUIText: function(entity, offsetX, offsetY) {
-
-			offsetX = offsetX || 0;
-			offsetY = offsetY || 0;
-
-
-			var pos = entity.getPosition();
-
-			this.drawText(
-				pos.x + offsetX - entity.width / 2,
-				pos.y + offsetY - entity.height / 2,
-				entity.text,
-				entity.font
-			);
-
-		},
-
-		renderUITile: function(entity, offsetX, offsetY) {
-
-			if (entity.color === null) return;
-
-			offsetX = offsetX || 0;
-			offsetY = offsetY || 0;
-
-
-			var pos = entity.getPosition();
-
-			this.drawBox(
-				pos.x + offsetX - entity.width / 2,
-				pos.y + offsetY - entity.height / 2,
-				pos.x + offsetX + entity.width / 2,
-				pos.y + offsetY + entity.height / 2,
-				entity.color,
-				true
-			);
 
 		}
 

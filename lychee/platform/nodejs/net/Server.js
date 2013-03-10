@@ -37,17 +37,6 @@ lychee.define('lychee.net.Server').tags({
 		this.__remotes      = [];
 
 
-		var that = this;
-		this.__onServerUpgrade = function(request, socket, headers) {
-
-			if (that.__upgrade(request, socket, headers) === false) {
-				socket.end();
-				socket.destroy();
-			}
-
-		};
-
-
 		lychee.event.Emitter.call(this, 'server');
 
 	};
@@ -180,9 +169,18 @@ lychee.define('lychee.net.Server').tags({
 			}
 
 
+			var that = this;
+
 			this.__server = new http.Server();
 			this.__server.listen(port, hostname);
-			this.__server.on('upgrade', this.__onServerUpgrade);
+			this.__server.on('upgrade', function(request, socket, headers) {
+
+				if (that.__upgrade(request, socket, headers) === false) {
+					socket.end();
+					socket.destroy();
+				}
+
+			});
 
 
 			this.__isRunning = true;
@@ -209,8 +207,14 @@ lychee.define('lychee.net.Server').tags({
 
 
 			if (found === false) {
+
+				if (lychee.debug === true) {
+					console.log('lychee.net.Server: Connected lychee.Remote (' + remote.id + ')');
+				}
+
 				this.__remotes.push(remote);
 				this.trigger('connect', [ remote ]);
+
 			}
 
 		},

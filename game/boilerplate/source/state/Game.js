@@ -1,5 +1,7 @@
 
-lychee.define('game.state.Game').includes([
+lychee.define('game.state.Game').requires([
+	'game.entity.Text'
+]).includes([
 	'lychee.game.State'
 ]).exports(function(lychee, global) {
 
@@ -27,9 +29,9 @@ lychee.define('game.state.Game').includes([
 			var width = this.game.settings.width;
 			var height = this.game.settings.height;
 
-			this.__entities.intro = new lychee.ui.Text({
+			this.__entities.intro = new game.entity.Text({
 				text: 'Game State active',
-				font: this.game.fonts.normal,
+				font:  this.game.fonts.normal,
 				position: {
 					x: width / 2,
 					y: -200
@@ -37,117 +39,21 @@ lychee.define('game.state.Game').includes([
 			});
 
 
-			this.__entities.noisehint = new lychee.ui.Text({
+			this.__entities.noisehint = new game.entity.Text({
 				text: 'Touch to make Noise',
-				font: this.game.fonts.small,
+				font:  this.game.fonts.small,
 				position: {
 					x: width / 2,
 					y: height + 24
 				}
 			});
 
-			this.__entities.exithint = new lychee.ui.Text({
+			this.__entities.exithint = new game.entity.Text({
 				text: 'Exit to Menu',
-				font: this.game.fonts.small,
+				font:  this.game.fonts.small,
 				position: {
 					x: width / 2,
 					y: height + 24
-				}
-			});
-
-			this.__entities.exithint.bind('touch', function() {
-				this.game.setState('menu');
-			}, this);
-
-
-			var image = this.game.config.sprite.image;
-			var states = this.game.config.sprite.states;
-			var map = this.game.config.sprite.map;
-
-
-
-			this.__entities.spriteA = new lychee.ui.Sprite({
-				image: image,
-				states: states,
-				map: map,
-				position: {
-					x: width / 2 - 84,
-					y: height / 2
-				},
-				state: 'first',
-				animation: {
-					frame: 0,
-					frames: 6,
-					duration: 24000,
-					loop: true
-				}
-			});
-
-			this.__entities.spriteB = new lychee.ui.Sprite({
-				image: image,
-				states: states,
-				map: map,
-				position: {
-					x: width / 2 - 42,
-					y: height / 2
-				},
-				state: 'second',
-				animation: {
-					frame: 0,
-					frames: 6,
-					duration: 12000,
-					loop: true
-				}
-			});
-
-			this.__entities.spriteC = new lychee.ui.Sprite({
- 				image: image,
-				states: states,
-				map: map,
-				position: {
-					x: width / 2,
-					y: height / 2
-				},
-				state: 'third',
-				animation: {
-					frame: 0,
-					frames: 6,
-					duration: 6000,
-					loop: true
-				}
-			});
-
-			this.__entities.spriteD = new lychee.ui.Sprite({
-				image: image,
-				states: states,
-				map: map,
-				position: {
-					x: width / 2 + 42,
-					y: height / 2
-				},
-				state: 'fourth',
-				animation: {
-					frame: 0,
-					frames: 6,
-					duration: 3000,
-					loop: true
-				}
-			});
-
-			this.__entities.spriteE = new lychee.ui.Sprite({
-				image: image,
-				states: states,
-				map: map,
-				position: {
-					x: width / 2 + 84,
-					y: height / 2
-				},
-				state: 'fifth',
-				animation: {
-					frame: 0,
-					frames: 6,
-					duration: 1000,
-					loop: true
 				}
 			});
 
@@ -179,9 +85,13 @@ lychee.define('game.state.Game').includes([
 			});
 
 
-			this.__entities.intro.setTween(1500, {
-				y: height / 2 - 50
-			}, lychee.game.Entity.TWEEN.easeOut);
+			this.__loop.timeout(500, function() {
+
+				this.__entities.intro.setTween(1500, {
+					y: height / 2 - 50
+				}, lychee.game.Entity.TWEEN.easeOut);
+
+			}, this);
 
 			this.__loop.timeout(1000, function() {
 
@@ -192,7 +102,6 @@ lychee.define('game.state.Game').includes([
 				}, lychee.game.Entity.TWEEN.easeOut);
 
 			}, this);
-
 
 			this.__loop.timeout(3000, function() {
 
@@ -236,7 +145,7 @@ lychee.define('game.state.Game').includes([
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
-				this.__renderer.renderUIEntity(this.__entities[e]);
+				this.__renderer.renderText(this.__entities[e]);
 			}
 
 
@@ -255,8 +164,8 @@ lychee.define('game.state.Game').includes([
 
 
 			var entity = this.__getEntityByPosition(position.x, position.y);
-			if (entity !== null) {
-				entity.trigger('touch', [ entity ]);
+			if (entity === this.__entities.exithint) {
+				this.game.setState('menu');
 			}
 
 

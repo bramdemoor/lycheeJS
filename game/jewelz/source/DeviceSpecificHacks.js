@@ -31,3 +31,4 @@ lychee.define('game.DeviceSpecificHacks').exports(function(lychee, global) {
 	return Callback;
 
 });
+

@@ -11,17 +11,19 @@ lychee.define('lychee.net.Remote').tags({
 
 	var Class = function(server, socket, maxFrameSize, encoder, decoder) {
 
-		encoder = encoder instanceof Function ? encoder : function(msg) { return msg; };
-		decoder = decoder instanceof Function ? decoder : function(msg) { return msg; };
+		encoder = encoder instanceof Function ? encoder : function(blob) { return blob; };
+		decoder = decoder instanceof Function ? decoder : function(blob) { return blob; };
 
 
-		this.id      = socket.remoteAddress + ':' + socket.remotePort;
-		this.version = _protocol.VERSION;
+		this.id       = socket.remoteAddress + ':' + socket.remotePort;
+		this.version  = _protocol.VERSION;
+		this.__server = server;
 
-		this.__server    = server;
-		this.__socket    = socket;
 		this.__encoder   = encoder;
 		this.__decoder   = decoder;
+		this.__socket    = socket;
+		this.__services  = [];
+
 		this.__isWaiting = true;
 
 
@@ -61,18 +63,54 @@ lychee.define('lychee.net.Remote').tags({
 		 * PRIVATE API
 		 */
 
-		__onReceive: function(message, isBinary) {
-
+		__onReceive: function(blob, isBinary) {
 
 			var data = null;
 			try {
-				data = this.__decoder(message);
+				data = this.__decoder(blob);
 			} catch(e) {
+				// Unsupported data encoding
 				return false;
 			}
 
 
-			this.trigger('receive', [ data ]);
+			if (
+				data instanceof Object
+				&& typeof data._serviceId === 'string'
+			) {
+
+				var service = this.__getServiceById(data._serviceId);
+				var method  = data._serviceMethod || null;
+
+				if (
+					service !== null
+					&& method !== null
+					&& method.charAt(0) !== '@'
+					&& typeof service[method] === 'function'
+				) {
+
+					// Remove data frame service header
+					delete data._serviceId;
+					delete data._serviceMethod;
+
+					service[method](data);
+
+				} else {
+
+					if (method === '@plug') {
+						this.__plugService(data._serviceId, service);
+					} else if (method === '@unplug') {
+						this.__unplugService(data._serviceId, service);
+					}
+
+				}
+
+			} else {
+
+				this.trigger('receive', [ data ]);
+
+			}
+
 
 			return true;
 
@@ -85,12 +123,8 @@ lychee.define('lychee.net.Remote').tags({
 		accept: function() {
 
 			if (this.__isWaiting === true) {
-
-				this.__server.connect(this);
 				this.__isWaiting = false;
-
 				return true;
-
 			}
 
 
@@ -114,10 +148,20 @@ lychee.define('lychee.net.Remote').tags({
 
 		},
 
-		send: function(message) {
+		send: function(data, service) {
 
-			var data = this.__encoder(message);
-			this.__protocol.write(data);
+			if (data instanceof Object) {
+
+				if (service instanceof Object) {
+					data._serviceId     = service.id || null;
+					data._serviceMethod = service.method || null;
+				}
+
+			}
+
+
+			var blob = this.__encoder(data);
+			this.__protocol.write(blob);
 
 		},
 
@@ -129,6 +173,117 @@ lychee.define('lychee.net.Remote').tags({
 
 
 			return false;
+
+		},
+
+
+
+		/*
+		 * SERVICE INTEGRATION
+		 */
+
+		__getServiceById: function(id) {
+
+			for (var s = 0, sl = this.__services.length; s < sl; s++) {
+
+				var service = this.__services[s];
+				if (service.getId() === id) {
+					return service;
+				}
+
+			}
+
+
+			return null;
+
+		},
+
+		__plugService: function(id, service) {
+
+			id = typeof id === 'string' ? id : null;
+
+			if (
+				id === null
+				|| service !== null
+			) {
+				return;
+			}
+
+
+			var construct = lychee.net.remote[id];
+			if (typeof construct === 'function') {
+
+				service = new construct();
+				this.__services.push(service);
+
+
+				if (lychee.debug === true) {
+					console.log('lychee.net.Remote: Plugged in Service (' + id + ')');
+				}
+
+
+				// Okay, Client, plugged Service! PONG
+				this.send({}, {
+					id: service.getId(),
+					method: '@plug'
+				});
+
+			} else {
+
+				if (lychee.debug === true) {
+					console.log('lychee.net.Remote: Unplugged Service (' + id + ')');
+				}
+
+
+				// Nope, Client, unplug invalid Service! PONG
+				this.send({}, {
+					id: id,
+					method: '@unplug'
+				});
+
+			}
+
+		},
+
+		__unplugService: function(id, service) {
+
+			id = typeof id === 'string' ? id : null;
+
+
+			if (
+				id === null
+				|| service === null
+			) {
+				return;
+			}
+
+
+			var found = false;
+
+			for (var s = 0, sl = this.__services.length; s < sl; s++) {
+
+				if (this.__services[s].getId() === id) {
+					this.__services.splice(s, 1);
+					found = true;
+					sl--;
+				}
+
+			}
+
+
+			if (lychee.debug === true) {
+				console.log('lychee.net.Remote: Unplugged Service (' + id + ')');
+			}
+
+
+			if (found === true) {
+
+				this.send({}, {
+					id: id,
+					method: '@unplug'
+				});
+
+			}
 
 		}
 

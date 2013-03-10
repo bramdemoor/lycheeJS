@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+<head>
+	<title>Welcome to lycheeJS</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+	<style>
+	body{color:#444;background:#999;}
+	h1 {margin:0;padding:0;}
+	#wrapper {position:absolute;width:auto;height:auto;top:20px;right:20px;bottom:auto;left:20px;padding:30px;border:4px solid #ccc;border-radius:30px;box-shadow:0px 0px 20px #000;background:#fff;}
+	#wrapper-left, #wrapper-right {display:inline-block;vertical-align:top;}
+	#wrapper-left{min-width:120px;max-width:49%;}
+	#wrapper-right{min-width:200px;max-width:50%;}
+	</style>
+
+</head>
+<body>
+	<div id="wrapper">
+		<div id="wrapper-left">
+			<h1>Available Games</h1>
+			<ul>
+			<%script% for(var g=0, gl = games_list.length; g < gl; g++) { %>
+				<li><%=games_list[g]%></li>
+			<%script% } %>
+			</ul>
+			<hr>
+			<h1>Server Status</h1>
+		</div>
+		<div id="wrapper-right">
+		</div>
+		<hr>
+		<small><%=webserver_version%></small>
+	</div>
+</body>
+</html>

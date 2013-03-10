@@ -1,0 +1,57 @@
+{
+	"tags": {
+
+		"platform": {
+
+			"nodejs": "platform/nodejs"
+
+		}
+
+	},
+
+	"tree": {
+
+		"platform": {
+
+			"nodejs": {
+
+				"webserver": {
+
+					"mod": {
+						"FS": [ "js" ]
+					}
+
+				},
+
+				"WebServer": [ "js" ]
+
+			}
+
+		},
+
+		"entity": {
+		},
+
+		"state": {
+			"Editor": [ "js" ]
+		},
+
+		"webserver": {
+
+			"mod": {
+				"Error": [ "js", "html" ],
+				"File": [ "js" ],
+				"Redirect": [ "js" ],
+				"Welcome": [ "js", "html" ]
+			},
+
+			"Template": [ "js" ]
+
+		},
+
+		"DeviceSpecificHacks": [ "js" ],
+		"Main": [ "js", "css" ],
+		"Renderer": [ "js" ]
+
+	}
+}

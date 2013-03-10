@@ -1,0 +1,25 @@
+{
+	"tags": {},
+
+	"tree": {
+
+		"demo": {
+			"Base": [ "js" ],
+			"BitON": [ "js" ],
+			"PO": [ "js" ],
+			"RoomService": [ "js" ]
+		},
+
+		"state": {
+			"Demo": [ "js" ],
+			"Menu": [ "js" ]
+		},
+
+		"DeviceSpecificHacks": [ "js" ],
+		"Jukebox": [ "js" ],
+		"Main": [ "js", "css" ],
+		"Renderer": [ "js" ],
+		"Server": [ "js", "css" ]
+
+	}
+}

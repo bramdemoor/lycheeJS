@@ -16,6 +16,9 @@ if (typeof global !== 'undefined') {
 	};
 
 
+	lychee.VERSION = 0.6;
+
+
 	lychee.define = function(name) {
 
 		var namespace = null,

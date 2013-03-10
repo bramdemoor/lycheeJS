@@ -1,5 +1,7 @@
 
-lychee.define('game.state.Result').includes([
+lychee.define('game.state.Result').requires([
+	'game.entity.Text'
+]).includes([
 	'lychee.game.State'
 ]).exports(function(lychee, global) {
 
@@ -9,11 +11,11 @@ lychee.define('game.state.Result').includes([
 
 		lychee.game.State.call(this, game, 'result');
 
-		this.__input = this.game.input;
-		this.__loop = this.game.loop;
-		this.__renderer = this.game.renderer;
+		this.__input    = game.input;
+		this.__loop     = game.loop;
+		this.__renderer = game.renderer;
 
-		this.__locked = true;
+		this.__locked   = true;
 
 		this.reset();
 
@@ -35,25 +37,23 @@ lychee.define('game.state.Result').includes([
 			}
 
 
-			this.__entities.headline = new lychee.ui.Text({
+			this.__entities.headline = new game.entity.Text({
 				text: 'Game Over',
 				font: font,
 				position: {
-					x: 0,
-					y: -hheight - 60
+					x: 0, y: -hheight - 60
 				}
 			});
 
-			this.__entities.points = new lychee.ui.Text({
+			this.__entities.points = new game.entity.Text({
 				text: '0 Points',
 				font: font,
 				position: {
-					x: 0,
-					y: hheight + 50
+					x: 0, y: hheight + 50
 				}
 			});
 
-			this.__entities.hint = new lychee.ui.Text({
+			this.__entities.hint = new game.entity.Text({
 				text: 'Touch to get back to Menu',
 				font: this.game.fonts.small,
 				position: {
@@ -83,23 +83,29 @@ lychee.define('game.state.Result').includes([
 			this.__entities.headline.setPosition({
 				y: -hheight - 60
 			});
-			this.__entities.headline.setTween(2000, {
-				y: -60
-			}, lychee.game.Entity.TWEEN.bounceEaseOut);
 
-
-			this.__entities.points.set(data.points + ' Points');
+			this.__entities.points.setText(data.points + ' Points');
 			this.__entities.points.setPosition({
 				y: hheight + 50
 			});
-   			this.__entities.points.setTween(2000, {
-   				y: 0
-   			}, lychee.game.Entity.TWEEN.bounceEaseOut);
-
 
 			this.__entities.hint.setPosition({
 				y: hheight + 50
 			});
+
+
+			this.__loop.timeout(500, function() {
+
+				this.__entities.headline.setTween(2000, {
+					y: -60
+				}, lychee.game.Entity.TWEEN.bounceEaseOut);
+
+	   			this.__entities.points.setTween(2000, {
+					y: 0
+				}, lychee.game.Entity.TWEEN.bounceEaseOut);
+
+			}, this);
+
 
 			this.__loop.timeout(3000, function() {
 
@@ -141,7 +147,7 @@ lychee.define('game.state.Result').includes([
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
-				this.__renderer.renderUIText(this.__entities[e], this.game.settings.width / 2, this.game.settings.height / 2);
+				this.__renderer.renderText(this.__entities[e], this.game.settings.width / 2, this.game.settings.height / 2);
 			}
 
 
@@ -162,3 +168,4 @@ lychee.define('game.state.Result').includes([
 	return Class;
 
 });
+

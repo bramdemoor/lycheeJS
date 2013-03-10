@@ -1,7 +1,6 @@
 
 lychee.define('lychee.ui.Button').requires([
-	'lychee.ui.Sprite',
-	'lychee.ui.Text'
+	'lychee.Font'
 ]).includes([
 	'lychee.ui.Entity'
 ]).exports(function(lychee, global) {
@@ -10,46 +9,28 @@ lychee.define('lychee.ui.Button').requires([
 
 		var settings = lychee.extend({}, data);
 
-		this.__background = null;
-		this.__label = null;
 
-		settings.width = 0;
-		settings.height = 0;
+		this.__label = null;
+		this.__font  = null;
 
 
 		if (
-			settings.background != null
+			settings.label !== undefined
+			&& settings.font !== undefined
 		) {
-
-			this.__background = settings.background;
-
-			if (settings.background.width > settings.width) {
-				settings.width = settings.background.width;
-			}
-
-			if (settings.background.height > settings.height) {
-				settings.height = settings.background.height;
-			}
-
+			this.setLabel(settings.label, settings.font);
 		}
 
 
-		if (settings.label != null) {
-
-			this.__label = settings.label;
-
-			if (settings.label.width > settings.width) {
-				settings.width = settings.label.width;
-			}
-
-			if (settings.label.height > settings.height) {
-				settings.height = settings.label.height;
-			}
-
-		}
+		delete settings.label;
+		delete settings.font;
 
 
-		lychee.ui.Entity.call(this, settings);
+		// Needs to be precached, layouting taking place inside setLabel()
+		settings.width  = this.width;
+		settings.height = this.height;
+
+		lychee.ui.Entity.call(this, 'ui-button', settings);
 
 		settings = null;
 
@@ -58,23 +39,46 @@ lychee.define('lychee.ui.Button').requires([
 
 	Class.prototype = {
 
-		getBackground: function() {
-			return this.__background;
-		},
-
 		getLabel: function() {
 			return this.__label;
 		},
 
-		update: function(clock, delta) {
+		getFont: function() {
+			return this.__font;
+		},
 
-			if (this.__label !== null) {
-				this.__label.update(clock, delta);
+		setLabel: function(label, font) {
+
+			label = typeof label === 'string' ? label : null;
+			font  = font instanceof lychee.Font ? font : this.__font;
+
+
+			if (label !== null && font !== null) {
+
+				this.__label = label;
+				this.__font  = font;
+
+
+				var width   = 0;
+				var height  = 0;
+				var kerning = font.getSettings().kerning;
+
+				for (var l = 0, ll = label.length; l < ll; l++) {
+					var chr = font.get(label[l]);
+					width += chr.real + kerning;
+					height = Math.max(height, chr.height);
+				}
+
+				this.width  = width;
+				this.height = height;
+
+
+				return true;
+
 			}
 
-			if (this.__background !== null) {
-				this.__background.update(clock, delta);
-			}
+
+			return false;
 
 		}
 
@@ -84,3 +88,4 @@ lychee.define('lychee.ui.Button').requires([
 	return Class;
 
 });
+

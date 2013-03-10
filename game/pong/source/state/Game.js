@@ -44,7 +44,7 @@ lychee.define('game.state.Game').requires([
 
 		reset: function() {
 
-			this.__entities.ball = new game.entity.Ball(this.game.images.ball);
+			this.__entities.ball   = new game.entity.Ball(this.game.images.ball);
 			this.__entities.player = new game.entity.Paddle(this.game.images.player);
 			this.__entities.cpu    = new game.entity.Paddle(this.game.images.cpu);
 

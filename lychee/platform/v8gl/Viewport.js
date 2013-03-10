@@ -78,8 +78,10 @@ lychee.define('Viewport').tags({
 	var Class = function() {
 
 		this.__orientation = null; // Unsupported by freeglut
-		this.__width = 0;
-		this.__height = 0;
+		this.__width       = 0;
+		this.__height      = 0;
+
+		this.__isFullscreen = false;
 
 
 		lychee.event.Emitter.call(this, 'viewport');
@@ -90,6 +92,22 @@ lychee.define('Viewport').tags({
 
 
 	Class.prototype = {
+
+		/*
+		 * PUBLIC API
+		 */
+
+		enterFullscreen: function() {
+		},
+
+		leaveFullscreen: function() {
+		},
+
+		isFullscreen: function() {
+			return this.__isFullscreen === true;
+		},
+
+
 
 		/*
 		 * PRIVATE API

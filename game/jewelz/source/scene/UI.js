@@ -1,8 +1,6 @@
 
 lychee.define('game.scene.UI').requires([
 	'game.Score'
-]).includes([
-	'lychee.ui.Graph'
 ]).exports(function(lychee, global) {
 
 	var Class = function(game, settings) {
@@ -10,13 +8,12 @@ lychee.define('game.scene.UI').requires([
 		this.game = game;
 
 		this.__background = [];
-		this.__loop = game.loop;
-		this.__root = null;
+		this.__loop     = game.loop;
+		this.__root     = null;
+		this.__renderer = game.renderer;
 
 		// Score is public for state.Game access
 		this.score = null;
-
-		lychee.ui.Graph.call(this, game.renderer);
 
 
 		this.reset(settings);
@@ -39,49 +36,51 @@ lychee.define('game.scene.UI').requires([
 
 				this.__entities = {};
 
-				this.__root = this.add(new lychee.ui.Tile({
-					color: null,
-					width: data.width,
+				this.__root = new lychee.ui.Area({
+					width:  data.width,
 					height: data.height,
 					position: {
 						x: data.position.x,
 						y: data.position.y
 					}
+				});
+
+
+				this.__root.add(new lychee.ui.Button({
+					label: 'Score: ',
+					font:  this.game.fonts.normal,
+					position: {
+						x: 0, y: -84
+					}
 				}));
 
-				this.add(new lychee.ui.Text({
-					text: 'Score:',
-					font: this.game.fonts.normal,
-					position: {
-						x: 0,
-						y: -84
-					}
-				}), this.__root);
-
-				this.__entities.points = this.add(new lychee.ui.Text({
-					text: '0',
-					font: this.game.fonts.normal,
+				this.__entities.points = new lychee.ui.Button({
+					label: '0',
+					font:  this.game.fonts.normal,
 					position: {
 						x: 0, y: -42
 					}
-				}), this.__root).entity;
+				});
 
-				this.add(new lychee.ui.Text({
-					text: 'Time:',
-					font: this.game.fonts.normal,
+				this.__root.add(this.__entities.points);
+
+				this.__root.add(new lychee.ui.Button({
+					label: 'Time:',
+					font:  this.game.fonts.normal,
 					position: {
-						x: 0,
-						y: 42
+						x: 0, y: 42
 					}
-				}), this.__root);
+				}));
 
-				this.__entities.time = this.add(new lychee.ui.Text({
-					text: '0',
-					font: this.game.fonts.normal,
+				this.__entities.time = new lychee.ui.Button({
+					label: '0',
+					font:  this.game.fonts.normal,
 					position: {
 						x: 0, y: 84
 					}
-				}), this.__root).entity;
+				});
+
+				this.__root.add(this.__entities.time);
 
 			} else {
 
@@ -145,20 +144,18 @@ lychee.define('game.scene.UI').requires([
 			this.score.unbind('update', this.__updateScore);
 		},
 
+		update: function(clock, delta) {
+		},
+
 		render: function(clock, delta) {
 
-			if (this.__renderer !== null) {
+			for (var b = 0, bl = this.__background.length; b < bl; b++) {
+				this.__renderer.renderDeco(this.__background[b]);
+			}
 
-				for (var b = 0, bl = this.__background.length; b < bl; b++) {
-					this.__renderer.renderDeco(this.__background[b]);
-				}
 
-				this.__renderNode(
-					this.__tree,
-					this.__offset.x,
-					this.__offset.y
-				);
-
+			if (this.__root !== null) {
+				this.__renderer.renderUIArea(this.__root);
 			}
 
 		},
@@ -170,10 +167,10 @@ lychee.define('game.scene.UI').requires([
 
 		__updateScore: function(data) {
 
-			this.__entities.points.set(data.points + '');
+			this.__entities.points.setLabel(data.points + '');
 
 			var time = (data.time / 1000) | 0;
-			this.__entities.time.set(time + '');
+			this.__entities.time.setLabel(time + '');
 
 		}
 

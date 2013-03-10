@@ -5,8 +5,6 @@ lychee.define('game.Main').requires([
 	'lychee.Viewport',
 	'game.Jukebox',
 	'game.Renderer',
-	'game.state.Credits',
-	'game.state.GameBlast',
 	'game.state.GameBoard',
 	'game.state.Menu',
 	'game.state.Result',
@@ -20,9 +18,6 @@ lychee.define('game.Main').requires([
 		lychee.game.Main.call(this, settings);
 
 		this.fonts = {};
-		this.sprite = null;
-
-		this.__offset = { x: 0, y: 0 };
 
 		this.load();
 
@@ -38,16 +33,16 @@ lychee.define('game.Main').requires([
 			music: true,
 			fullscreen: true,
 			play: {
-				hits: 3,
+				hits:  3,
 				intro: 5000,
-				hint: 2000,
-				time: 60000
+				hint:  2000,
+				time:  30000
 			},
-			renderFps: 40,
-			updateFps: 40,
-			width: 896,
-			height: 384,
-			tile: 64
+			renderFps: 60,
+			updateFps: 60,
+			width:     896,
+			height:    384,
+			tile:      64
 		},
 
 		load: function() {
@@ -186,6 +181,10 @@ lychee.define('game.Main').requires([
 
 		init: function() {
 
+			// Remove Preloader Progress Bar
+			lychee.Preloader.prototype._progress(null, null);
+
+
 			lychee.game.Main.prototype.init.call(this);
 
 			this.renderer = new game.Renderer('game');
@@ -251,11 +250,17 @@ lychee.define('game.Main').requires([
 			});
 
 
+			// This is apparently a one-time HACK
+			this.input.bind('touch', function() {
+				if (this.settings.fullscreen === true) {
+					this.viewport.enterFullscreen();
+				}
+			}, this, true);
+
+
 			this.states.gameboard  = new game.state.GameBoard(this);
-			this.states.gameblast  = new game.state.GameBlast(this);
 			this.states.result     = new game.state.Result(this);
 			this.states.menu       = new game.state.Menu(this);
-			this.states.credits    = new game.state.Credits(this);
 
 			this.setState('menu');
 
