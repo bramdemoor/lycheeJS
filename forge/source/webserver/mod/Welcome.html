@@ -11,7 +11,12 @@
 	body{color:#444;background:#999;}
 	h1 {margin:0;padding:0;}
 	#wrapper {position:absolute;width:auto;height:auto;top:20px;right:20px;bottom:auto;left:20px;padding:30px;border:4px solid #ccc;border-radius:30px;box-shadow:0px 0px 20px #000;background:#fff;}
-	#wrapper-left, #wrapper-right {display:inline-block;vertical-align:top;}
+	#wrapper-left, #wrapper-right {
+		display:inline-block;
+		vertical-align:top;
+		width:50%;
+		border:1px solid red;
+	}
 	#wrapper-left{min-width:120px;max-width:49%;}
 	#wrapper-right{min-width:200px;max-width:50%;}
 	</style>
@@ -30,6 +35,13 @@
 			<h1>Server Status</h1>
 		</div>
 		<div id="wrapper-right">
+			<h1>lycheeJS Forge</h1>
+			<ul>
+				<li><a href="/forge/index.html#scene">Scene Editor</a></li>
+				<li><a href="/forge/index.html#localization">Localization Editor</a></li>
+				<li><a href="/forge/index.html#entity">Entity Editor</a></li>
+				<li><a href="/forge/index.html#font">Font Exporter</a></li>
+			</ul>
 		</div>
 		<hr>
 		<small><%=webserver_version%></small>

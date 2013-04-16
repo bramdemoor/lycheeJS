@@ -21,6 +21,9 @@ lychee.define('game.webserver.Template').exports(function(lychee, global) {
 			for (var c = 0, cl = chunks.length; c < cl; c++) {
 
 				var chunk = chunks[c];
+
+				chunk = chunk.replace('\'', '\\\'');
+
 				if (chunk.substr(0, 7) === 'script%') {
 					functionbody.push(chunk.substr(7));
 					inScript = inScript === true ? false : true;
