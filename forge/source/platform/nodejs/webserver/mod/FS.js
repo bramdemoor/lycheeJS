@@ -176,6 +176,36 @@ lychee.define('game.webserver.mod.FS').tags({
 
 		},
 
+		filter: function(prefix, suffix, type) {
+
+			prefix = typeof prefix === 'string' ? prefix : null;
+			suffix = typeof suffix === 'string' ? suffix : null;
+			type   = typeof type === 'number' ? type : null;
+
+
+			var pl = 0, sl = 0;
+			if (prefix !== null) pl = prefix.length;
+			if (suffix !== null) sl = suffix.length;
+
+
+			var filtered = [];
+			for (var path in this.__cache) {
+
+				if (prefix === null || path.substr(0, pl) === prefix) {
+					if (suffix === null || path.substr(-1 * sl) === suffix) {
+						if (type === null || this.__cache[path] === type) {
+							filtered.push(path);
+						}
+					}
+				}
+
+			}
+
+
+			return filtered;
+
+		},
+
 		isDirectory: function(path) {
 			return this.__cache[path] === Class.TYPE.directory;
 		},

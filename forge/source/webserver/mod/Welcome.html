@@ -23,7 +23,7 @@
 			<h1>Available Games</h1>
 			<ul>
 			<%script% for(var g=0, gl = games_list.length; g < gl; g++) { %>
-				<li><%=games_list[g]%></li>
+				<li><a href="<%=games_list[g].url%>"><%=games_list[g].title%></a></li>
 			<%script% } %>
 			</ul>
 			<hr>

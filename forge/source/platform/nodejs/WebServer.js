@@ -146,12 +146,12 @@ lychee.define('game.WebServer').tags({
 					} else if (fs.isFile(resolved) === true) {
 						file.execute(resolved, callback);
 					} else {
-						error.execute(404, url, callback);
+						error.execute(403, url, callback);
 					}
 
 				} else {
 					// TODO: Evaluate if alternative redirect makes more sense
-					error.execute(403, url, callback);
+					error.execute(404, url, callback);
 				}
 
 			} else {

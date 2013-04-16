@@ -82,29 +82,29 @@ console.error(e);
 
 		__generateGamesList: function() {
 
-return [ 'foo', 'bar' ];
+			var games = [];
 
-			var root  = this.__webserver.getRoot();
-			var rl    = root.length;
 			var fsmod = this.__webserver.getMod('fs');
+			if (fsmod !== null) {
+
+				var root = this.__webserver.getRoot();
+
+				var files = fsmod.filter(
+					root + '/game',
+					'index.html',
+					game.webserver.mod.FS.TYPE.file
+				);
 
 
-			var list = [];
-			var entries = fsmod.all();
-			for (var e = 0, el = entries.length; e < el; e++) {
+				for (var f = 0, fl = files.length; f < fl; f++) {
 
-				var path  = entries[e];
-				var chunk = path.substr(rl);
+					var url = files[f].substr(root.length);
+					var tmp = url.split('/');
+					tmp.splice(tmp.length - 1, 1); // remove index.html
 
-				if (
-					path.substr(0, rl) === root
-					&& chunk.substr(0, 5) === '/game'
-					&& chunk.substr(-10) === 'index.html'
-				) {
-
-					list.push({
-						id:  chunk.substr(0, chunk.length - 10),
-						url: chunk
+					games.push({
+						url: url,
+						title: tmp.join('/')
 					});
 
 				}
@@ -112,7 +112,7 @@ return [ 'foo', 'bar' ];
 			}
 
 
-			return list;
+			return games;
 
 		}
 
