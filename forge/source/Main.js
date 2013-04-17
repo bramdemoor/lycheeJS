@@ -5,6 +5,7 @@ lychee.define('game.Main').requires([
 	'lychee.Viewport',
 	'game.Renderer',
 	'game.state.Editor',
+	'game.state.Test',
 	'game.DeviceSpecificHacks'
 ]).includes([
 	'lychee.game.Main'
@@ -170,8 +171,9 @@ lychee.define('game.Main').requires([
 
 
 			this.states.editor = new game.state.Editor(this);
+			this.states.test   = new game.state.Test(this);
 
-			this.setState('editor');
+			this.setState('test');
 
 			this.start();
 

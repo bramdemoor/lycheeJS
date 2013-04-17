@@ -10,6 +10,7 @@ lychee.define('lychee.ui.Entity').includes([
 
 		this.width  = typeof settings.width === 'number' ? settings.width : 0;
 		this.height = typeof settings.height === 'number' ? settings.height : 0;
+		this.radius = typeof settings.radius === 'number' ? settings.radius : 0;
 
 
 		this.__clock    = null;

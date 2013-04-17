@@ -1,13 +1,15 @@
 
 lychee.define('lychee.ui.Renderer').requires([
 	'lychee.ui.Area',
-	'lychee.ui.Button'
+	'lychee.ui.Button',
+	'lychee.ui.Slider'
 ]).includes([
 	'lychee.Renderer'
 ]).exports(function(lychee, global) {
 
 	var _area   = lychee.ui.Area;
 	var _button = lychee.ui.Button;
+	var _slider = lychee.ui.Slider;
 
 
 	var Class = function(id) {
@@ -25,6 +27,8 @@ lychee.define('lychee.ui.Renderer').requires([
 				this.renderUIArea(entity, offsetX, offsetY);
 			} else if (entity instanceof _button) {
 				this.renderUIButton(entity, offsetX, offsetY);
+			} else if (entity instanceof _slider) {
+				this.renderUISlider(entity, offsetX, offsetY);
 			}
 
 		},
@@ -73,6 +77,55 @@ lychee.define('lychee.ui.Renderer').requires([
 					this.drawText(
 						realX, realY,
 						label, font,
+						true
+					);
+
+				}
+
+			}
+
+		},
+
+		renderUISlider: function(entity, offsetX, offsetY) {
+
+			offsetX = offsetX || 0;
+			offsetY = offsetY || 0;
+
+
+			var position = entity.getPosition();
+
+			var realX = position.x + offsetX;
+			var realY = position.y + offsetY;
+
+
+			if (
+				realX >= 0 && realX <= this.__width
+				&& realY >= 0 && realY <= this.__height
+			) {
+
+				var radius = entity.radius;
+				if (radius > 0) {
+
+					this.setAlpha(0.5);
+
+					this.drawArc(
+						realX, realY,
+						0, 1,
+						radius,
+						'#333333',
+						true
+					);
+
+					this.setAlpha(1.0);
+
+
+					var drag = entity.getDrag();
+
+					this.drawCircle(
+						realX + drag.x,
+						realY + drag.y,
+						20,
+						'#ff0000',
 						true
 					);
 

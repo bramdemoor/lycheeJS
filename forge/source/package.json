@@ -33,7 +33,8 @@
 		},
 
 		"state": {
-			"Editor": [ "js" ]
+			"Editor": [ "js" ],
+			"Test": [ "js" ]
 		},
 
 		"webserver": {

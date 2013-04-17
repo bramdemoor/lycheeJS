@@ -44,22 +44,44 @@ lychee.define('lychee.ui.Area').includes([
 
 				var child    = this.__children[c];
 				var cpos     = child.getPosition();
+
 				var chwidth  = child.width / 2;
 				var chheight = child.height / 2;
+				var chradius = child.radius;
 
 
-				var x1 = cpos.x - chwidth;
-				var y1 = cpos.y - chheight;
-				var x2 = cpos.x + chwidth;
-				var y2 = cpos.y + chheight;
+				// 1. AABB via radius
+				if (chradius > 0) {
 
+					var x1 = cpos.x - chradius;
+					var x2 = cpos.x + chradius;
+					var y1 = cpos.y - chradius;
+					var y2 = cpos.y + chradius;
 
-				if (
-					position.x >= x1 && position.x <= x2
-					&& position.y >= y1 && position.y <= y2
-				) {
-					found = child;
-					break;
+					if (
+						position.x >= x1 && position.x <= x2
+						&& position.y >= y1 && position.y <= y2
+					) {
+						found = child;
+						break;
+					}
+
+				// 2. AABB via width/height
+				} else {
+
+					var x1 = cpos.x - chwidth;
+					var y1 = cpos.y - chheight;
+					var x2 = cpos.x + chwidth;
+					var y2 = cpos.y + chheight;
+
+					if (
+						position.x >= x1 && position.x <= x2
+						&& position.y >= y1 && position.y <= y2
+					) {
+						found = child;
+						break;
+					}
+
 				}
 
 			}
