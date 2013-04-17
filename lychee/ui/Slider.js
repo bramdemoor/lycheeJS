@@ -31,11 +31,6 @@ lychee.define('lychee.ui.Slider').includes([
 			this.setValue(this.__range.from);
 		}
 
-		this.setValue(30);
-		this.setValue(90);
-		this.setValue(180);
-		this.setValue(720 + 90);
-
 
 		settings = null;
 
@@ -87,10 +82,10 @@ lychee.define('lychee.ui.Slider').includes([
 				var index  = value / (range.to - range.from);
 				var radius = this.radius;
 
-				this.__drag.x = Math.sin(index * 2 * Math.PI) * radius;
-				this.__drag.y = Math.cos(index * 2 * Math.PI) * radius;
+				this.__drag.x = Math.sin(index * 2 * Math.PI) * (radius - 24);
+				this.__drag.y = Math.cos(index * 2 * Math.PI) * (radius - 24);
 
-console.log('setting value:', this.__drag.x, this.__drag.y, value, index);
+				this.__value = value;
 
 			}
 

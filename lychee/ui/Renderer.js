@@ -124,7 +124,7 @@ lychee.define('lychee.ui.Renderer').requires([
 					this.drawCircle(
 						realX + drag.x,
 						realY + drag.y,
-						20,
+						24,
 						'#ff0000',
 						true
 					);

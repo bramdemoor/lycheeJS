@@ -4,7 +4,6 @@ lychee.define('game.Main').requires([
 	'lychee.Input',
 	'lychee.Viewport',
 	'game.Renderer',
-	'game.state.Editor',
 	'game.state.Test',
 	'game.DeviceSpecificHacks'
 ]).includes([
@@ -141,14 +140,6 @@ lychee.define('game.Main').requires([
 
 				this.reset(width, height);
 
-				for (var id in this.states) {
-					this.states[id].reset();
-				}
-
-				var state = this.getState();
-				state.leave && state.leave();
-				state.enter && state.enter();
-
 			}, this);
 			this.viewport.bind('hide', function() {
 
@@ -170,8 +161,7 @@ lychee.define('game.Main').requires([
 			});
 
 
-			this.states.editor = new game.state.Editor(this);
-			this.states.test   = new game.state.Test(this);
+			this.states.test = new game.state.Test(this);
 
 			this.setState('test');
 

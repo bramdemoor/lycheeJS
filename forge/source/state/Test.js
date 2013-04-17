@@ -33,23 +33,69 @@ lychee.define('game.state.Test').requires([
 			lychee.game.State.prototype.enter.call(this);
 
 
-			this.__entities.slider = new lychee.ui.Slider({
+			this.__entities.slider1 = new lychee.ui.Slider({
 				range: {
 					from:  0,
-					to:    360,
+					to:    100,
 					delta: 1
 				},
-				radius: 50,
+				radius: 100,
 				position: {
 					x: 200,
 					y: 200
 				}
 			});
 
+			this.__entities.slider1.setValue(20);
+
+
+			this.__entities.slider2 = new lychee.ui.Slider({
+				range: {
+					from:  0,
+					to:    360,
+					delta: 10
+				},
+				radius: 50,
+				position: {
+					x: 500,
+					y: 200
+				}
+			});
+
+			this.__entities.slider2.setValue(90);
+
+
+			this.__entities.slider3 = new lychee.ui.Slider({
+				range: {
+					from:  0,
+					to:    360,
+					delta: 10
+				},
+				radius: 50,
+				position: {
+					x: 800,
+					y: 200
+				}
+			});
+
+			this.__entities.slider3.setValue(90);
+
+
+
+			this.__loop.interval(25, function(clock, delta) {
+
+				var slider1 = this.__entities.slider1;
+				var slider2 = this.__entities.slider2;
+
+				var value1 = slider1.getValue() + 1;
+				var value2 = slider2.getValue() + 1;
+
+				slider1.setValue(value1);
+				slider2.setValue(value2);
+
+			}, this);
+
 global.SLIDER = this.__entities.slider;
-
-
-			console.log('enter');
 
 
 			this.__input.bind('touch', this.__processTouch, this);
@@ -83,7 +129,9 @@ global.SLIDER = this.__entities.slider;
 			this.__renderer.clear();
 
 
-			this.__renderer.renderUISlider(this.__entities.slider);
+			this.__renderer.renderUISlider(this.__entities.slider1);
+			this.__renderer.renderUISlider(this.__entities.slider2);
+			this.__renderer.renderUISlider(this.__entities.slider3);
 
 
 			this.__renderer.flush();
