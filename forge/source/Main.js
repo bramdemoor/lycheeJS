@@ -47,7 +47,7 @@ lychee.define('game.Main').requires([
 
 
 			this.preloader = new lychee.Preloader({
-				timeout: 3000
+				timeout: Infinity
 			});
 
 			this.preloader.bind('ready', function(assets) {
@@ -157,7 +157,7 @@ lychee.define('game.Main').requires([
 				fireModifier: false,
 				fireKey:      false, // change to true for NodeJS support
 				fireTouch:    true,
-				fireSwipe:    false
+				fireSwipe:    true
 			});
 
 

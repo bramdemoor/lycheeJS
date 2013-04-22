@@ -10,6 +10,51 @@ lychee.define('lychee.game.State').requires([
 	var _shape = lychee.game.Entity.SHAPE;
 
 
+	/*
+	 * PRIVATE HELPER
+	 */
+
+	var _triggerEntityAtPosition = function(entity, pos, event, data) {
+
+		var x = pos.x;
+		var y = pos.y;
+
+
+		if (typeof entity.trigger === 'function') {
+
+			var position = entity.getPosition();
+			var shape    = entity.getShape();
+			if (shape === _shape.circle) {
+
+				var dx = position.x - x;
+				var dy = position.y - y;
+
+				var distance = Math.sqrt(dx * dx + dy * dy);
+				if (distance < entity.radius) {
+					entity.trigger(event, data);
+				}
+
+			} else if (shape === _shape.rectangle) {
+
+				var x1 = position.x - entity.width / 2;
+				var x2 = position.x + entity.width / 2;
+				var y1 = position.y - entity.height / 2;
+				var y2 = position.y + entity.height / 2;
+
+				if (
+					x >= x1 && x <= x2
+					&& y >= y1 && y <= y2
+				) {
+					entity.trigger(event, data);
+				}
+
+			}
+
+		}
+
+	};
+
+
 	var Class = function(game, id) {
 
 		this.game     = game;
@@ -38,6 +83,7 @@ lychee.define('lychee.game.State').requires([
 			var input = this.input;
 			if (input !== null) {
 				input.bind('touch', this.__processTouch, this);
+				input.bind('swipe', this.__processSwipe, this);
 			}
 
 			var renderer = this.renderer;
@@ -56,6 +102,7 @@ lychee.define('lychee.game.State').requires([
 
 			var input = this.input;
 			if (input !== null) {
+				input.unbind('swipe', this.__processSwipe, this);
 				input.unbind('touch', this.__processTouch, this);
 			}
 
@@ -160,19 +207,15 @@ lychee.define('lychee.game.State').requires([
 		 * PRIVATE API
 		 */
 
-		__processTouch: function(id, touchposition, delta) {
-
-			var x = touchposition.x;
-			var y = touchposition.y;
-
+		__processSwipe: function(id, type, position, delta, swipe) {
 
 			// TODO: Evaluate if this can be solved better
 			if (typeof this.game.getOffset === 'function') {
 
 				var offset = this.game.getOffset();
 
-				x -= offset.x;
-				y -= offset.y;
+				position.x -= offset.x;
+				position.y -= offset.y;
 
 			}
 
@@ -186,38 +229,47 @@ lychee.define('lychee.game.State').requires([
 				var entities = layer.getEntities();
 				for (var e = 0, el = entities.length; e < el; e++) {
 
-					var entity = entities[e];
-					if (typeof entity.trigger === 'function') {
+					_triggerEntityAtPosition(
+						entities[e],
+						position,
+						'swipe',
+						null // TODO: Pass in the correct swipe data with relative positions
+					);
 
-						var position = entity.getPosition();
-						var shape    = entity.getShape();
-						if (shape === _shape.circle) {
+				}
 
-							var dx = position.x - x;
-							var dy = position.y - y;
+			}
 
-							var distance = Math.sqrt(dx * dx + dy * dy);
-							if (distance < entity.radius) {
-								entity.trigger('touch');
-							}
+		},
 
-						} else if (shape === _shape.rectangle) {
+		__processTouch: function(id, position, delta) {
 
-							var x1 = position.x - entity.width / 2;
-							var x2 = position.x + entity.width / 2;
-							var y1 = position.y - entity.height / 2;
-							var y2 = position.y + entity.height / 2;
+			// TODO: Evaluate if this can be solved better
+			if (typeof this.game.getOffset === 'function') {
 
-							if (
-								x >= x1 && x <= x2
-								&& y >= y1 && y <= y2
-							) {
-								entity.trigger('touch');
-							}
+				var offset = this.game.getOffset();
 
-						}
+				position.x -= offset.x;
+				position.y -= offset.y;
 
-					}
+			}
+
+
+			for (var id in this.__layers) {
+
+				var layer = this.__layers[id];
+				if (layer.isVisible() === false) continue;
+
+
+				var entities = layer.getEntities();
+				for (var e = 0, el = entities.length; e < el; e++) {
+
+					_triggerEntityAtPosition(
+						entities[e],
+						position,
+						'touch',
+						null
+					);
 
 				}
 

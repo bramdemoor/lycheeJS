@@ -19,6 +19,7 @@ lychee.define('lychee.ui.Slider').includes([
 
 
 		settings.radius = typeof settings.radius === 'number' ? settings.radius : 50;
+		settings.shape  = lychee.ui.Entity.SHAPE.circle;
 
 		delete settings.range;
 

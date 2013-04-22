@@ -30,6 +30,7 @@ lychee.define('game.state.Game').requires([
 
 			var layer = new lychee.game.Layer();
 
+
 			layer.addEntity(new game.entity.Text({
 				text: 'Game State active',
 				font:  this.game.fonts.headline,
