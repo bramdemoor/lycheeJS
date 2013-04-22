@@ -120,6 +120,7 @@ lychee.define('lychee.game.Entity').exports(function(lychee) {
 	};
 
 
+	// Same ENUM values as lychee.ui.Entity
 	Class.SHAPE = {
 		circle:    0,
 		sphere:    1,
