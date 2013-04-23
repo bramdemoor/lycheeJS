@@ -209,15 +209,23 @@ lychee.define('lychee.game.State').requires([
 
 		__processSwipe: function(id, type, position, delta, swipe) {
 
-			// TODO: Evaluate if this can be solved better
-			if (typeof this.game.getOffset === 'function') {
+			if (this.renderer !== null) {
 
-				var offset = this.game.getOffset();
+				var offset = this.renderer.getEnvironment().offset;
 
 				position.x -= offset.x;
 				position.y -= offset.y;
 
 			}
+
+
+			var originalX = position.x;
+			var originalY = position.y;
+
+			var data = [ id, type, {
+				x: position.x,
+				y: position.y
+			}, delta, swipe ];
 
 
 			for (var id in this.__layers) {
@@ -229,11 +237,18 @@ lychee.define('lychee.game.State').requires([
 				var entities = layer.getEntities();
 				for (var e = 0, el = entities.length; e < el; e++) {
 
+					var entity    = entities[e];
+					var eposition = entity.getPosition();
+
+					data[2].x = originalX - eposition.x;
+					data[2].y = originalY - eposition.y;
+
+
 					_triggerEntityAtPosition(
-						entities[e],
+						entity,
 						position,
 						'swipe',
-						null // TODO: Pass in the correct swipe data with relative positions
+						data
 					);
 
 				}
@@ -244,10 +259,9 @@ lychee.define('lychee.game.State').requires([
 
 		__processTouch: function(id, position, delta) {
 
-			// TODO: Evaluate if this can be solved better
-			if (typeof this.game.getOffset === 'function') {
+			if (this.renderer !== null) {
 
-				var offset = this.game.getOffset();
+				var offset = this.renderer.getEnvironment().offset;
 
 				position.x -= offset.x;
 				position.y -= offset.y;

@@ -16,8 +16,6 @@ lychee.define('game.Main').requires([
 
 		this.fonts = {};
 
-		this.__offset = { x: 0, y: 0 };
-
 		this.load();
 
 	};
@@ -114,8 +112,6 @@ lychee.define('game.Main').requires([
 
 			this.renderer.reset(this.settings.width, this.settings.height, false);
 
-			this.__offset = env.offset; // Linked
-
 		},
 
 		init: function() {
@@ -167,10 +163,6 @@ lychee.define('game.Main').requires([
 
 			this.start();
 
-		},
-
-		getOffset: function() {
-			return this.__offset;
 		}
 
 	};

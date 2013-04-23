@@ -67,14 +67,6 @@ lychee.define('game.state.Test').requires([
 
 			this.addLayer('ui', layer);
 
-
-			var slider = layer.getEntities()[0];
-
-			slider.bind('swipe', function() {
-				console.log('swipe', this, arguments);
-			});
-
-
 		},
 
 		enter: function() {
