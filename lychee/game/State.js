@@ -219,10 +219,10 @@ lychee.define('lychee.game.State').requires([
 			}
 
 
-			var originalX = position.x;
-			var originalY = position.y;
+			var absoluteX = position.x;
+			var absoluteY = position.y;
 
-			var data = [ id, type, {
+			var args = [ id, type, {
 				x: position.x,
 				y: position.y
 			}, delta, swipe ];
@@ -240,15 +240,15 @@ lychee.define('lychee.game.State').requires([
 					var entity    = entities[e];
 					var eposition = entity.getPosition();
 
-					data[2].x = originalX - eposition.x;
-					data[2].y = originalY - eposition.y;
+					args[2].x = absoluteX - eposition.x;
+					args[2].y = absoluteY - eposition.y;
 
 
 					_triggerEntityAtPosition(
 						entity,
 						position,
 						'swipe',
-						data
+						args
 					);
 
 				}
@@ -269,6 +269,15 @@ lychee.define('lychee.game.State').requires([
 			}
 
 
+			var absoluteX = position.x;
+			var absoluteY = position.y;
+
+			var args = [ id, {
+				x: position.x,
+				y: position.y
+			}, delta ];
+
+
 			for (var id in this.__layers) {
 
 				var layer = this.__layers[id];
@@ -278,11 +287,18 @@ lychee.define('lychee.game.State').requires([
 				var entities = layer.getEntities();
 				for (var e = 0, el = entities.length; e < el; e++) {
 
+					var entity    = entities[e];
+					var eposition = entity.getPosition();
+
+					args[1].x = absoluteX - eposition.x;
+					args[1].y = absoluteY - eposition.y;
+
+
 					_triggerEntityAtPosition(
-						entities[e],
+						entity,
 						position,
 						'touch',
-						null
+						args
 					);
 
 				}
