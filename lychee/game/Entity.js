@@ -1,5 +1,5 @@
 
-lychee.define('lychee.game.Entity').exports(function(lychee) {
+lychee.define('lychee.game.Entity').exports(function(lychee, global) {
 
 	var Class = function(data) {
 
