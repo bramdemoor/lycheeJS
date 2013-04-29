@@ -177,6 +177,13 @@ lychee.define('lychee.ui.Renderer').requires([
 				this.setAlpha(1.0);
 
 
+				this.setBoundaries(
+					realX - hwidth,
+					realY - hheight,
+					realX + hwidth,
+					realY + hheight
+				);
+
 				var font = entity.getFont();
 				if (font !== null) {
 
@@ -201,6 +208,9 @@ lychee.define('lychee.ui.Renderer').requires([
 					}
 
 				}
+
+				this.flush(false);
+
 
 			}
 

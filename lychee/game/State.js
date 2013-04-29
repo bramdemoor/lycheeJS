@@ -169,7 +169,7 @@ lychee.define('lychee.game.State').requires([
 
 				}
 
-				renderer.flush();
+				renderer.flush(true);
 
 			}
 
