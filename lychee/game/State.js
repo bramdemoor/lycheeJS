@@ -14,6 +14,18 @@ lychee.define('lychee.game.State').requires([
 	 * PRIVATE HELPER
 	 */
 
+	var _triggerEntity = function(entity, event, data) {
+
+		if (typeof entity.trigger === 'function') {
+			entity.trigger(event, data);
+			return true;
+		}
+
+
+		return false;
+
+	};
+
 	var _triggerEntityAtPosition = function(entity, pos, event, data) {
 
 		var x = pos.x;
@@ -32,6 +44,7 @@ lychee.define('lychee.game.State').requires([
 				var distance = Math.sqrt(dx * dx + dy * dy);
 				if (distance < entity.radius) {
 					entity.trigger(event, data);
+					return true;
 				}
 
 			} else if (shape === _shape.rectangle) {
@@ -46,9 +59,13 @@ lychee.define('lychee.game.State').requires([
 					&& y >= y1 && y <= y2
 				) {
 					entity.trigger(event, data);
+					return true;
 				}
 
 			}
+
+
+			return false;
 
 		}
 
@@ -64,6 +81,7 @@ lychee.define('lychee.game.State').requires([
 		this.loop     = game.loop || null;
 		this.renderer = game.renderer || null;
 
+		this.__activeEntity = null;
 		this.__layers = {};
 
 		lychee.event.Emitter.call(this, 'state-' + id);
@@ -82,9 +100,11 @@ lychee.define('lychee.game.State').requires([
 
 			var input = this.input;
 			if (input !== null) {
+				input.bind('key',   this.__processKey,   this);
 				input.bind('touch', this.__processTouch, this);
 				input.bind('swipe', this.__processSwipe, this);
 			}
+
 
 			var renderer = this.renderer;
 			if (renderer !== null) {
@@ -104,6 +124,7 @@ lychee.define('lychee.game.State').requires([
 			if (input !== null) {
 				input.unbind('swipe', this.__processSwipe, this);
 				input.unbind('touch', this.__processTouch, this);
+				input.unbind('key',   this.__processKey,   this);
 			}
 
 			this.trigger('leave');
@@ -207,6 +228,23 @@ lychee.define('lychee.game.State').requires([
 		 * PRIVATE API
 		 */
 
+		__processKey: function(key, name, delta) {
+
+			if (this.__activeEntity !== null) {
+
+				var args = [ key, name, delta ];
+
+
+				_triggerEntity(
+					this.__activeEntity,
+					'key',
+					args
+				)
+
+			}
+
+		},
+
 		__processSwipe: function(id, type, position, delta, swipe) {
 
 			if (this.renderer !== null) {
@@ -269,6 +307,10 @@ lychee.define('lychee.game.State').requires([
 			}
 
 
+			var oldActiveEntity = this.__activeEntity;
+			var newActiveEntity = null;
+
+
 			var absoluteX = position.x;
 			var absoluteY = position.y;
 
@@ -294,14 +336,33 @@ lychee.define('lychee.game.State').requires([
 					args[1].y = absoluteY - eposition.y;
 
 
-					_triggerEntityAtPosition(
+					var result = _triggerEntityAtPosition(
 						entity,
 						position,
 						'touch',
 						args
 					);
 
+					if (result === true) {
+						newActiveEntity = entity;
+					}
+
 				}
+
+			}
+
+
+			if (oldActiveEntity !== newActiveEntity) {
+
+				if (oldActiveEntity !== null) {
+					oldActiveEntity.trigger('blur');
+				}
+
+				if (newActiveEntity !== null) {
+					newActiveEntity.trigger('focus');
+				}
+
+				this.__activeEntity = newActiveEntity;
 
 			}
 
