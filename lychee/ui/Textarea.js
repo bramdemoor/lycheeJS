@@ -61,17 +61,25 @@ lychee.define('lychee.ui.Textarea').requires([
 					character = '\t';
 				}
 
+				var ll = this.__lines.length;
+
 				if (character.length === 1) {
+
 					line += character;
+					this.__lines[ll - 1] = line;
+
 				} else if (key === 'backspace') {
-					line = line.substr(0, line.length - 1);
+
+					if (line.length > 0) {
+						line = line.substr(0, line.length - 1);
+						this.__lines[ll - 1] = line;
+					} else if (ll > 1) {
+						this.__lines.splice(ll - 1, 1);
+					}
+
 				}
 
-				this.__lines[this.__lines.length - 1] = line;
-
 			}
-
-console.log(this.__lines);
 
 		}, this);
 
@@ -141,12 +149,17 @@ console.log(this.__lines);
 
 		setValue: function(value) {
 
-			value = typeof value === 'string' ? value : '';
+			value = typeof value === 'string' ? value : null;
 
-			this.__lines = value.split('\n');
+			if (value !== null) {
+
+				this.__lines = value.split('\n');
+				return true;
+
+			}
 
 
-			return true;
+			return false;
 
 		}
 

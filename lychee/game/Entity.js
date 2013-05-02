@@ -563,6 +563,7 @@ lychee.define('lychee.game.Entity').exports(function(lychee, global) {
 			if (
 				this.getCollision() === Class.COLLISION.none
 				|| entity.getCollision() === Class.COLLISION.none
+				|| this.getCollision() !== entity.getCollision()
 			) {
 				return false;
 			}

@@ -50,7 +50,7 @@ lychee.define('game.WebServer').tags({
 		this.__mods.redirect = new _mod['Redirect'](this);
 		this.__mods.welcome  = new _mod['Welcome'](this);
 
-		this.__mods.fs.walk(this.__root);
+		this.__mods.fs.watch(this.__root);
 
 
 		if (lychee.debug === true) {
@@ -66,16 +66,20 @@ lychee.define('game.WebServer').tags({
 
 			that.__handleRequest(request, function(data) {
 
-
 				if (accept_encoding.match(/\bgzip\b/)) {
-
-					data.header['Content-Encoding'] = 'gzip';
-					response.writeHead(data.status, data.header);
 
 					zlib.gzip(data.body, function(err, buffer) {
 
-						if (!err) { response.write(buffer); }
-						response.end();
+						data.header['Content-Encoding'] = 'gzip';
+						data.header['Content-Length']   = buffer.length;
+						response.writeHead(data.status, data.header);
+
+						if (!err) {
+							response.write(buffer);
+							response.end();
+						} else {
+							response.end();
+						}
 
 					});
 
@@ -178,8 +182,8 @@ lychee.define('game.WebServer').tags({
 					}
 
 				} else {
-					// TODO: Evaluate if alternative redirect makes more sense
 					error.execute(404, url, callback);
+					this.__mods.fs.refresh();
 				}
 
 			} else {

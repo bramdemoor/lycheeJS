@@ -48,7 +48,7 @@ lychee.define('lychee.ui.Slider').includes([
 
 		this.bind('swipe', function(id, type, position, delta, swipe) {
 
-			console.log(position);
+console.log(id, type, position, delta, swipe);
 
 		}, this);
 

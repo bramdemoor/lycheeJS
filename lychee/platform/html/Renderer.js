@@ -81,7 +81,7 @@ lychee.define('Renderer').tags({
 
 			width = typeof width === 'number' ? width : this.__width;
 			height = typeof height === 'number' ? height : this.__height;
-			resetCache = resetCache === true ? true : false;
+			resetCache = resetCache === true;
 
 			if (resetCache === true) {
 				this.__cache = {};
@@ -133,16 +133,21 @@ lychee.define('Renderer').tags({
 
 		},
 
-		flush: function(all) {
+		flush: function(command) {
 
-			all = all === true;
+			// Flush all buffers
+			if (command === 0) {
 
+			// Flush buffer to temporary buffer
+			} else if (command === 1) {
 
-			if (all === true) {
+				this.__ctx.save();
 
+			// Flush temporary buffer to buffer
+			} else if (command === 2) {
 
-			} else {
 				this.__ctx.restore();
+
 			}
 
 		},
@@ -203,7 +208,7 @@ lychee.define('Renderer').tags({
 
 		},
 
-		setBoundaries: function(x1, y1, x2, y2) {
+		setBufferBoundaries: function(x1, y1, x2, y2) {
 
 			this.__ctx.rect(
 				x1,      y1,
@@ -224,7 +229,7 @@ lychee.define('Renderer').tags({
 			if (this.__state !== 'running') return;
 
 			color = typeof color === 'string' ? color : '#000000';
-			background = background === true ? true : false;
+			background = background === true;
 			lineWidth = typeof lineWidth === 'number' ? lineWidth : 1;
 
 
@@ -323,7 +328,7 @@ lychee.define('Renderer').tags({
 			if (this.__state !== 'running') return;
 
 			color = typeof color === 'string' ? color : '#000000';
-			background = background === true ? true : false;
+			background = background === true;
 			lineWidth = typeof lineWidth === 'number' ? lineWidth : 1;
 
 
@@ -345,9 +350,9 @@ lychee.define('Renderer').tags({
 
 			if (this.__state !== 'running') return;
 
-			color = typeof color === 'string' ? color : '#000000';
-			background = background === true ? true : false;
-			lineWidth = typeof lineWidth === 'number' ? lineWidth : 1;
+			color      = typeof color === 'string' ? color : '#000000';
+			background = background === true;
+			lineWidth  = typeof lineWidth === 'number' ? lineWidth : 1;
 
 
 			var ctx = this.__ctx;
@@ -382,7 +387,7 @@ lychee.define('Renderer').tags({
 			if (this.__state !== 'running') return;
 
 			color = typeof color === 'string' ? color : '#000000';
-			background = background === true ? true : false;
+			background = background === true;
 			lineWidth = typeof lineWidth === 'number' ? lineWidth : 1;
 
 

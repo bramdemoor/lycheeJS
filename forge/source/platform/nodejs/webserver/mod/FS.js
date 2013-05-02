@@ -1,9 +1,7 @@
 
 lychee.define('game.webserver.mod.FS').tags({
 	platform: 'nodejs'
-}).requires([
-	'game.webserver.mod.Welcome'
-]).supports(function(lychee, global) {
+}).supports(function(lychee, global) {
 
 	if (
 		typeof process !== 'undefined'
@@ -21,6 +19,7 @@ lychee.define('game.webserver.mod.FS').tags({
 
 	var Class = function(webserver) {
 
+		this.__roots = [];
 		this.__cache = {};
 		this.__map   = {};
 		this.__rmap  = {};
@@ -45,9 +44,49 @@ lychee.define('game.webserver.mod.FS').tags({
 
 		reset: function() {
 
+			this.__roots = [];
 			this.__cache = {};
 			this.__map   = {};
 			this.__rmap  = {};
+
+		},
+
+		refresh: function() {
+
+			if (lychee.debug === true) {
+				console.log('game.webserver.mod.FS: Refreshing tree for ' + this.__roots.join(', '));
+			}
+
+			for (var r = 0, rl = this.__roots.length; r < rl; r++) {
+				this.walk(this.__roots[r]);
+			}
+
+		},
+
+		watch: function(directory) {
+
+			var index = this.__roots.indexOf(directory);
+			if (index === -1) {
+				this.__roots.push(directory);
+				this.refresh();
+				return true;
+			}
+
+
+			return false;
+
+		},
+
+		unwatch: function(directory) {
+
+			var index = this.__roots.indexOf(directory);
+			if (index !== -1) {
+				this.__roots.splice(index, 1);
+				return true;
+			}
+
+
+			return false;
 
 		},
 

@@ -54,6 +54,11 @@ lychee.define('game.webserver.mod.Error').requires([
 			code = typeof code === 'number' ? code : 500;
 
 
+			if (lychee.debug === true) {
+				console.error('game.webserver.mod.Error: ' + code + ' for ' + url);
+			}
+
+
 			var webserver = this.__webserver;
 
 

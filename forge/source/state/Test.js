@@ -1,5 +1,6 @@
 
 lychee.define('game.state.Test').requires([
+	'lychee.ui.Input',
 	'lychee.ui.Slider',
 	'lychee.ui.Textarea'
 ]).includes([
@@ -8,7 +9,7 @@ lychee.define('game.state.Test').requires([
 
 	var Class = function(game) {
 
-		lychee.game.State.call(this, game, 'menu');
+		lychee.game.State.call(this, game, 'test');
 
 		this.__locked = false;
 
@@ -73,6 +74,30 @@ lychee.define('game.state.Test').requires([
 				position: {
 					x: 850,
 					y: 200
+				}
+			}));
+
+			layer.addEntity(new lychee.ui.Input({
+				font: this.game.fonts.normal,
+				type: lychee.ui.Input.TYPE.text,
+				value: 'test',
+				width: 200,
+				position: {
+					x: 850,
+					y: 300
+				}
+			}));
+
+			layer.addEntity(new lychee.ui.Input({
+				font: this.game.fonts.normal,
+				type: lychee.ui.Input.TYPE.number,
+				value: 12345,
+				min: 123,
+				max: 12347,
+				width: 200,
+				position: {
+					x: 550,
+					y: 300
 				}
 			}));
 

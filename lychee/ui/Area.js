@@ -8,7 +8,7 @@ lychee.define('lychee.ui.Area').includes([
 		var settings = lychee.extend({}, data);
 
 
-		this.__children   = [];
+		this.__entities   = [];
 		this.__scrollable = settings.scrollable === true;
 
 		this.__scroll = {
@@ -31,67 +31,6 @@ lychee.define('lychee.ui.Area').includes([
 
 
 	Class.prototype = {
-
-		/*
-		 * PRIVATE API
-		 */
-
-		__getChildByPosition: function(position) {
-
-			var found = null;
-
-			for (var c = 0, cl = this.__children.length; c < cl; c++) {
-
-				var child    = this.__children[c];
-				var cpos     = child.getPosition();
-
-				var chwidth  = child.width / 2;
-				var chheight = child.height / 2;
-				var chradius = child.radius;
-
-
-				// 1. AABB via radius
-				if (chradius > 0) {
-
-					var x1 = cpos.x - chradius;
-					var x2 = cpos.x + chradius;
-					var y1 = cpos.y - chradius;
-					var y2 = cpos.y + chradius;
-
-					if (
-						position.x >= x1 && position.x <= x2
-						&& position.y >= y1 && position.y <= y2
-					) {
-						found = child;
-						break;
-					}
-
-				// 2. AABB via width/height
-				} else {
-
-					var x1 = cpos.x - chwidth;
-					var y1 = cpos.y - chheight;
-					var x2 = cpos.x + chwidth;
-					var y2 = cpos.y + chheight;
-
-					if (
-						position.x >= x1 && position.x <= x2
-						&& position.y >= y1 && position.y <= y2
-					) {
-						found = child;
-						break;
-					}
-
-				}
-
-			}
-
-
-			return found;
-
-		},
-
-
 
 		/*
 		 * PUBLIC API
@@ -155,9 +94,9 @@ lychee.define('lychee.ui.Area').includes([
 			}
 
 
-			// 3. Children
-			for (var c = 0, cl = this.__children.length; c < cl; c++) {
-				this.__children[c].update(clock, delta);
+			// 3. Entities
+			for (var e = 0, el = this.__entities.length; e < el; e++) {
+				this.__entities[e].update(clock, delta);
 			}
 
 
@@ -165,17 +104,17 @@ lychee.define('lychee.ui.Area').includes([
 
 		},
 
-		getChildren: function() {
-			return this.__children;
+		getEntities: function() {
+			return this.__entities;
 		},
 
-		add: function(entity) {
+		addEntity: function(entity) {
 
 			var found = false;
 
-			for (var c = 0, cl = this.__children.length; c < cl; c++) {
+			for (var e = 0, el = this.__entities.length; e < el; e++) {
 
-				if (this.__children[c] === entity) {
+				if (this.__entities[e] === entity) {
 					found = true;
 					break;
 				}
@@ -184,7 +123,7 @@ lychee.define('lychee.ui.Area').includes([
 
 
 			if (found === false) {
-				this.__children.push(entity);
+				this.__entities.push(entity);
 			}
 
 
@@ -192,16 +131,16 @@ lychee.define('lychee.ui.Area').includes([
 
 		},
 
-		remove: function(entity) {
+		removeEntity: function(entity) {
 
 			var found = false;
 
-			for (var c = 0, cl = this.__children.length; c < cl; c++) {
+			for (var e = 0, el = this.__entities.length; e < el; e++) {
 
-				if (this.__children[c] === entity) {
+				if (this.__entities[e] === entity) {
+					this.__entities.splice(e, 1);
 					found = true;
-					this.__children.splice(c, 1);
-					cl--;
+					el--;
 				}
 
 			}
@@ -234,36 +173,6 @@ lychee.define('lychee.ui.Area').includes([
 				scroll.to.y     = pos.y + offset.y;
 
 				return true;
-
-			}
-
-
-			return false;
-
-		},
-
-		triggerChildren: function(name, position) {
-
-			var offset = this.getPosition();
-
-			position.x -= offset.x;
-			position.y -= offset.y;
-
-
-			var entity = this.__getChildByPosition(position);
-			if (entity !== null) {
-
-				if (typeof entity.triggerChildren === 'function') {
-
-					entity.triggerChildren(name, position);
-					return true;
-
-				} else if (typeof entity.trigger === 'function') {
-
-					entity.trigger(name, [ entity ]);
-					return true;
-
-				}
 
 			}
 
