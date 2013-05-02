@@ -1,0 +1,24 @@
+{
+	"tags": {},
+
+	"tree": {
+
+		"entity": {
+			"Background": [ "js" ],
+			"Ship": [ "js" ]
+		},
+
+		"state": {
+			"Game": [ "js" ]
+		},
+
+		"Camera": [ "js" ],
+		"DeviceSpecificHacks": [ "js" ],
+		"Main": [ "js" ],
+		"Player": [ "js" ],
+		"Renderer": [ "js" ],
+		"Track": [ "js" ],
+		"World": [ "js" ]
+
+	}
+}

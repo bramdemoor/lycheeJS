@@ -1,0 +1,23 @@
+[{
+	"id":    "red-claw",
+	"title": "Red Claw",
+	"description": "A lightweight and easy to control ship. Very balanced steering behaviour.",
+
+	"spritemap": {
+	
+		"right":      [  0,  3 ],
+		"left":       [ 31, 28 ],
+		"rotation":   [  0, 31 ],
+		"speed":      [ 39, 32 ]
+
+	},
+
+	"acceleration":  50,
+	"deceleration":  50,
+	"agility":       95,
+	"speed":         65,
+	"flow":          50,
+
+	"response":     300
+
+}]
