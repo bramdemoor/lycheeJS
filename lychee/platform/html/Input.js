@@ -56,6 +56,7 @@ lychee.define('Input').tags({
 			}
 
 
+			// Prevent scrolling and swiping behaviour
 			if (handled === true) {
 				event.preventDefault();
 				event.stopPropagation();
@@ -103,8 +104,18 @@ lychee.define('Input').tags({
 
 			_mouseactive = true;
 
+
+			var handled = false;
+
 			for (var i = 0, l = _instances.length; i < l; i++) {
-				_instances[i].__processTouch(0, event.pageX, event.pageY);
+				handled = _instances[i].__processTouch(0, event.pageX, event.pageY) || handled;
+			}
+
+
+			// Prevent drag of canvas as image
+			if (handled === true) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 
 		},
@@ -113,8 +124,18 @@ lychee.define('Input').tags({
 
 			if (_mouseactive === false) return;
 
+
+			var handled = false;
+
 			for (var i = 0, l = _instances.length; i < l; i++) {
-				_instances[i].__processSwipe(0, 'move', event.pageX, event.pageY);
+				handled = _instances[i].__processSwipe(0, 'move', event.pageX, event.pageY) || handled;
+			}
+
+
+			// Prevent selection of canvas as content
+			if (handled === true) {
+				event.preventDefault();
+				event.stopPropagation();
 			}
 
 		},

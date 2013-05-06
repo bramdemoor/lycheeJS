@@ -9,6 +9,11 @@ lychee.define('game.entity.Circle').includes([
 
 		lychee.ui.Entity.call(this, 'game-text', settings);
 
+
+		this.bind('swipe', function(id, type, position, delta, swipe) {
+			console.log(type, position.x, position.y);
+		}, this);
+
 	};
 
 
