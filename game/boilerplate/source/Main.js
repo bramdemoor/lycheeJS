@@ -185,14 +185,15 @@ lychee.define('game.Main').requires([
 				fireModifier: false,
 				fireKey:      false, // change to true for NodeJS support
 				fireTouch:    true,
-				fireSwipe:    false
+				fireSwipe:    true
 			});
 
 
 			this.states.game = new game.state.Game(this);
 			this.states.menu = new game.state.Menu(this);
 
-			this.setState('menu');
+//			this.setState('menu');
+			this.setState('game');
 
 			this.start();
 

@@ -21,7 +21,7 @@ lychee.define('game.state.Game').requires([
 
 		reset: function() {
 
-			var width = this.game.settings.width;
+			var width  = this.game.settings.width;
 			var height = this.game.settings.height;
 
 
@@ -35,8 +35,7 @@ lychee.define('game.state.Game').requires([
 				text: 'Game State active',
 				font:  this.game.fonts.headline,
 				position: {
-					x: width / 2,
-					y: height / 2 - 50
+					x: 0, y: -50
 				}
 			}));
 
@@ -44,8 +43,7 @@ lychee.define('game.state.Game').requires([
 				text: 'Touch the circle to make Noise',
 				font:  this.game.fonts.small,
 				position: {
-					x: width / 2,
-					y: height / 2
+					x: 0, y: 0
 				}
 			}));
 
@@ -62,8 +60,8 @@ lychee.define('game.state.Game').requires([
 			var circle = new game.entity.Circle({
 				radius: 50,
 				position: {
-					x: width / 2,
-					y: height / 2 + 100
+					x: 0,
+					y: 100
 				}
 			});
 
@@ -85,8 +83,8 @@ lychee.define('game.state.Game').requires([
 				text: 'Exit to Menu',
 				font:  this.game.fonts.small,
 				position: {
-					x: width / 2,
-					y: height - 50
+					x: 0,
+					y: height / 2 - 42
 				}
 			});
 

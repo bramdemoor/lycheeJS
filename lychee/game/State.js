@@ -10,60 +10,42 @@ lychee.define('lychee.game.State').requires([
 	var _shape = lychee.game.Entity.SHAPE;
 
 
-	/*
-	 * PRIVATE HELPER
-	 */
+	var _isEntityAtPosition = function(entity, targetX, targetY) {
 
-	var _triggerEntity = function(entity, event, data) {
+		var result = false;
 
-		if (typeof entity.trigger === 'function') {
-			entity.trigger(event, data);
-			return true;
-		}
+		var position = entity.getPosition();
+		var shape = entity.getShape();
+		if (shape === _shape.circle) {
+
+			var dx = position.x - targetX;
+			var dy = position.y - targetY;
 
 
-		return false;
-
-	};
-
-	var _triggerEntityAtPosition = function(entity, positionX, positionY, event, data) {
-
-		if (typeof entity.trigger === 'function') {
-
-			var position = entity.getPosition();
-			var shape    = entity.getShape();
-			if (shape === _shape.circle) {
-
-				var dx = position.x - positionX;
-				var dy = position.y - positionY;
-
-				var distance = Math.sqrt(dx * dx + dy * dy);
-				if (distance < entity.radius) {
-					entity.trigger(event, data);
-					return true;
-				}
-
-			} else if (shape === _shape.rectangle) {
-
-				var x1 = position.x - entity.width / 2;
-				var x2 = position.x + entity.width / 2;
-				var y1 = position.y - entity.height / 2;
-				var y2 = position.y + entity.height / 2;
-
-				if (
-					positionX >= x1 && positionX <= x2
-					&& positionY >= y1 && positionY <= y2
-				) {
-					entity.trigger(event, data);
-					return true;
-				}
-
+			var distance = Math.sqrt(dx * dx + dy * dy);
+			if (distance < entity.radius) {
+				result = true;
 			}
 
+		} else if (shape === _shape.rectangle) {
 
-			return false;
+			var x1 = position.x - entity.width / 2;
+			var x2 = position.x + entity.width / 2;
+			var y1 = position.y - entity.height / 2;
+			var y2 = position.y + entity.height / 2;
+
+
+			if (
+				targetX >= x1 && targetX <= x2
+				&& targetY >= y1 && targetY <= y2
+			) {
+				result = true;
+			}
 
 		}
+
+
+		return result;
 
 	};
 
@@ -77,8 +59,19 @@ lychee.define('lychee.game.State').requires([
 		this.loop     = game.loop || null;
 		this.renderer = game.renderer || null;
 
-		this.__activeEntity = null;
-		this.__layers = {};
+
+		this.__layers      = {};
+		this.__focusEntity = null;
+		this.__activeSwipeEntities = [];
+		this.__activeSwipeOffsets  = [];
+
+		for (var i = 0; i < 10; i++) {
+			this.__activeSwipeEntities.push(null);
+			this.__activeSwipeOffsets.push({
+				x: 0, y: 0
+			});
+		}
+
 
 		lychee.event.Emitter.call(this, 'state-' + id);
 
@@ -147,8 +140,12 @@ lychee.define('lychee.game.State').requires([
 		render: function(clock, delta) {
 
 			var renderer = this.renderer;
-
 			if (renderer !== null) {
+
+				var env = renderer.getEnvironment();
+				var offsetX = env.width / 2;
+				var offsetY = env.height / 2;
+
 
 				renderer.clear();
 
@@ -160,12 +157,18 @@ lychee.define('lychee.game.State').requires([
 
 					var entities = layer.getEntities();
 					for (var e = 0, el = entities.length; e < el; e++) {
-						renderer.renderEntity(entities[e]);
+
+						renderer.renderEntity(
+							entities[e],
+							offsetX,
+							offsetY
+						);
+
 					}
 
 				}
 
-				renderer.flush(true);
+				renderer.flush();
 
 			}
 
@@ -226,121 +229,148 @@ lychee.define('lychee.game.State').requires([
 
 		__processKey: function(key, name, delta) {
 
-			if (this.__activeEntity !== null) {
-
-				var args = [ key, name, delta ];
-
-
-				_triggerEntity(
-					this.__activeEntity,
-					'key',
-					args
-				)
-
+			if (this.__focusEntity !== null) {
+				this.__focusEntity.trigger('key', [ key, name, delta ]);
 			}
 
 		},
+
 
 		__processSwipe: function(id, type, position, delta, swipe) {
 
-			if (this.renderer !== null) {
+			if (this.__activeSwipeEntities[id] !== undefined) {
 
-				var env = this.renderer.getEnvironment();
-				var offset = env.offset;
-
-				position.x -= offset.x;
-				position.y -= offset.y;
-
-			}
+				var entity = this.__activeSwipeEntities[id];
+				var offset = this.__activeSwipeOffsets[id];
 
 
-			var relativeX = position.x;
-			var relativeY = position.y;
+				if (this.renderer !== null) {
 
-			var args = [ id, type, {
-				x: position.x,
-				y: position.y
-			}, delta, swipe ];
+					var env = this.renderer.getEnvironment();
 
+					position.x -= env.offset.x;
+					position.y -= env.offset.y;
 
-			for (var id in this.__layers) {
-
-				var layer = this.__layers[id];
-				if (layer.isVisible() === true) {
-
-					this.__processSwipeLayer(
-						layer,
-						args,
-						relativeX,
-						relativeY
-					);
+					position.x -= env.width / 2;
+					position.y -= env.height / 2;
 
 				}
 
-			}
 
-		},
+				if (
+					type === 'start'
+					&& entity === null
+				) {
 
-		__processSwipeLayer: function(layer, args, relativeX, relativeY) {
+					for (var id in this.__layers) {
 
-			var entities = layer.getEntities();
-			for (var e = 0, el = entities.length; e < el; e++) {
+						var layer = this.__layers[id];
 
-				var entity   = entities[e];
-				var position = entity.getPosition();
+						var entities = layer.getEntities();
+						for (var e = 0, el = entities.length; e < el; e++) {
 
-				args[2].x = relativeX - position.x;
-				args[2].y = relativeY - position.y;
-
-
-				_triggerEntityAtPosition(
-					entity,
-					relativeX,
-					relativeY,
-					'swipe',
-					args
-				);
+							// Reset incrementally calculated offset
+							// for each entity
+							offset.x = 0;
+							offset.y = 0;
 
 
-				if (typeof entity.getEntities === 'function') {
+							var triggered = this.__processSwipeRecursive(
+								entities[e],
+								position.x,
+								position.y,
+								offset
+							);
 
-					var subentities = entity.getEntities();
-					for (var s = 0, sl = subentities.length; s < sl; s++) {
+							if (triggered !== null) {
+								entity = triggered;
+								break;
+							}
 
-						this.__processSwipeLayer(
-							subentities[s],
-							args,
-							relativeX - position.x,
-							relativeY - position.y
-						);
+						}
 
 					}
 
+
+					if (entity !== null) {
+
+console.log('SWIPESTART', entity);
+
+						position.x -= offset.x;
+						position.y -= offset.y;
+
+						entity.trigger('swipe', [
+							id, type, position, delta, swipe
+						]);
+
+
+						this.__activeSwipeEntities[id] = entity;
+
+					}
+
+
+				} else if (
+					type === 'move'
+					&& entity !== null
+				) {
+
+console.log('SWIPEMOVE', entity);
+
+					position.x -= offset.x;
+					position.y -= offset.y;
+
+ 					entity.trigger('swipe', [
+						id, type, position, delta, swipe
+					]);
+
+				} else if (
+					type === 'end'
+					&& entity !== null
+				) {
+
+console.log('SWIPEEND', entity);
+
+					position.x -= offset.x;
+					position.y -= offset.y;
+
+ 					entity.trigger('swipe', [
+						id, type, position, delta, swipe
+					]);
+
+
+					this.__activeSwipeEntities[id] = null;
+
 				}
 
 			}
 
 		},
+
+		__processSwipeRecursive: function(entity, originX, originY, offset) {
+
+
+// TODO: trace the entities recursively
+// and update the offset incrementally
+// to calculate the offsets for the swipe position
+// fired in start/move/end
+
+		},
+
 
 		__processTouch: function(id, position, delta) {
 
 			if (this.renderer !== null) {
 
 				var env = this.renderer.getEnvironment();
-				var offset = env.offset;
 
-				position.x -= offset.x;
-				position.y -= offset.y;
+				position.x -= env.offset.x;
+				position.y -= env.offset.y;
+
+				position.x -= env.width / 2;
+				position.y -= env.height / 2;
 
 			}
 
-
-			var oldActiveEntity = this.__activeEntity;
-			var newActiveEntity = null;
-
-
-			var relativeX = position.x;
-			var relativeY = position.y;
 
 			var args = [ id, {
 				x: position.x,
@@ -348,84 +378,27 @@ lychee.define('lychee.game.State').requires([
 			}, delta ];
 
 
+			var oldFocusEntity = this.__focusEntity;
+			var newFocusEntity = null;
+
+
 			for (var id in this.__layers) {
 
 				var layer = this.__layers[id];
-				if (layer.isVisible() === true) {
 
-					newActiveEntity = this.__processTouchLayer(
-						layer,
-						args,
-						relativeX,
-						relativeY
+				var entities = layer.getEntities();
+				for (var e = 0, el = entities.length; e < el; e++) {
+
+					var triggered = this.__processTouchRecursive(
+						entities[e],
+						position.x,
+						position.y,
+						args
 					);
 
-				}
-
-			}
-
-
-			if (oldActiveEntity !== newActiveEntity) {
-
-				if (oldActiveEntity !== null) {
-					oldActiveEntity.trigger('blur');
-				}
-
-				if (newActiveEntity !== null) {
-					newActiveEntity.trigger('focus');
-				}
-
-				this.__activeEntity = newActiveEntity;
-
-			}
-
-		},
-
-		__processTouchLayer: function(layer, args, relativeX, relativeY) {
-
-			var triggeredEntity = null;
-
-
-			var entities = layer.getEntities();
-			for (var e = 0, el = entities.length; e < el; e++) {
-
-				var entity   = entities[e];
-				var position = entity.getPosition();
-
-				args[2].x = relativeX - position.x;
-				args[2].y = relativeY - position.y;
-
-
-				var result = _triggerEntityAtPosition(
-					entity,
-					relativeX,
-					relativeY,
-					'touch',
-					args
-				);
-
-
-				if (result === true) {
-					triggeredEntity = entity;
-				}
-
-
-				if (typeof entity.getEntities === 'function') {
-
-					var subentities = entity.getEntities();
-					for (var s = 0, sl = subentities.length; s < sl; s++) {
-
-						var triggeredSubEntity = this.__processTouchLayer(
-							subentities[s],
-							args,
-							relativeX - position.x,
-							relativeY - position.y
-						);
-
-						if (triggeredSubEntity !== null) {
-							triggeredEntity = triggeredSubEntity;
-						}
-
+					if (triggered !== null) {
+						newFocusEntity = triggered;
+						break;
 					}
 
 				}
@@ -433,7 +406,69 @@ lychee.define('lychee.game.State').requires([
 			}
 
 
-			return triggeredEntity;
+			if (newFocusEntity !== oldFocusEntity) {
+
+				if (oldFocusEntity !== null) {
+					oldFocusEntity.trigger('blur');
+				}
+
+				if (newFocusEntity !== null) {
+					newFocusEntity.trigger('focus');
+				}
+
+				this.__focusEntity = newFocusEntity;
+
+			}
+
+		},
+
+		__processTouchRecursive: function(entity, originX, originY, args) {
+
+			var triggered = null;
+
+
+			if (_isEntityAtPosition(entity, originX, originY) === true) {
+
+				var position = entity.getPosition();
+
+				if (typeof entity.getEntities === 'function') {
+
+					var entities = entity.getEntities();
+					for (var e = 0, el = entities.length; e < el; e++) {
+
+						var result = this.__processTouchRecursive(
+							entities[e],
+							originX - position.x,
+							originY - position.y,
+							args
+						);
+
+
+						if (result !== null) {
+							triggered = result;
+						}
+
+					}
+
+				}
+
+
+				if (typeof entity.trigger === 'function') {
+
+					args[1].x = originX - position.x;
+					args[1].y = originY - position.y;
+
+					var result = entity.trigger('touch', args);
+					if (result === true && triggered === null) {
+						triggered = entity;
+					}
+
+				}
+
+			}
+
+
+			return triggered;
 
 		}
 

@@ -29,11 +29,11 @@ lychee.define('game.Renderer').requires([
 
 			if (entity instanceof _circle) {
 
-				this.renderCircle(entity);
+				this.renderCircle(entity, offsetX, offsetY);
 
 			} else if (entity instanceof _text) {
 
-				this.renderText(entity);
+				this.renderText(entity, offsetX, offsetY);
 
 			} else {
 
@@ -49,12 +49,17 @@ lychee.define('game.Renderer').requires([
 		 * CUSTOM RENDERING API
 		 */
 
-		renderCircle: function(entity) {
+		renderCircle: function(entity, offsetX, offsetY) {
+
+			offsetX = offsetX || 0;
+			offsetY = offsetY || 0;
+
 
 			var pos = entity.getPosition();
 
 			this.drawCircle(
-				pos.x, pos.y,
+				offsetX + pos.x,
+				offsetY + pos.y,
 				entity.radius,
 				'#ff0000',
 				true
@@ -62,12 +67,17 @@ lychee.define('game.Renderer').requires([
 
 		},
 
-		renderText: function(entity) {
+		renderText: function(entity, offsetX, offsetY) {
+
+			offsetX = offsetX || 0;
+			offsetY = offsetY || 0;
+
 
 			var pos = entity.getPosition();
 
 			this.drawText(
-				pos.x, pos.y,
+				offsetX + pos.x,
+				offsetY + pos.y,
 				entity.getText(),
 				entity.getFont(),
 				true
