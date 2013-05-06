@@ -4,8 +4,21 @@
 	"tree": {
 
 		"entity": {
-			"Ball": [ "js" ],
-			"Paddle": [ "js" ]
+			"Ball": [ "js", "png" ],
+			"Font": [
+				"js",
+				"headline.png",
+				"headline.json",
+				"normal.png",
+				"normal.json",
+				"small.png",
+				"small.json"
+			],
+			"Paddle": [
+				"js",
+				"blue.png",
+				"red.png"
+			]
 		},
 
 		"state": {
@@ -14,7 +27,6 @@
 		},
 
 		"DeviceSpecificHacks": [ "js" ],
-		"Jukebox": [ "js" ],
 		"Main": [ "js", "css" ],
 		"Renderer": [ "js" ]
 

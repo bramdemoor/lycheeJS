@@ -10,13 +10,9 @@ lychee.define('game.state.Game').requires([
 
 		lychee.game.State.call(this, game, 'menu');
 
-		this.__input = this.game.input;
-		this.__loop = this.game.loop;
-		this.__renderer = this.game.renderer;
-
-		this.__clock = 0;
+		this.__clock    = 0;
 		this.__entities = {};
-		this.__locked = false;
+		this.__locked   = false;
 
 		this.__score = {
 			cpu: 0,
@@ -44,9 +40,9 @@ lychee.define('game.state.Game').requires([
 
 		reset: function() {
 
-			this.__entities.ball   = new game.entity.Ball(this.game.images.ball);
-			this.__entities.player = new game.entity.Paddle(this.game.images.player);
-			this.__entities.cpu    = new game.entity.Paddle(this.game.images.cpu);
+			this.__entities.ball   = new game.entity.Ball();
+			this.__entities.player = new game.entity.Paddle('player');
+			this.__entities.cpu    = new game.entity.Paddle('cpu');
 
 		},
 
@@ -55,7 +51,7 @@ lychee.define('game.state.Game').requires([
 
 			winner = typeof winner === 'string' ? winner : null;
 
-			var width = this.game.settings.width;
+			var width  = this.game.settings.width;
 			var height = this.game.settings.height;
 
 
@@ -94,22 +90,15 @@ lychee.define('game.state.Game').requires([
 
 		enter: function() {
 
-			lychee.game.State.prototype.enter.call(this);
-
 			this.__score.cpu = 0;
 			this.__score.player = 0;
 			this.__reset();
 
-			this.__input.bind('touch', this.__processTouch, this);
-			this.__renderer.start();
+			lychee.game.State.prototype.enter.call(this);
 
 		},
 
 		leave: function() {
-
-			this.__renderer.stop();
-			this.__input.unbind('touch', this.__processTouch);
-
 
 			lychee.game.State.prototype.leave.call(this);
 
@@ -233,26 +222,30 @@ lychee.define('game.state.Game').requires([
 
 		render: function(clock, delta) {
 
-			this.__renderer.clear();
+			if (this.renderer !== null) {
 
-			this.__renderer.renderEntity(this.__entities.ball);
-			this.__renderer.renderEntity(this.__entities.player);
-			this.__renderer.renderEntity(this.__entities.cpu);
+				this.renderer.clear();
 
-			this.__renderer.drawText(
-				100, 20,
-				this.__score.player + '',
-				this.game.fonts.normal
-			);
+				this.renderer.renderEntity(this.__entities.ball);
+				this.renderer.renderEntity(this.__entities.player);
+				this.renderer.renderEntity(this.__entities.cpu);
 
-			this.__renderer.drawText(
-				this.game.settings.width - 100, 20,
-				this.__score.cpu + '',
-				this.game.fonts.normal
-			);
+				this.renderer.drawText(
+					100, 20,
+					this.__score.player + '',
+					this.game.fonts.normal
+				);
+
+				this.renderer.drawText(
+					this.game.settings.width - 100, 20,
+					this.__score.cpu + '',
+					this.game.fonts.normal
+				);
 
 
-			this.__renderer.flush();
+				this.renderer.flush();
+
+			}
 
 		},
 
@@ -260,10 +253,14 @@ lychee.define('game.state.Game').requires([
 
 			if (this.__locked === true) return;
 
-			var offset = this.game.getOffset();
+			if (this.renderer !== null) {
 
-			position.x -= offset.x;
-			position.y -= offset.y;
+				var env = this.renderer.getEnvironment();
+
+				position.x -= env.offset.x;
+				position.y -= env.offset.y;
+
+			}
 
 
 			var playerposition = this.__entities.player.getPosition();
@@ -274,35 +271,6 @@ lychee.define('game.state.Game').requires([
 			}
 
 			this.__target.y = position.y;
-
-		},
-
-		__getEntityByPosition: function(x, y) {
-
-			var found = null;
-
-			for (var e in this.__entities) {
-
-				if (this.__entities[e] === null) continue;
-
-				var entity = this.__entities[e];
-				var position = entity.getPosition();
-
-				if (
-					x >= position.x - entity.width / 2
-					&& x <= position.x + entity.width / 2
-					&& y >= position.y - entity.height / 2
-					&& y <= position.y + entity.height / 2
-				) {
-					found = entity;
-					break;
-				}
-
-
-			}
-
-
-			return found;
 
 		}
 

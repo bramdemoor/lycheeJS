@@ -1,8 +1,12 @@
+
 lychee.define('game.entity.Ball').includes([
 	'lychee.game.Entity'
-]).exports(function(lychee, global) {
+]).exports(function(lychee, global, attachments) {
 
-	var Class = function(image) {
+	var _image = attachments['png'];
+
+
+	var Class = function() {
 
 		var settings = {
 			radius:    11,
@@ -11,7 +15,7 @@ lychee.define('game.entity.Ball').includes([
 		};
 
 
-		this.__image = image || null;
+		this.__image = _image;
 
 
 		lychee.game.Entity.call(this, settings);

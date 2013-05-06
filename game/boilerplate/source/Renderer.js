@@ -9,6 +9,7 @@ lychee.define('game.Renderer').requires([
 	var _circle = game.entity.Circle;
 	var _text   = game.entity.Text;
 
+
 	var Class = function(id) {
 
 		lychee.ui.Renderer.call(this, id);
