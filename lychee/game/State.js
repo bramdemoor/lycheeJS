@@ -60,14 +60,16 @@ lychee.define('lychee.game.State').requires([
 		this.renderer = game.renderer || null;
 
 
-		this.__layers      = {};
-		this.__focusEntity = null;
-		this.__activeSwipeEntities = [];
-		this.__activeSwipeOffsets  = [];
+		this.__layers        = {};
+		this.__focusEntity   = null;
+		this.__touchEntities = [];
+		this.__touchLayers   = [];
+		this.__touchOffsets  = [];
 
 		for (var i = 0; i < 10; i++) {
-			this.__activeSwipeEntities.push(null);
-			this.__activeSwipeOffsets.push({
+			this.__touchEntities.push(null);
+			this.__touchLayers.push(null);
+			this.__touchOffsets.push({
 				x: 0, y: 0
 			});
 		}
@@ -122,9 +124,9 @@ lychee.define('lychee.game.State').requires([
 
 		update: function(clock, delta) {
 
-			for (var id in this.__layers) {
+			for (var layerId in this.__layers) {
 
-				var layer = this.__layers[id];
+				var layer = this.__layers[layerId];
 				if (layer.isVisible() === false) continue;
 
 
@@ -149,9 +151,9 @@ lychee.define('lychee.game.State').requires([
 
 				renderer.clear();
 
-				for (var id in this.__layers) {
+				for (var layerId in this.__layers) {
 
-					var layer = this.__layers[id];
+					var layer = this.__layers[layerId];
 					if (layer.isVisible() === false) continue;
 
 
@@ -238,11 +240,12 @@ lychee.define('lychee.game.State').requires([
 
 		__processSwipe: function(id, type, position, delta, swipe) {
 
-			if (this.__activeSwipeEntities[id] !== undefined) {
+			var entity = this.__touchEntities[id];
+			var layer  = this.__touchLayers[id];
+			var offset = this.__touchOffsets[id];
 
-				var entity = this.__activeSwipeEntities[id];
-				var offset = this.__activeSwipeOffsets[id];
 
+			if (entity !== undefined && entity !== null) {
 
 				if (this.renderer !== null) {
 
@@ -257,88 +260,46 @@ lychee.define('lychee.game.State').requires([
 				}
 
 
-				if (
-					type === 'start'
-					&& entity === null
-				) {
+				if (type === 'start') {
 
-					for (var id in this.__layers) {
+					this.__processSwipeOffset(
+						entity,
+						layer,
+						offset
+					);
 
-						var layer = this.__layers[id];
-
-						var entities = layer.getEntities();
-						for (var e = 0, el = entities.length; e < el; e++) {
-
-							// Reset incrementally calculated offset
-							// for each entity
-							offset.x = 0;
-							offset.y = 0;
-
-
-							var triggered = this.__processSwipeRecursive(
-								entities[e],
-								position.x,
-								position.y,
-								offset
-							);
-
-							if (triggered !== null) {
-								entity = triggered;
-								break;
-							}
-
-						}
-
-					}
-
-
-					if (entity !== null) {
-
-console.log('SWIPESTART', entity);
-
-						position.x -= offset.x;
-						position.y -= offset.y;
-
-						entity.trigger('swipe', [
-							id, type, position, delta, swipe
-						]);
-
-
-						this.__activeSwipeEntities[id] = entity;
-
-					}
-
-
-				} else if (
-					type === 'move'
-					&& entity !== null
-				) {
-
-console.log('SWIPEMOVE', entity);
 
 					position.x -= offset.x;
 					position.y -= offset.y;
 
- 					entity.trigger('swipe', [
+
+					var result = entity.trigger('swipe', [
 						id, type, position, delta, swipe
 					]);
 
-				} else if (
-					type === 'end'
-					&& entity !== null
-				) {
+					if (result === false) {
+						this.__touchEntities[id] = null;
+					}
 
-console.log('SWIPEEND', entity);
+				} else if (type === 'move') {
 
 					position.x -= offset.x;
 					position.y -= offset.y;
 
- 					entity.trigger('swipe', [
+					entity.trigger('swipe', [
 						id, type, position, delta, swipe
 					]);
 
+				} else if (type === 'end') {
 
-					this.__activeSwipeEntities[id] = null;
+					position.x -= offset.x;
+					position.y -= offset.y;
+
+					entity.trigger('swipe', [
+						id, type, position, delta, swipe
+					]);
+
+					this.__touchEntities[id] = null;
 
 				}
 
@@ -346,16 +307,53 @@ console.log('SWIPEEND', entity);
 
 		},
 
-		__processSwipeRecursive: function(entity, originX, originY, offset) {
+		__processSwipeOffset: function(search, entity, offset, offsetX, offsetY) {
+
+			if (offsetX === undefined || offsetY === undefined) {
+
+				offset.x = 0;
+				offset.y = 0;
+				offsetX  = 0;
+				offsetY  = 0;
+
+			}
 
 
-// TODO: trace the entities recursively
-// and update the offset incrementally
-// to calculate the offsets for the swipe position
-// fired in start/move/end
+			if (search === entity) {
+
+				offset.x = offsetX;
+				offset.y = offsetY;
+
+				return true;
+
+
+			} else if (typeof entity.getEntities === 'function') {
+
+				var entities = entity.getEntities();
+				for (var e = 0, el = entities.length; e < el; e++) {
+
+					var position = entities[e].getPosition();
+
+					var result = this.__processSwipeOffset(
+						search,
+						entities[e],
+						offset,
+						offsetX + position.x,
+						offsetY + position.y
+					);
+
+					if (result === true) {
+						return true;
+					}
+
+				}
+
+			}
+
+
+			return false;
 
 		},
-
 
 		__processTouch: function(id, position, delta) {
 
@@ -382,9 +380,9 @@ console.log('SWIPEEND', entity);
 			var newFocusEntity = null;
 
 
-			for (var id in this.__layers) {
+			for (var layerId in this.__layers) {
 
-				var layer = this.__layers[id];
+				var layer = this.__layers[layerId];
 
 				var entities = layer.getEntities();
 				for (var e = 0, el = entities.length; e < el; e++) {
@@ -397,8 +395,13 @@ console.log('SWIPEEND', entity);
 					);
 
 					if (triggered !== null) {
+
+						this.__touchEntities[id] = triggered;
+						this.__touchLayers[id] = layer;
 						newFocusEntity = triggered;
+
 						break;
+
 					}
 
 				}
@@ -406,6 +409,14 @@ console.log('SWIPEEND', entity);
 			}
 
 
+			// 1. Reset Touch trace data if no Entity was touched
+			if (newFocusEntity === null) {
+				this.__touchEntities[id] = null;
+				this.__touchLayers[id] = null;
+			}
+
+
+			// 2. Change Focus State Interaction
 			if (newFocusEntity !== oldFocusEntity) {
 
 				if (oldFocusEntity !== null) {
