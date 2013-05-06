@@ -59,6 +59,24 @@ lychee.define('lychee.ui.Renderer').requires([
 			var realY = position.y + offsetY;
 
 
+			if (lychee.debug === true) {
+
+				var hwidth  = entity.width / 2;
+				var hheight = entity.height / 2;
+
+				this.drawBox(
+					realX - hwidth,
+					realY - hheight,
+					realX + hwidth,
+					realY + hheight,
+					'#ff00ff',
+					false,
+					1
+				);
+
+			}
+
+
 			var entities = entity.getEntities();
 
 			for (var e = 0, el = entities.length; e < el; e++) {

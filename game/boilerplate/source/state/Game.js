@@ -89,7 +89,11 @@ lychee.define('game.state.Game').requires([
 			});
 
 			exit.bind('touch', function() {
-				this.game.setState('menu');
+
+				if (this.__locked === false) {
+					this.game.setState('menu');
+				}
+
 			}, this);
 
 			layer.addEntity(exit);

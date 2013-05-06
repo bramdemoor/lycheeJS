@@ -32,7 +32,7 @@ lychee.define('game.Main').requires([
 			base: './asset',
 			sound: true,
 			music: true,
-			fullscreen: true,
+			fullscreen: false,
 			renderFps: 60,
 			updateFps: 60,
 			width: 896,
@@ -91,7 +91,7 @@ lychee.define('game.Main').requires([
 
 		},
 
-		reset: function(width, height) {
+		reset: function(width, height, states) {
 
 			game.DeviceSpecificHacks.call(this);
 
@@ -120,6 +120,21 @@ lychee.define('game.Main').requires([
 
 			this.__offset = env.offset; // Linked
 
+
+			if (states === true) {
+
+				var state = this.getState();
+
+				state.leave && state.leave();
+
+				for (var id in this.states) {
+					this.states[id].reset();
+				}
+
+				state.enter && state.enter();
+
+			}
+
 		},
 
 		init: function() {
@@ -141,17 +156,7 @@ lychee.define('game.Main').requires([
 
 			this.viewport = new lychee.Viewport();
 			this.viewport.bind('reshape', function(orientation, rotation, width, height) {
-
-				this.reset(width, height);
-
-				for (var id in this.states) {
-					this.states[id].reset();
-				}
-
-				var state = this.getState();
-				state.leave && state.leave();
-				state.enter && state.enter();
-
+				this.reset(width, height, true);
 			}, this);
 			this.viewport.bind('hide', function() {
 

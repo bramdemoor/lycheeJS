@@ -534,7 +534,7 @@ lychee.define('Renderer').tags({
 							y1,
 							x1 + margin + chr.real,
 							y1 + chr.height,
-							'#ffff00',
+							'#00ff00',
 							false,
 							1
 						);

@@ -26,9 +26,8 @@ lychee.define('game.state.Menu').requires([
 		reset: function() {
 
 			var entity   = null;
-			var settings = this.game.settings;
-			var width    = settings.width;
-			var height   = settings.height;
+			var width    = this.game.settings.width;
+			var height   = this.game.settings.height;
 
 
 			this.removeLayer('ui');
@@ -38,7 +37,7 @@ lychee.define('game.state.Menu').requires([
 
 
 			var root = new lychee.ui.Area({
-				width:  width,
+				width:  width * 3,
 				height: height,
 				scrollable: true,
 				position: {
@@ -56,16 +55,14 @@ lychee.define('game.state.Menu').requires([
 			 */
 
 			var welcome = new lychee.ui.Area({
-				width:  400,
-				height: 300,
+				width:  width,
+				height: height,
 				scrollable: false,
 				position: {
-					x: -200,
+					x: 0,
 					y: 0
 				}
 			});
-
-welcome.background = '#00ff00';
 
 			root.addEntity(welcome);
 
@@ -139,16 +136,14 @@ welcome.background = '#00ff00';
 			 */
 
 			var settings = new lychee.ui.Area({
-				width:  400,
-				height: 300,
+				width:  width,
+				height: height,
 				scrollable: false,
 				position: {
-					x: 200,
+					x: width,
 					y: 0
 				}
 			});
-
-settings.background = '#0000ff';
 
 			root.addEntity(settings);
 
@@ -189,7 +184,7 @@ settings.background = '#0000ff';
 
 
 			entity = new lychee.ui.Button({
-				label: 'Fullscreen: ' + ((settings.fullscreen === true) ? 'On': 'Off'),
+				label: 'Fullscreen: ' + ((this.game.settings.fullscreen === true) ? 'On': 'Off'),
 				font:  this.game.fonts.normal,
 				position: {
 					x: 0,
@@ -199,14 +194,16 @@ settings.background = '#0000ff';
 
 			entity.bind('#touch', function(entity) {
 
-				settings.fullscreen = !settings.fullscreen;
+				var s = this.game.settings;
+				s.fullscreen = !s.fullscreen;
 
-console.log(entity);
+				entity.setLabel('Fullscreen: ' + ((s.fullscreen === true) ? 'On': 'Off'));
+
+				this.game.reset(null, null, true);
 
 			}, this);
 
 			settings.addEntity(entity);
-
 
 
 
