@@ -10,9 +10,9 @@ lychee.define('game.demo.PO').requires([
 
 	var _count = 0;
 
-	var Demo = function(game) {
+	var Demo = function(state) {
 
-		_base.call(this, game);
+		_base.call(this, state);
 
 
 		var preloader = new lychee.Preloader({
@@ -46,9 +46,6 @@ lychee.define('game.demo.PO').requires([
 			console.group('TEST RUN #' + _count++);
 
 			var decoded = PO.decode(data);
-
-
-
 
 			console.log(decoded);
 

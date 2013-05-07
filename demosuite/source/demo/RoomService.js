@@ -8,9 +8,10 @@ lychee.define('game.demo.RoomService').requires([
 
 	var _base = game.demo.Base;
 
-	var Demo = function(game) {
+	var Demo = function(state) {
 
-		_base.call(this, game);
+		_base.call(this, state);
+
 
 		this.__client  = null;
 		this.__service = null;

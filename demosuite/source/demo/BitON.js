@@ -10,9 +10,9 @@ lychee.define('game.demo.BitON').requires([
 
 	var _count = 0;
 
-	var Demo = function(game) {
+	var Demo = function(state) {
 
-		_base.call(this, game);
+		_base.call(this, state);
 
 
 		this.run("test123");
