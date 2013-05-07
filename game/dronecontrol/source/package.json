@@ -1,0 +1,30 @@
+{
+	"tags": {},
+
+	"tree": {
+
+		"entity": {
+			"Circle": [ "js" ],
+			"Font": [
+				"js",
+				"headline.png",
+				"headline.json",
+				"normal.png",
+				"normal.json",
+				"small.png",
+				"small.json"
+			],
+			"Text": [ "js" ]
+		},
+
+		"state": {
+			"Game": [ "js" ]
+		},
+
+		"DeviceSpecificHacks": [ "js" ],
+		"Main": [ "js", "css" ],
+		"Renderer": [ "js" ],
+		"Server": [ "js" ]
+
+	}
+}
