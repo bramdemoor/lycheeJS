@@ -121,7 +121,7 @@ lychee.define('game.state.Menu').requires([
 
 				(function(id, that) {
 
-					entity.bind('#touch', function(entity) {
+					entity.bind('touch', function() {
 						this.game.setState('demo', id);
 					}, that);
 
