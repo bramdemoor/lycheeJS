@@ -113,16 +113,29 @@ lychee.define('lychee.net.Client').tags({
 						service !== null
 						&& method !== null
 						&& method.charAt(0) !== '@'
-						&& typeof service[method] === 'function'
 					) {
 
-						// Remove data frame service header
-						delete data._serviceId;
-						delete data._serviceMethod;
+						if (
+							typeof service.trigger === 'function'
+							|| typeof service[method] === 'function'
+						) {
 
-						service[method](data);
+							// Remove data frame service header
+							delete data._serviceId;
+							delete data._serviceMethod;
 
-					} else {
+
+							if (typeof service.trigger === 'function') {
+								service.trigger(method, [ data ]);
+							}
+
+							if (typeof service[method] === 'function') {
+								service[method](data);
+							}
+
+						}
+
+					} else if (method.charAt(0) === '@') {
 
 						if (method === '@plug') {
 							that.__plugService(data._serviceId, service);

@@ -3,7 +3,9 @@ lychee.define('lychee.net.client.RoomService').includes([
 	'lychee.event.Emitter'
 ]).exports(function(lychee, global) {
 
-	var Class = function() {
+	var Class = function(client) {
+
+		this.client = client;
 
 		lychee.event.Emitter.call(this, 'roomservice');
 
@@ -18,6 +20,21 @@ lychee.define('lychee.net.client.RoomService').includes([
 
 		init: function() {
 			this.trigger('ready');
+		},
+
+
+
+		/*
+		 * COMMANDS
+		 */
+
+		enter: function() {
+
+			this.client.send({}, {
+				id:     this.getId(),
+				method: 'enter'
+			});
+
 		}
 
 	};

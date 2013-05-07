@@ -13,6 +13,9 @@ lychee.define('game.demo.RoomService').requires([
 		_base.call(this, state);
 
 
+		var settings = state.game.settings;
+
+
 		this.__client  = null;
 		this.__service = null;
 
@@ -24,8 +27,11 @@ lychee.define('game.demo.RoomService').requires([
 
 		this.__client.bind('connect', function() {
 
-			this.__service = new lychee.net.client.RoomService();
-			this.__service.bind('ready', this.__refresh, this);
+			this.__service = new lychee.net.client.RoomService(this.__client);
+			this.__service.bind('#ready', function(service) {
+				service.enter();
+			}, this);
+			this.__service.bind('update', this.__update, this);
 			this.__client.plug(this.__service);
 
 		}, this);
@@ -37,8 +43,8 @@ lychee.define('game.demo.RoomService').requires([
 		}, this);
 
 		this.__client.listen(
-			this.game.settings.port || 1337,
-			this.game.settings.host || 'localhost'
+			settings.port,
+			settings.host
 		);
 
 	};
@@ -47,23 +53,9 @@ lychee.define('game.demo.RoomService').requires([
 
 	Demo.prototype = {
 
-		__refresh: function() {
+		__update: function(data) {
 
-			var service = this.__service;
-			if (service !== null) {
-
-				service.command('refresh').then(function() {
-
-				}, function() {
-				}, this);
-
-			}
-
-			if (this.__service !== null) {
-				this.__service.command('enter');
-			}
-
-console.log('REFRESHING', this.__service);
+console.log('GOT THIS DATA FROM SERVER', data);
 
 		}
 

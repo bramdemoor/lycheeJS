@@ -73,8 +73,6 @@ lychee.define('game.state.Demo').includes([
 			this.addLayer('demo', demo);
 			this.addLayer('ui', ui);
 
-console.log('BACKBUTTON', button);
-
 		},
 
 		enter: function(id) {

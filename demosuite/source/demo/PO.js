@@ -20,7 +20,7 @@ lychee.define('game.demo.PO').requires([
 		});
 
 
-		var base = this.game.settings.base;
+		var base = this.state.game.settings.base;
 		var urls = [
 			base + '/po/de_DE.po'
 		];

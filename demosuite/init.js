@@ -43,8 +43,8 @@ lychee.build(function(lychee, global) {
 
 	} else {
 
-		if (document && document.location && document.location.host) {
-			settings.host = document.location.host;
+		if (document && document.location && document.location.hostname) {
+			settings.host = document.location.hostname;
 		}
 
 		new game.Main(settings);
