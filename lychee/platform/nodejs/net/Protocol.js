@@ -408,6 +408,8 @@ lychee.define('lychee.net.Protocol').tags({
 
 			if (this.__isClosed === false) {
 
+				this.__isClosed = true;
+
 				this.write(reason || 'Disconnect', false, true);
 
 				this.__closeCode = Class.STATUS.normal_closure;
