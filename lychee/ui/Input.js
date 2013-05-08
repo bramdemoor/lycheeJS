@@ -45,6 +45,7 @@ lychee.define('lychee.ui.Input').requires([
 		 * INITIALIZATION
 		 */
 
+		this.bind('touch', function() {}, this);
 
 		this.bind('focus', function() {
 			this.setState('active');
@@ -104,10 +105,8 @@ lychee.define('lychee.ui.Input').requires([
 
 				if (
 					type === Class.TYPE.text
-					&& character.match(/[A-Za-z0-9\s-_]+)/)
+					&& character.match(/([A-Za-z0-9\s-_]+)/)
 				) {
-
-console.log('VALID TEXT INPUT');
 
 					this.setValue(this.__value + character);
 

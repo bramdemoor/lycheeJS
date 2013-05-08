@@ -105,7 +105,7 @@ lychee.define('game.Main').requires([
 			this.input = new lychee.Input({
 				delay:        0,
 				fireModifier: false,
-				fireKey:      false, // change to true for NodeJS support
+				fireKey:      true,
 				fireTouch:    true,
 				fireSwipe:    false
 			});

@@ -5,6 +5,12 @@ lychee.define('lychee.net.client.RoomService').includes([
 
 	var Class = function(client) {
 
+		this.__userId   = null;
+		this.__roomId   = null;
+		this.__users    = [];
+		this.__messages = [];
+
+
 		this.client = client;
 
 		lychee.event.Emitter.call(this, 'roomservice');
@@ -18,22 +24,101 @@ lychee.define('lychee.net.client.RoomService').includes([
 			return 'RoomService';
 		},
 
-		init: function() {
-			this.trigger('ready');
-		},
-
 
 
 		/*
 		 * COMMANDS
 		 */
 
-		enter: function() {
+		enter: function(userId, roomId) {
 
-			this.client.send({}, {
-				id:     this.getId(),
-				method: 'enter'
-			});
+			if (
+				typeof userId === 'string'
+				&& typeof roomId === 'number'
+			) {
+
+				this.client.send({
+					userId: userId,
+					roomId: roomId
+				}, {
+					id: this.getId(),
+					method: 'enter'
+				});
+
+			}
+
+		},
+
+		leave: function(roomId) {
+
+			if (typeof roomId === 'number') {
+
+				this.client.send({
+					userId: this.__userId,
+					roomId: roomId
+				}, {
+					id: this.getId(),
+					method: 'leave'
+				});
+
+			}
+
+		},
+
+		message: function(message) {
+
+			if (typeof message === 'string') {
+
+				this.client.send({
+					userId:    this.__userId,
+					roomId:    this.__roomId,
+					message: message
+				}, {
+					id: this.getId(),
+					method: 'message'
+				});
+
+			}
+
+		},
+
+		update: function(data) {
+
+console.log('UPDATE', data);
+
+			if (data.userId != null) {
+				this.__userId = data.userId;
+			}
+
+			if (data.roomId != null) {
+				this.__roomId = data.roomId;
+			}
+
+			if (data.messages != null) {
+
+				for (var m = 0, ml = data.messages.length; m < ml; m++) {
+					this.__messages.push(data.messages[m]);
+				}
+
+			} else if (data.message != null) {
+				this.__messages.push(data.message);
+			}
+
+			if (data.users != null) {
+
+				for (var u = 0, ul = data.users.length; u < ul; u++) {
+					this.__users.push(data.users[u]);
+				}
+
+			}
+
+
+			this.trigger('refresh', [
+				this.__userId,
+				this.__roomId,
+				this.__users,
+				this.__messages
+			]);
 
 		}
 
