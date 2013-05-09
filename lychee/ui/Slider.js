@@ -61,11 +61,56 @@ console.log(id, type, position, delta, swipe);
 	Class.prototype = {
 
 		/*
-		 * PUBLIC API
+		 * ENTITY API
 		 */
 
-		getDrag: function() {
-			return this.__drag;
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+
+			var x = position.x + offsetX;
+			var y = position.y + offsetY;
+
+			var bgcolor = this.getState() === 'active' ? '#666666' : '#333333';
+
+			var radius = this.radius;
+			if (radius > 0) {
+
+				renderer.setAlpha(0.5);
+
+				renderer.drawCircle(
+					x,
+					y,
+					radius,
+					bgcolor,
+					true
+				);
+
+				renderer.setAlpha(1.0);
+
+
+				var drag = this.__drag;
+
+				renderer.drawCircle(
+					x + drag.x,
+					y + drag.y,
+					24,
+					'#ff0000',
+					true
+				);
+
+			}
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
+
+		getRange: function() {
+			return this.__range;
 		},
 
 		setRange: function(range) {

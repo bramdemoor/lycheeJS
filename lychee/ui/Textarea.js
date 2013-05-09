@@ -92,56 +92,80 @@ lychee.define('lychee.ui.Textarea').requires([
 	Class.prototype = {
 
 		/*
-		 * PUBLIC API
+		 * ENTITY API
 		 */
 
-		getDrag: function() {
-			return this.__drag;
-		},
+		render: function(renderer, offsetX, offsetY) {
 
-		getFont: function() {
-			return this.__font;
-		},
+			var position = this.getPosition();
 
-		getLines: function() {
-			return this.__lines;
-		},
+			var x = position.x + offsetX;
+			var y = position.y + offsetY;
 
-		getOffset: function(line) {
 
-			line = typeof line === 'number' ? line : null;
+			var hwidth  = this.width / 2;
+			var hheight = this.height / 2;
+			var bgcolor = this.getState() === 'active' ? '#666666' : '#333333';
 
-			if (line !== null && this.__lines[line] !== undefined) {
 
-				var lineheight = 0;
-				if (this.__font !== null) {
-					lineheight = this.__font.getSettings().lineheight;
+			renderer.setAlpha(0.5);
+
+			renderer.drawBox(
+				x - hwidth,
+				y - hheight,
+				x + hwidth,
+				y + hheight,
+				bgcolor,
+				true
+			);
+
+			renderer.setAlpha(1.0);
+
+
+			var font = this.__font;
+			var ll = this.__lines.length;
+			if (
+				font !== null
+				&& ll > 0
+			) {
+
+				renderer.flush(1);
+
+				renderer.setBufferBoundaries(
+					x - hwidth,
+					y - hheight,
+					x + hwidth,
+					y + hheight
+				);
+
+
+				var lineHeight = font.getSettings().lineheight;
+				for (var l = 0; l < ll; l++) {
+
+					var text = this.__lines[l];
+
+					renderer.drawText(
+						x - hwidth,
+						y - hheight + lineHeight * l,
+						text,
+						font,
+						false
+					);
+
 				}
 
-				var offset = line * lineheight;
 
-
-				return offset;
+				renderer.flush(2);
 
 			}
 
-
-			return 0;
-
 		},
 
-		getText: function(line) {
-
-			line = typeof line === 'number' ? line : null;
-
-			if (line !== null && this.__lines[line] !== undefined) {
-				return this.__lines[line];
-			}
 
 
-			return this.__lines.join('\n');
-
-		},
+		/*
+		 * CUSTOM API
+		 */
 
 		getValue: function() {
 			return this.__lines.join('\n');

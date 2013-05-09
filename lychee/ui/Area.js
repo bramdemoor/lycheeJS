@@ -33,7 +33,7 @@ lychee.define('lychee.ui.Area').includes([
 	Class.prototype = {
 
 		/*
-		 * PUBLIC API
+		 * ENTITY API
 		 */
 
 		sync: function(clock, force) {
@@ -103,6 +103,51 @@ lychee.define('lychee.ui.Area').includes([
 			this.__clock = clock;
 
 		},
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+
+			var x = position.x + offsetX;
+			var y = position.y + offsetY;
+
+
+			if (lychee.debug === true) {
+
+				var hwidth  = this.width / 2;
+				var hheight = this.height / 2;
+
+				renderer.drawBox(
+					x - hwidth,
+					y - hheight,
+					x + hwidth,
+					y + hheight,
+					'#ff00ff',
+					false,
+					1
+				);
+
+			}
+
+
+			var entities = this.getEntities();
+			for (var e = 0, el = entities.length; e < el; e++) {
+
+				renderer.renderEntity(
+					entities[e],
+					x,
+					y
+				);
+
+			}
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
 
 		getEntities: function() {
 			return this.__entities;

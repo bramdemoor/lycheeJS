@@ -16,7 +16,7 @@ lychee.define('game.Main').requires([
 
 		lychee.game.Main.call(this, settings);
 
-		this.load();
+		this.init();
 
 	};
 
@@ -33,13 +33,6 @@ lychee.define('game.Main').requires([
 			updateFps: 60,
 			width: 896,
 			height: 386
-		},
-
-		load: function() {
-
-			// Nothing to load, so initialize
-			this.init();
-
 		},
 
 		reset: function(width, height, states) {
@@ -150,9 +143,7 @@ lychee.define('game.Main').requires([
 			});
 
 			this.fonts = {};
-			this.fonts.headline = new game.entity.Font('headline');
-			this.fonts.normal   = new game.entity.Font('normal');
-			this.fonts.small    = new game.entity.Font('small');
+			this.fonts.normal = new game.entity.Font('normal');
 
 
 			this.states.game = new game.state.Game(this);

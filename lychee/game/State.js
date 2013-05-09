@@ -420,11 +420,15 @@ lychee.define('lychee.game.State').requires([
 			if (newFocusEntity !== oldFocusEntity) {
 
 				if (oldFocusEntity !== null) {
-					oldFocusEntity.trigger('blur');
+					if (oldFocusEntity.getState() !== 'default') {
+						oldFocusEntity.trigger('blur');
+					}
 				}
 
 				if (newFocusEntity !== null) {
-					newFocusEntity.trigger('focus');
+					if (newFocusEntity.getState() === 'default') {
+						newFocusEntity.trigger('focus');
+					}
 				}
 
 				this.__focusEntity = newFocusEntity;
@@ -457,6 +461,7 @@ lychee.define('lychee.game.State').requires([
 
 						if (result !== null) {
 							triggered = result;
+							break;
 						}
 
 					}

@@ -41,6 +41,7 @@ lychee.define('lychee.ui.Input').requires([
 		lychee.ui.Entity.call(this, 'ui-input', settings);
 
 
+
 		/*
 		 * INITIALIZATION
 		 */
@@ -91,6 +92,10 @@ lychee.define('lychee.ui.Input').requires([
 
 
 					return;
+
+				} else if (key === 'return') {
+
+					this.trigger('blur', []);
 
 				} else if (key === 'space') {
 
@@ -144,24 +149,70 @@ lychee.define('lychee.ui.Input').requires([
 	Class.prototype = {
 
 		/*
-		 * PUBLIC API
+		 * ENTITY API
 		 */
 
-		getDrag: function() {
-			return this.__drag;
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+
+			var x = position.x + offsetX;
+			var y = position.y + offsetY;
+
+
+			var hwidth  = this.width / 2;
+			var hheight = this.height / 2;
+			var bgcolor = this.getState() === 'active' ? '#666666' : '#333333';
+
+
+			renderer.setAlpha(0.5);
+
+			renderer.drawBox(
+				x - hwidth,
+				y - hheight,
+				x + hwidth,
+				y + hheight,
+				bgcolor,
+				true
+			);
+
+			renderer.setAlpha(1.0);
+
+
+			renderer.flush(1);
+
+			renderer.setBufferBoundaries(
+				x - hwidth,
+				y - hheight,
+				x + hwidth,
+				y + hheight
+			);
+
+
+			var font = this.__font;
+			if (font !== null) {
+
+				var text = this.__value + '';
+
+				renderer.drawText(
+					x - hwidth,
+					y - hheight,
+					text,
+					font,
+					false
+				);
+
+			}
+
+			renderer.flush(2);
+
 		},
 
-		getFont: function() {
-			return this.__font;
-		},
 
-		getOffset: function() {
-			return 0;
-		},
 
-		getText: function(line) {
-			return this.getValue() + '';
-		},
+		/*
+		 * CUSTOM API
+		 */
 
 		getType: function() {
 			return this.__type;

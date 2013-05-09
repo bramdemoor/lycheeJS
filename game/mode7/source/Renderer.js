@@ -1,6 +1,6 @@
 
 lychee.define('game.Renderer').includes([
-	'lychee.ui.Renderer'
+	'lychee.Renderer'
 ]).requires([
 	'game.entity.Background',
 	'game.entity.Ship'
@@ -8,7 +8,7 @@ lychee.define('game.Renderer').includes([
 
 	var Class = function(id) {
 
-		lychee.ui.Renderer.call(this, id);
+		lychee.Renderer.call(this, id);
 
 		this.__projectionCache = [
 			{ x: 0, y: 0, z: 0, w: 0 }, // segment / from

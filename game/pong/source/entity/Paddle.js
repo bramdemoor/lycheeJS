@@ -31,6 +31,32 @@ lychee.define('game.entity.Paddle').includes([
 
 	Class.prototype = {
 
+		/*
+		 * ENTITY API
+		 */
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+			var hwidth   = this.width / 2;
+			var hheight  = this.height / 2;
+			var image    = this.getImage();
+
+
+			renderer.drawSprite(
+				position.x - hwidth,
+				position.y - hheight,
+				image
+			);
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
+
 		getImage: function() {
 			return this.__image;
 		}

@@ -84,8 +84,6 @@ lychee.define('lychee.net.client.RoomService').includes([
 
 		update: function(data) {
 
-console.log('UPDATE', data);
-
 			if (data.userId != null) {
 				this.__userId = data.userId;
 			}

@@ -243,7 +243,7 @@ lychee.define('game.state.Game').requires([
 				);
 
 
-				this.renderer.flush();
+				this.renderer.flush(0);
 
 			}
 

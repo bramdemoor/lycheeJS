@@ -1,7 +1,7 @@
 
 lychee.define('game.state.Game').requires([
-	'game.entity.Circle',
-	'game.entity.Text'
+	'lychee.ui.Button',
+	'game.entity.Circle'
 ]).includes([
 	'lychee.game.State'
 ]).exports(function(lychee, global) {

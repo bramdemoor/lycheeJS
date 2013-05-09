@@ -119,7 +119,6 @@
 			"Button": [ "js" ],
 			"Entity": [ "js" ],
 			"Input": [ "js" ],
-			"Renderer": [ "js" ],
 			"Slider": [ "js" ],
 			"Textarea": [ "js" ],
 			"Wizard": [ "js" ]

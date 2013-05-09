@@ -234,7 +234,7 @@ lychee.define('game.state.Game').includes([
 
 			}
 
-			this.__renderer.flush();
+			this.__renderer.flush(0);
 
 		},
 

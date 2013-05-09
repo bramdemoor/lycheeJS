@@ -32,6 +32,33 @@ lychee.define('game.entity.Text').requires([
 
 	Class.prototype = {
 
+		/*
+		 * ENTITY API
+		 */
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+			var text = this.getText();
+			var font = this.getFont();
+
+
+			renderer.drawText(
+				offsetX + position.x,
+				offsetY + position.y,
+				text,
+				font,
+				true
+			);
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
+
 		setFont: function(font) {
 
 			if (font instanceof _font) {

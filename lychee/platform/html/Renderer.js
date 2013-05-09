@@ -31,7 +31,7 @@ lychee.define('Renderer').tags({
 
 	return false;
 
-}).exports(function(lychee, global) {
+}).exports(function(lychee, global, attachments) {
 
 	var Class = function(id) {
 
@@ -73,8 +73,26 @@ lychee.define('Renderer').tags({
 
 	Class.prototype = {
 
+		__updateEnvironment: function() {
+
+			var env = this.__environment;
+
+
+			env.screen.width  = global.innerWidth;
+			env.screen.height = global.innerHeight;
+
+			env.offset.x = this.__canvas.offsetLeft;
+			env.offset.y = this.__canvas.offsetTop;
+
+			env.width  = this.__width;
+			env.height = this.__height;
+
+		},
+
+
+
 		/*
-		 * State and Environment Management
+		 * STATE AND ENVIRONMENT MANAGEMENT
 		 */
 
 		reset: function(width, height, resetCache) {
@@ -135,22 +153,31 @@ lychee.define('Renderer').tags({
 
 		flush: function(command) {
 
+			if (this.__state !== 'running') return;
+
+
 			// Flush all buffers
 			if (command === 0) {
 
 			// Flush buffer to temporary buffer
 			} else if (command === 1) {
 
-				this.__ctx.save();
+//				this.__ctx.save();
 
 			// Flush temporary buffer to buffer
 			} else if (command === 2) {
 
-				this.__ctx.restore();
+//				this.__ctx.restore();
 
 			}
 
 		},
+
+
+
+		/*
+		 * SETTERS AND GETTERS
+		 */
 
 		isRunning: function() {
 			return this.__state === 'running';
@@ -160,34 +187,6 @@ lychee.define('Renderer').tags({
 			this.__updateEnvironment();
 			return this.__environment;
 		},
-
-
-
-		/*
-		 * PRIVATE API: Helpers
-		 */
-
-		__updateEnvironment: function() {
-
-			var env = this.__environment;
-
-
-			env.screen.width  = global.innerWidth;
-			env.screen.height = global.innerHeight;
-
-			env.offset.x = this.__canvas.offsetLeft;
-			env.offset.y = this.__canvas.offsetTop;
-
-			env.width  = this.__width;
-			env.height = this.__height;
-
-		},
-
-
-
-		/*
-		 * Setters
-		 */
 
 		setAlpha: function(alpha) {
 
@@ -210,18 +209,18 @@ lychee.define('Renderer').tags({
 
 		setBufferBoundaries: function(x1, y1, x2, y2) {
 
-			this.__ctx.rect(
-				x1,      y1,
-				x2 - x1, y2 - y1
-			);
-			this.__ctx.clip();
+//			this.__ctx.rect(
+//				x1,      y1,
+//				x2 - x1, y2 - y1
+//			);
+//			this.__ctx.clip();
 
 		},
 
 
 
 		/*
-		 * Drawing API
+		 * DRAWING API
 		 */
 
 		drawTriangle: function(x1, y1, x2, y2, x3, y3, color, background, lineWidth) {
@@ -260,7 +259,6 @@ lychee.define('Renderer').tags({
 		drawPolygon: function(points, x1, y1) {
 
 			if (this.__state !== 'running') return;
-
 
 			var l = arguments.length;
 
@@ -556,6 +554,26 @@ lychee.define('Renderer').tags({
 					margin += chr.real + settings.kerning;
 
 				}
+
+			}
+
+		},
+
+
+
+		/*
+		 * RENDERING API
+		 */
+
+		renderEntity: function(entity, offsetX, offsetY) {
+
+			if (typeof entity.render === 'function') {
+
+				entity.render(
+					this,
+					offsetX || 0,
+					offsetY || 0
+				);
 
 			}
 

@@ -63,6 +63,10 @@ lychee.define('lychee.ui.Entity').includes([
 
 	Class.prototype = {
 
+		/*
+		 * ENTITY API
+		 */
+
 		// Allows sync(null, true) for reset
 		sync: function(clock, force) {
 
@@ -118,6 +122,14 @@ lychee.define('lychee.ui.Entity').includes([
 			this.__clock = clock;
 
 		},
+
+		// Hint: Renderer skips if no render method exists
+		// render: function() {},
+
+
+		/*
+		 * CUSTOM API
+		 */
 
 		show: function(duration) {
 

@@ -27,6 +27,31 @@ lychee.define('game.entity.Ball').includes([
 
 	Class.prototype = {
 
+		/*
+		 * ENTITY API
+		 */
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+			var radius   = this.radius;
+			var image    = this.getImage();
+
+
+			renderer.drawSprite(
+				position.x - radius,
+				position.y - radius,
+				image
+			);
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
+
 		getImage: function() {
 			return this.__image;
 		}

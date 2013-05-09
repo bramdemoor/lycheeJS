@@ -7,14 +7,9 @@
 			"Circle": [ "js" ],
 			"Font": [
 				"js",
-				"headline.png",
-				"headline.json",
 				"normal.png",
-				"normal.json",
-				"small.png",
-				"small.json"
-			],
-			"Text": [ "js" ]
+				"normal.json"
+			]
 		},
 
 		"state": {

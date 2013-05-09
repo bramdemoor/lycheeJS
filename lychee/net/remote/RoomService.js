@@ -65,7 +65,6 @@ lychee.define('lychee.net.remote.RoomService').exports(function(lychee, global) 
 						messages: room.messages
 					};
 
-console.log('RESPONSE IS', response);
 
 					this.remote.send(response, {
 						id:     this.getId(),
@@ -78,7 +77,6 @@ console.log('RESPONSE IS', response);
 						users:  room.users
 					};
 
-console.log('OTHER RESPONSE IS', oresponse);
 
 					for (var r = 0, rl = _remotes.length; r < rl; r++) {
 
@@ -157,8 +155,6 @@ console.log('OTHER RESPONSE IS', oresponse);
 		},
 
 		message: function(data) {
-
-console.log('> MESSAGE', data);
 
 			if (data instanceof Object) {
 

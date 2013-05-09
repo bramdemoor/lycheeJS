@@ -116,6 +116,9 @@ lychee.define('game.Main').requires([
 			this.fonts.normal   = new game.entity.Font('normal');
 			this.fonts.small    = new game.entity.Font('small');
 
+			this.fonts.ubuntu20      = new game.entity.Font('ubuntu20');
+			this.fonts.ubuntu20_bold = new game.entity.Font('ubuntu20_bold');
+
 
 			this.states.demo = new game.state.Demo(this);
 			this.states.menu = new game.state.Menu(this);

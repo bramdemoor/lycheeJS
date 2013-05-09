@@ -19,6 +19,23 @@ lychee.define('game.entity.Circle').includes([
 
 	Class.prototype = {
 
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+
+			var radius = this.radius;
+
+
+			renderer.drawCircle(
+				position.x + offsetX,
+				position.y + offsetY,
+				radius,
+				'#ff0000',
+				true
+			);
+
+		}
+
 	};
 
 

@@ -7,7 +7,6 @@ lychee.define('game.state.Demo').includes([
 
 		lychee.game.State.call(this, game, 'menu');
 
-		this.__backbutton = null;
 		this.__demo = null;
 
 		this.reset();
@@ -76,6 +75,9 @@ lychee.define('game.state.Demo').includes([
 		},
 
 		enter: function(id) {
+
+			this.reset();
+
 
 			var valid = false;
 

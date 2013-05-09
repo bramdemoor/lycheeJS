@@ -42,12 +42,41 @@ lychee.define('lychee.ui.Button').requires([
 
 	Class.prototype = {
 
-		getLabel: function() {
-			return this.__label;
+		/*
+		 * ENTITY API
+		 */
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var position = this.getPosition();
+
+			var x = position.x + offsetX;
+			var y = position.y + offsetY;
+
+
+			var label = this.__label;
+			var font  = this.__font;
+			if (label !== null && font !== null) {
+
+				renderer.drawText(
+					x,
+					y,
+					label,
+					font,
+					true
+				);
+
+			}
+
 		},
 
-		getFont: function() {
-			return this.__font;
+
+		/*
+		 * CUSTOM API
+		 */
+
+		getLabel: function() {
+			return this.__label;
 		},
 
 		setLabel: function(label, font) {
