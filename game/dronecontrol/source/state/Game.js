@@ -88,8 +88,8 @@ lychee.define('game.state.Game').requires([
 			entity.bind('touch', function() {
 
 				this.__client.send({
-					method: 'up',
-					value:  1.0
+					method: 'heave',
+					value:  0.2
 				});
 
 			}, this);
@@ -109,8 +109,8 @@ lychee.define('game.state.Game').requires([
 			entity.bind('touch', function() {
 
 				this.__client.send({
-					method: 'down',
-					value:  1.0
+					method: 'heave',
+					value:  -0.2
 				});
 
 			}, this);
@@ -119,7 +119,7 @@ lychee.define('game.state.Game').requires([
 
 
 			entity = new lychee.ui.Button({
-				label: 'DO A BARREL ROLL!',
+				label: 'Turn Around!',
 				font:  this.game.fonts.normal,
 				position: {
 					x: 0,
@@ -130,10 +130,20 @@ lychee.define('game.state.Game').requires([
 			entity.bind('touch', function() {
 
 				this.__client.send({
-					method: 'barrelroll',
-					value:  2000
+					method: 'animateFlight',
+					type:   'turnaround',
+					value:  1000
 				});
 
+
+// animateLEDs('blinkOrange', 1000);
+
+/*
+				this.__client.send({
+					method: 'yaw',
+					value:  0.2
+				});
+*/
 			}, this);
 
 			layer.addEntity(entity);

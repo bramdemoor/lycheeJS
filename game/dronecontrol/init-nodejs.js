@@ -11,12 +11,6 @@ require(path + '/platform/nodejs/bootstrap.js')(__dirname);
 require('./source/Server.js');
 
 
-// TODO: Make this generic :)
-var ar_drone = require('ar-drone');
-
-global.drone = ar_drone.createClient('192.168.1.1');
-
-
 lychee.debug = true;
 
 lychee.rebase({
@@ -31,10 +25,11 @@ lychee.tag({
 
 lychee.build(function(lychee, global) {
 
-	var settings = {
-	};
+	var drone = new game.ar.Drone({
+		ip: '192.168.1.1'
+	});
 
-	new game.Server(settings);
+	new game.Server(drone);
 
 }, typeof global !== 'undefined' ? global : this);
 

@@ -1,7 +1,44 @@
 {
-	"tags": {},
+	"tags": {
+
+		"platform": {
+
+			"nodejs": "platform/nodejs"
+
+		}
+
+	},
 
 	"tree": {
+
+		"platform": {
+
+			"nodejs": {
+
+				"ar": {
+
+					"command": {
+						"CONFIG": [ "js" ],
+						"PCMD": [ "js" ],
+						"REF": [ "js" ],
+						"Socket": [ "js" ]
+					},
+
+					"data": {
+						"NAVDATA": [ "js" ]
+					},
+
+					"navdata": {
+						"Socket": [ "js" ]
+					},
+
+					"Drone": [ "js" ]
+
+				}
+
+			}
+
+		},
 
 		"entity": {
 			"Circle": [ "js" ],

@@ -1,15 +1,22 @@
 
 lychee.define('game.Server').requires([
+	'game.ar.Drone',
 	'lychee.game.Loop',
 	'lychee.net.Server'
 ]).exports(function(lychee, global) {
 
-	var Class = function() {
+	var _drone = game.ar.Drone;
+
+	var Class = function(drone) {
+
+		this.drone = drone instanceof _drone ? drone : null;
 
 		this.loop = new lychee.game.Loop({
-			render: 60,
-			update: 60
+			render: 0,
+			update: 33
 		});
+
+		this.loop.bind('update', this.update, this);
 
 
 		this.server = new lychee.net.Server(
@@ -35,60 +42,62 @@ lychee.define('game.Server').requires([
 
 	Class.prototype = {
 
+		/*
+		 * STATE API
+		 */
+
+		update: function(clock, delta) {
+
+			if (this.drone !== null) {
+				this.drone.update();
+			}
+
+		},
+
 		__onReceive: function(data) {
 
-			if (typeof drone === 'undefined') return false;
+			if (this.drone === null) {
+				return false;
+			}
 
 
 			var method = data.method;
+			var type   = data.type || null;
 			var value  = data.value;
 
 
-			drone.disableEmergency();
+			// this.drone.setEmergency(false);
+
 
 			switch(method) {
 
 				case 'takeoff':
-					drone.takeoff();
+					this.drone.takeoff();
 				break;
 
 				case 'land':
-					drone.land();
+					this.drone.land();
 				break;
 
-				case 'up':
-
-					this.loop.timeout(0, function() {
-
-						drone.up(value);
-
-						this.loop.timeout(2000, function() {
-							drone.stop();
-						}, this);
-
-					}, this);
-
+				case 'stop':
+					this.drone.stop();
 				break;
 
-				case 'down':
-
-					this.loop.timeout(0, function() {
-
-						drone.down(value);
-
-						this.loop.timeout(2000, function() {
-							drone.stop();
-						}, this);
-
-					}, this);
-
+				case 'roll':
+					this.drone.roll(value);
+				break;
+				case 'pitch':
+					this.drone.pitch(value);
+				break;
+				case 'yaw':
+					this.drone.yaw(value);
+				break;
+				case 'heave':
+					this.drone.heave(value);
 				break;
 
-				case 'barrelroll':
-
-					// drone.animate('flipLeft', value);
-					drone.animate('flipLeft', 1000);
-
+				case 'animateFlight':
+					this.drone.animateFlight(type, value);
 				break;
 
 			}

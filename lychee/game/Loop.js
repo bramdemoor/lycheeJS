@@ -102,7 +102,7 @@ lychee.define('lychee.game.Loop').includes([
 
 
 			this.__clock = {
-				start: Date.now(),
+				start:  Date.now(),
 				update: 0,
 				render: 0
 			};
