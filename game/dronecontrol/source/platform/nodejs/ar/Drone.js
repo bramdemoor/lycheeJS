@@ -83,7 +83,7 @@ lychee.define('game.ar.Drone').requires([
 	Class.LEDANIMATION = {
 		'blinkGreenRed': 0,
 		'blinkGreen':    1,
-		'blinkRed':      2.
+		'blinkRed':      2,
 		'blinkOrange':   3,
 		'fire':          4,
 		'standard':      5,
@@ -104,10 +104,11 @@ lychee.define('game.ar.Drone').requires([
 			if (data instanceof Object) {
 
 				if (
-					data.state
-					&& data.states.emergency_landing === true
+					data.states
+					&& data.states.emergency_landing === 1
 					&& this.__disableEmergency === true
 				) {
+					console.log('disabling emergency case');
 					this.__ref.setEmergency(true);
 				} else {
 					this.__ref.setEmergency(false);

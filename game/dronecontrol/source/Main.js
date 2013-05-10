@@ -117,6 +117,8 @@ lychee.define('game.Main').requires([
 				JSON.stringify, JSON.parse
 			);
 
+global.CLIENT = this.client;
+
 			this.client.bind('connect', function() {
 
 			}, this);

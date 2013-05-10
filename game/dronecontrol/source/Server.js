@@ -72,6 +72,7 @@ lychee.define('game.Server').requires([
 			switch(method) {
 
 				case 'takeoff':
+					this.drone.disableEmergency();
 					this.drone.takeoff();
 				break;
 
