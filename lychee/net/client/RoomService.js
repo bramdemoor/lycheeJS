@@ -20,6 +20,10 @@ lychee.define('lychee.net.client.RoomService').includes([
 
 	Class.prototype = {
 
+		/*
+		 * SERVICE API
+		 */
+
 		getId: function() {
 			return 'RoomService';
 		},
@@ -27,7 +31,7 @@ lychee.define('lychee.net.client.RoomService').includes([
 
 
 		/*
-		 * COMMANDS
+		 * CUSTOM API
 		 */
 
 		enter: function(userId, roomId) {

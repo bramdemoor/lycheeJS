@@ -234,7 +234,13 @@ lychee.define('lychee.net.Server').tags({
 
 
 			if (found === true) {
+
+				if (lychee.debug === true) {
+					console.log('lychee.net.Server: Disconnected lychee.Remote (' + remote.id + ')');
+				}
+
 				this.trigger('disconnect', [ remote ]);
+
 			}
 
 		}

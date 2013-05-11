@@ -40,6 +40,20 @@ lychee.define('lychee.net.Remote').tags({
 			that.__socket.destroy();
 			that.__server.disconnect(that);
 
+
+			for (var s = 0, sl = that.__services.length; s < sl; s++) {
+
+				var service = that.__services[s];
+
+				if (typeof service.unplug === 'function') {
+					service.unplug();
+				}
+
+				that.__services.splice(s, 1);
+				sl--;
+
+			}
+
 		});
 
 		this.__socket.on('data', function(data) {
@@ -226,12 +240,16 @@ lychee.define('lychee.net.Remote').tags({
 			var construct = lychee.net.remote[id];
 			if (typeof construct === 'function') {
 
-				service = new construct(this);
+				service = new construct();
 				this.__services.push(service);
 
 
 				if (lychee.debug === true) {
 					console.log('lychee.net.Remote: Plugged in Service (' + id + ')');
+				}
+
+				if (typeof service.plug === 'function') {
+					service.plug(this);
 				}
 
 
@@ -245,6 +263,10 @@ lychee.define('lychee.net.Remote').tags({
 
 				if (lychee.debug === true) {
 					console.log('lychee.net.Remote: Unplugged Service (' + id + ')');
+				}
+
+				if (typeof service.unplug === 'function') {
+					service.unplug();
 				}
 
 
@@ -290,6 +312,10 @@ lychee.define('lychee.net.Remote').tags({
 
 
 			if (found === true) {
+
+				if (typeof service.unplug === 'function') {
+					service.unplug();
+				}
 
 				this.send({}, {
 					id: id,
