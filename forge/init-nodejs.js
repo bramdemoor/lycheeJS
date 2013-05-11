@@ -31,7 +31,10 @@ lychee.build(function(lychee, global) {
 	 */
 
 	var root = __dirname;
-	if (root.substr(0, 2) === 'C:') {
+	if (
+		root.substr(0, 1).match(/([A-Z])/)
+		&& root.substr(1, 1) === ':'
+	) {
 		root = root.split(/\\/).join('/');
 		root = root.substr(2, root.length - 2);
 	}

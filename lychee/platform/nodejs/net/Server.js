@@ -172,7 +172,6 @@ lychee.define('lychee.net.Server').tags({
 			var that = this;
 
 			this.__server = new http.Server();
-			this.__server.listen(port, host);
 			this.__server.on('upgrade', function(request, socket, headers) {
 
 				if (that.__upgrade(request, socket, headers) === false) {
@@ -181,6 +180,7 @@ lychee.define('lychee.net.Server').tags({
 				}
 
 			});
+			this.__server.listen(port, host);
 
 
 			this.__isRunning = true;

@@ -10,28 +10,24 @@ lychee.define('game.MainServer').requires([
 		var settings = lychee.extend({}, data);
 
 
-		this.webserver = new game.WebServer({
-			root: settings.root,
-			port: 8080
-		});
-
-
-/*
-		this.__server = new lychee.net.Server(
+		this.server = new lychee.net.Server(
 			JSON.stringify, JSON.parse
 		);
 
-		this.__server.listen(
-			settings.port,
-			settings.host
-		);
-
-		this.__server.bind('connect', function(remote) {
+		this.server.bind('connect', function(remote) {
 
 			remote.accept();
 
 		}, this);
-*/
+
+		this.server.listen(1337);
+
+
+		this.webserver = new game.WebServer({
+			root: settings.root
+		});
+
+		this.webserver.listen(8080);
 
 	};
 

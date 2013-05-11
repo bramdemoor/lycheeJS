@@ -37,92 +37,27 @@ lychee.define('game.WebServer').tags({
 		var settings = lychee.extend({}, data);
 
 
-		this.__host = typeof settings.host === 'string' ? settings.host : null;
-		this.__port = typeof settings.port === 'number' ? settings.port : 8080;
-		this.__root = typeof settings.root === 'string' ? settings.root : '/var/www';
+		this.__root   = typeof settings.root === 'string' ? settings.root : '/var/www';
+		this.__host   = null;
+		this.__port   = null;
+		this.__server = null;
+		this.__mods   = {};
 
 
-		this.__mods          = {};
 		this.__mods.fs       = new _mod['FS'](this);
 		this.__mods.error    = new _mod['Error'](this);
-
 		this.__mods.file     = new _mod['File'](this);
 		this.__mods.redirect = new _mod['Redirect'](this);
 		this.__mods.welcome  = new _mod['Welcome'](this);
 
+
 		this.__mods.fs.watch(this.__root);
-
-
-		if (lychee.debug === true) {
-			console.log('game.WebServer: Listening on ' + this.__host + ':' + this.__port);
-		}
-
-
-		var that = this;
-
-		this.__server = http.createServer(function(request, response) {
-
-			var accept_encoding = request.headers['accept-encoding'] || "";
-
-			that.__handleRequest(request, function(data) {
-
-				if (accept_encoding.match(/\bgzip\b/)) {
-
-					zlib.gzip(data.body, function(err, buffer) {
-
-						data.header['Content-Encoding'] = 'gzip';
-						data.header['Content-Length']   = buffer.length;
-						response.writeHead(data.status, data.header);
-
-						if (!err) {
-							response.write(buffer);
-							response.end();
-						} else {
-							response.end();
-						}
-
-					});
-
-				} else {
-
-					data.header['Content-Length'] = data.body.length;
-
-					response.writeHead(data.status, data.header);
-					response.write(data.body);
-					response.end();
-
-				}
-
-			});
-
-		});
-
-
-		this.__server.listen(this.__port);
-
 
 		this.__mods.fs.add(
 			this.__root, 'forge/backend.sjs',
 			game.webserver.mod.FS.TYPE.link,
 			'backend'
 		);
-
-
-		var url = 'http://' + (this.__host === null ? 'localhost' : this.__host) + ':' + this.__port;
-		var welcome = 'game.WebServer: Ready. Navigate your Web Browser to: ' + url;
-
-
-		var header = '';
-		for (var w = 0, wl = welcome.length; w < wl; w++) {
-			header += w % 2 === 0 ? '-' : '=';
-		}
-
-		console.log('\n');
-		console.log(header);
-		console.log(welcome);
-		console.log(header);
-		console.log('\n');
-
 
 	};
 
@@ -135,6 +70,80 @@ lychee.define('game.WebServer').tags({
 		/*
 		 * PUBLIC API
 		 */
+
+		listen: function(port, host) {
+
+			port = typeof port === 'number' ? port : 80;
+			host = typeof host === 'string' ? host : null;
+
+
+			if (lychee.debug === true) {
+				console.log('game.WebServer: Listening on ' + host + ':' + port);
+			}
+
+
+			var that = this;
+
+			this.__server = new http.Server();
+			this.__server.on('request', function(request, response) {
+
+				var accept_encoding = request.headers['accept-encoding'] || "";
+
+				that.__handleRequest(request, function(data) {
+
+					if (accept_encoding.match(/\bgzip\b/)) {
+
+						zlib.gzip(data.body, function(err, buffer) {
+
+							data.header['Content-Encoding'] = 'gzip';
+							data.header['Content-Length']   = buffer.length;
+							response.writeHead(data.status, data.header);
+
+							if (!err) {
+								response.write(buffer);
+								response.end();
+							} else {
+								response.end();
+							}
+
+						});
+
+					} else {
+
+						data.header['Content-Length'] = data.body.length;
+
+						response.writeHead(data.status, data.header);
+						response.write(data.body);
+						response.end();
+
+					}
+
+				});
+
+			});
+			this.__server.listen(port, host);
+
+
+			this.__host = host;
+			this.__port = port;
+
+
+			var url = 'http://' + (host === null ? 'localhost' : host) + ':' + port;
+			var welcome = 'game.WebServer: Ready. Navigate your Web Browser to: ' + url;
+
+
+			var header = '';
+			for (var w = 0, wl = welcome.length; w < wl; w++) {
+				header += w % 2 === 0 ? '-' : '=';
+			}
+
+			console.log('\n');
+			console.log(header);
+			console.log(welcome);
+			console.log(header);
+			console.log('\n');
+
+		},
 
 		getHost: function() {
 			return this.__host;
@@ -162,6 +171,12 @@ lychee.define('game.WebServer').tags({
 		getVersion: function() {
 			return Class.VERSION;
 		},
+
+
+
+		/*
+		 * PRIVATE API
+		 */
 
 		__handleRequest: function(request, callback) {
 
@@ -193,12 +208,11 @@ lychee.define('game.WebServer').tags({
 					} else if (fs.isFile(resolved) === true) {
 						file.execute(resolved, callback);
 					} else {
-						console.log(resolved);
-						error.execute(403, url, callback);
+						error.execute(403, url + ' (' + resolved + ')', callback);
 					}
 
 				} else {
-					error.execute(404, url + '(' + resolved + ')', callback);
+					error.execute(404, url + ' (' + resolved + ')', callback);
 					this.__mods.fs.refresh();
 				}
 
