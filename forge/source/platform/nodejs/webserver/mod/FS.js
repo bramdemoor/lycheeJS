@@ -139,15 +139,21 @@ lychee.define('game.webserver.mod.FS').tags({
 
 			if (entry.substr(0, 1) !== '.') {
 
-				var id = path + '/' + entry;
-				this.__cache[id] = type;
+				var fullpath = path + '/' + entry;
+
+				this.__cache[fullpath] = type;
+
 
 				if (
 					alias !== null
 					&& type === Class.TYPE.link
 				) {
-					this.__map[alias] = id;
-					this.__rmap[id] = alias;
+
+					var fullalias = path + '/' + alias;
+
+					this.__map[fullalias] = fullpath;
+					this.__rmap[fullpath] = fullalias;
+
 				}
 
 

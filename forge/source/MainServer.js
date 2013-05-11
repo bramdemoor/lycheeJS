@@ -1,12 +1,22 @@
 
-lychee.define('game.Server').requires([
+lychee.define('game.MainServer').requires([
 	'game.WebServer',
 	'lychee.net.Server',
 	'lychee.net.remote.RoomService'
 ]).exports(function(lychee, global) {
 
-	var Class = function(settings) {
+	var Class = function(data) {
 
+		var settings = lychee.extend({}, data);
+
+
+		this.webserver = new game.WebServer({
+			root: settings.root,
+			port: 8080
+		});
+
+
+/*
 		this.__server = new lychee.net.Server(
 			JSON.stringify, JSON.parse
 		);
@@ -21,6 +31,7 @@ lychee.define('game.Server').requires([
 			remote.accept();
 
 		}, this);
+*/
 
 	};
 

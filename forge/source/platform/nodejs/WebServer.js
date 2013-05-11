@@ -101,13 +101,28 @@ lychee.define('game.WebServer').tags({
 		this.__server.listen(this.__port);
 
 
-/*
 		this.__mods.fs.add(
-			this.__root, 'game/jewelz',
+			this.__root, 'forge/backend.sjs',
 			game.webserver.mod.FS.TYPE.link,
-			this.__root + '/alias'
+			'backend'
 		);
-*/
+
+
+		var url = 'http://' + (this.__host === null ? 'localhost' : this.__host) + ':' + this.__port;
+		var welcome = 'game.WebServer: Ready. Navigate your Web Browser to: ' + url;
+
+
+		var header = '';
+		for (var w = 0, wl = welcome.length; w < wl; w++) {
+			header += w % 2 === 0 ? '-' : '=';
+		}
+
+		console.log('\n');
+		console.log(header);
+		console.log(welcome);
+		console.log(header);
+		console.log('\n');
+
 
 	};
 
@@ -178,11 +193,12 @@ lychee.define('game.WebServer').tags({
 					} else if (fs.isFile(resolved) === true) {
 						file.execute(resolved, callback);
 					} else {
+						console.log(resolved);
 						error.execute(403, url, callback);
 					}
 
 				} else {
-					error.execute(404, url, callback);
+					error.execute(404, url + '(' + resolved + ')', callback);
 					this.__mods.fs.refresh();
 				}
 

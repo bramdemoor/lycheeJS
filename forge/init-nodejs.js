@@ -9,8 +9,7 @@ require(path + '/Preloader.js');
 require(path + '/platform/nodejs/bootstrap.js')(__dirname);
 
 
-// Also requires game.WebServer
-require('./source/Server.js');
+require('./source/MainServer.js');
 
 
 lychee.debug = true;
@@ -26,13 +25,10 @@ lychee.tag({
 
 lychee.build(function(lychee, global) {
 
-	var settings = {
-		base: './asset',
-		port: 1337
-	};
-
-	new game.Server(settings);
-
+	/*
+	 * HACK
+	 * for crappy OS aka Windows
+	 */
 
 	var root = __dirname;
 	if (root.substr(0, 2) === 'C:') {
@@ -45,12 +41,14 @@ lychee.build(function(lychee, global) {
 	root = root.join('/');
 
 
+
 	var settings = {
 		root: root,
-		port: 8080
+		base: './asset'
 	};
 
-	new game.WebServer(settings);
+
+	new game.MainServer(settings);
 
 }, typeof global !== 'undefined' ? global : this);
 
