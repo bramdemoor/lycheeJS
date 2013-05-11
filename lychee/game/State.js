@@ -232,7 +232,19 @@ lychee.define('lychee.game.State').requires([
 		__processKey: function(key, name, delta) {
 
 			if (this.__focusEntity !== null) {
-				this.__focusEntity.trigger('key', [ key, name, delta ]);
+
+				var result = this.__focusEntity.trigger('key', [ key, name, delta ]);
+				if (
+					key === 'return'
+					&& result === true
+				) {
+
+					if (this.__focusEntity.getState() === 'default') {
+						this.__focusEntity = null;
+					}
+
+				}
+
 			}
 
 		},
