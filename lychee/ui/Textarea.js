@@ -35,6 +35,8 @@ lychee.define('lychee.ui.Textarea').requires([
 		 * INITIALIZATION
 		 */
 
+		this.bind('touch', function() {}, this);
+
 		this.bind('focus', function() {
 			this.setState('active');
 		}, this);

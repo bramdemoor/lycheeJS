@@ -114,7 +114,10 @@ lychee.define('game.demo.RoomService').requires([
 				button.bind('touch', function() {
 
 					var user = username.getValue();
-					if (typeof user === 'string') {
+					if (
+						typeof user === 'string'
+						&& user !== 'Enter your name'
+					) {
 
 						if (this.__service !== null) {
 							this.__service.enter(user, 0);

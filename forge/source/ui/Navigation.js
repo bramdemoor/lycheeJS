@@ -1,5 +1,7 @@
 
 lychee.define('game.ui.Navigation').requires([
+	'lychee.ui.Area',
+	'lychee.ui.Button'
 ]).includes([
 	'lychee.ui.Entity'
 ]).exports(function(lychee, global) {

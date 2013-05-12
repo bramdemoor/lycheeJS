@@ -22,21 +22,12 @@ lychee.define('game.state.Test').requires([
 
 		reset: function() {
 
-			var layer = new lychee.game.Layer();
+			var env    = this.renderer.getEnvironment();
+			var width  = env.width;
+			var height = env.height;
 
-			layer.addEntity(new lychee.ui.Slider({
-				range: {
-					from:  0,
-					to:    100,
-					delta: 1
-				},
-				radius: 100,
-				position: {
-					x: 200,
-					y: 200
-				},
-				value: 0
-			}));
+
+			var layer = new lychee.game.Layer();
 
 			layer.addEntity(new lychee.ui.Slider({
 				range: {
@@ -44,10 +35,10 @@ lychee.define('game.state.Test').requires([
 					to:    360,
 					delta: 10
 				},
-				radius: 50,
+				radius: 100,
 				position: {
-					x: 500,
-					y: 200
+					x: -1/2 * width + 150,
+					y: 0
 				},
 				value: 90
 			}));
@@ -60,8 +51,8 @@ lychee.define('game.state.Test').requires([
 				},
 				radius: 50,
 				position: {
-					x: 650,
-					y: 200
+					x: -1/2 * width + 350,
+					y: 0
 				},
 				value: 180
 			}));
@@ -70,10 +61,10 @@ lychee.define('game.state.Test').requires([
 				font:   this.game.fonts.normal,
 				value:  ':)',
 				width:  200,
-				height: 100,
+				height: 200,
 				position: {
-					x: 850,
-					y: 200
+					x: -100,
+					y: 0
 				}
 			}));
 
@@ -83,8 +74,8 @@ lychee.define('game.state.Test').requires([
 				value: 'test',
 				width: 200,
 				position: {
-					x: 850,
-					y: 300
+					x: 150,
+					y: -50
 				}
 			}));
 
@@ -96,8 +87,8 @@ lychee.define('game.state.Test').requires([
 				max: 12347,
 				width: 200,
 				position: {
-					x: 550,
-					y: 300
+					x: 150,
+					y: 50
 				}
 			}));
 
