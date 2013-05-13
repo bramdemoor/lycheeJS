@@ -1,0 +1,66 @@
+{
+
+	"project": {
+		"title": "Game Boilerplate"
+	},
+
+	"states": [{
+
+		"id": "Game",
+
+		"layers": {
+
+			"ui": {
+
+				"entities": [{
+					"id": null,
+					"constructor": "game.entity.Text",
+					"settings": {
+						"text": "Game State active",
+						"font": "$game.entity.Font#headline",
+						"position": {
+							"x": 0,
+							"y": -50
+						}
+					}
+				}, {
+					"id": null,
+					"constructor": "game.entity.Text",
+					"settings": {
+						"text": "Touch the circle to make Noise",
+						"font": "$game.entity.Font#small",
+						"position": {
+							"x": 0,
+							"y": 0
+						}
+					}
+				}, {
+					"id": "circle",
+					"constructor": "game.entity.Circle",
+					"settings": {
+						"radius": 50,
+						"position": {
+							"x": 0,
+							"y": 100
+						}
+					}
+				}, {
+					"id": "exit",
+					"constructor": "game.entity.Text",
+					"settings": {
+						"text": "Exit to Menu",
+						"font": "$game.entity.Font#small",
+						"position": {
+							"x": 0,
+							"y":
+						}
+					}
+				}]
+
+			}
+
+		}
+
+	}]
+
+}

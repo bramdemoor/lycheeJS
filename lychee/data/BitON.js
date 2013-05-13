@@ -21,6 +21,30 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 	}
 
 
+	var _resolve_constructor = function(identifier, scope) {
+
+		var pointer = scope;
+
+		var ns = namespace.split('.');
+		for (var n = 0, l = ns.length; n < l; n++) {
+
+			var name = ns[n];
+
+			if (pointer[name] !== undefined) {
+				pointer = pointer[name];
+			} else {
+				pointer = null;
+				break;
+			}
+
+		}
+
+
+		return pointer;
+
+	};
+
+
 
 	var _stream = function(buffer, mode) {
 
@@ -381,7 +405,10 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 
 
 		// 5: Start of Object
-		} else if (data instanceof Object) {
+		} else if (
+			data instanceof Object
+			&& !data instanceof Function
+		) {
 
 			stream.write(5, 3);
 
@@ -394,6 +421,17 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 				}
 
 			}
+
+			// Write EOO marker
+			stream.write(7, 3);
+
+
+		// 6: Custom High-Level Implementation
+		} else if (typeof data.serialize === 'function') {
+
+			stream.write(6, 3);
+
+			_encode(stream, data.serialize());
 
 			// Write EOO marker
 			stream.write(7, 3);
@@ -418,25 +456,17 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 
 				tmp = stream.read(2);
 
-
 				if (tmp === 1) {
-
 					value = null;
-
 				} else if (tmp === 2) {
-
 					value = false;
-
 				} else if (tmp === 3) {
-
 					value = true;
-
 				}
 
 
 			// 1: Integer, 2: Float
 			} else if (type === 1 || type === 2) {
-
 
 				var tmp = stream.read(3);
 				if (tmp === 0) {
@@ -572,6 +602,41 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 						errors++;
 					}
 
+				}
+
+			// 6: Custom High-Level Implementation
+			} else if (type === 6) {
+
+				var data = _decode(stream);
+
+				if (
+					typeof data.constructor === 'string'
+					&& data.arguments instanceof Array
+				) {
+
+					var construct = _resolve_namespace(data.constructor, global);
+					if (typeof construct === 'function') {
+
+						var bindargs = data.arguments;
+						bindargs.reverse();
+						bindargs.push(construct);
+						bindargs.reverse();
+
+						value = new (
+							construct.bind.apply(
+								construct,
+								args
+							)
+						)();
+
+					}
+
+				}
+
+
+				var check = stream.read(3);
+				if (check !== 7) {
+					value = undefined;
 				}
 
 			}

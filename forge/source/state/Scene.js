@@ -38,7 +38,7 @@ lychee.define('game.state.Scene').requires([
 			var layer = new lychee.game.Layer();
 
 
-			var navigation = new _ui.Area({
+			var navigation = new _ui.Navigation({
 				width:    width - tile * 12,
 				height:   2 * tile,
 				position: {
@@ -51,7 +51,7 @@ lychee.define('game.state.Scene').requires([
 			layer.addEntity(navigation);
 
 
-			var menu = new _ui.Area({
+			var layers = new _ui.Layers({
 				width:    tile * 6,
 				height:   height,
 				position: {
@@ -61,10 +61,10 @@ lychee.define('game.state.Scene').requires([
 				scrollable: false
 			});
 
-			layer.addEntity(menu);
+			layer.addEntity(layers);
 
 
-			var details = new _ui.Area({
+			var properties = new _ui.Properties({
 				width:    tile * 6,
 				height:   height,
 				position: {
@@ -74,7 +74,7 @@ lychee.define('game.state.Scene').requires([
 				scrollable: false
 			});
 
-			layer.addEntity(details);
+			layer.addEntity(properties);
 
 
 			this.addLayer('ui', layer);
