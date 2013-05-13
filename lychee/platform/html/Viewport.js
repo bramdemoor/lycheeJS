@@ -270,6 +270,14 @@ lychee.define('Viewport').tags({
 
 		__processReshape: function(width, height) {
 
+			if (
+				width === this.__width
+				&& height === this.__height
+			) {
+				return;
+			}
+
+
 			this.__width  = width;
 			this.__height = height;
 

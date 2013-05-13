@@ -5,6 +5,7 @@ lychee.define('game.Main').requires([
 	'lychee.Viewport',
 	'game.Renderer',
 	'game.entity.Font',
+	'game.state.Scene',
 	'game.state.Test',
 	'game.DeviceSpecificHacks'
 ]).includes([
@@ -31,7 +32,7 @@ lychee.define('game.Main').requires([
 			height: 386
 		},
 
-		reset: function(width, height) {
+		reset: function(width, height, states) {
 
 			game.DeviceSpecificHacks.call(this);
 
@@ -58,6 +59,21 @@ lychee.define('game.Main').requires([
 
 			this.renderer.reset(this.settings.width, this.settings.height, false);
 
+
+			if (states === true) {
+
+				var state = this.getState();
+
+				state.leave && state.leave();
+
+				for (var id in this.states) {
+					this.states[id].reset();
+				}
+
+				state.enter && state.enter();
+
+			}
+
 		},
 
 		init: function() {
@@ -79,15 +95,13 @@ lychee.define('game.Main').requires([
 
 			this.viewport = new lychee.Viewport();
 			this.viewport.bind('reshape', function(orientation, rotation, width, height) {
-
-				this.reset(width, height);
-
+				this.reset(width, height, true);
 			}, this);
 			this.viewport.bind('hide', function() {
-
+				this.stop();
 			}, this);
 			this.viewport.bind('show', function() {
-
+				this.start();
 			}, this);
 
 
@@ -109,9 +123,10 @@ lychee.define('game.Main').requires([
 			this.fonts.small    = new game.entity.Font('small');
 
 
+			this.states.scene = new game.state.Scene(this);
 			this.states.test  = new game.state.Test(this);
 
-			this.setState('test');
+			this.setState('scene');
 
 			this.start();
 

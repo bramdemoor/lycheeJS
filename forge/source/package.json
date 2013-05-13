@@ -30,6 +30,12 @@
 		},
 
 		"entity": {
+
+			"ui": {
+				"Area": [ "js" ],
+				"Widget": [ "js" ]
+			},
+
 			"Font": [
 				"js",
 				"headline.json",
@@ -39,9 +45,11 @@
 				"small.json",
 				"small.png"
 			]
+
 		},
 
 		"state": {
+			"Scene": [ "js" ],
 			"Test": [ "js" ]
 		},
 
