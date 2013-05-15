@@ -114,8 +114,8 @@ lychee.define('game.Main').requires([
 
 				state.leave && state.leave();
 
-				for (var id in this.states) {
-					this.states[id].reset();
+				for (var id in this.__states) {
+					this.__states[id].reset();
 				}
 
 				state.enter && state.enter();
@@ -189,8 +189,8 @@ lychee.define('game.Main').requires([
 			this.fonts.small    = new game.entity.Font('small');
 
 
-			this.states.game = new game.state.Game(this);
-			this.states.menu = new game.state.Menu(this);
+			this.addState('game', new game.state.Game(this));
+			this.addState('menu', new game.state.Menu(this));
 
 			this.setState('menu');
 

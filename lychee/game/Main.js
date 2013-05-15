@@ -9,8 +9,8 @@ lychee.define('lychee.game.Main').requires([
 
 		this.settings = lychee.extend({}, this.defaults, settings);
 
-		this.states = {};
-		this.__state = null;
+		this.__states = {};
+		this.__state  = null;
 
 		lychee.event.Emitter.call(this, 'game');
 
@@ -54,11 +54,46 @@ lychee.define('lychee.game.Main').requires([
 			this.loop.stop();
 		},
 
+		addState: function(id, state) {
+
+			id = typeof id === 'string' ? id : null;
+
+			if (id !== null) {
+
+				this.__states[id] = state;
+				return true;
+
+			}
+
+
+			return false;
+
+		},
+
 		getState: function(id) {
 
 			id = typeof id === 'string' ? id : null;
 
-			return this.states[id] || this.__state;
+			return this.__states[id] || this.__state;
+
+		},
+
+		removeState: function(id) {
+
+			id = typeof id === 'string' ? id : null;
+
+			if (
+				id !== null
+				&& this.__states[id] !== undefined
+			) {
+
+				delete this.__states[id];
+				return true;
+
+			}
+
+
+			return false;
 
 		},
 
@@ -67,7 +102,7 @@ lychee.define('lychee.game.Main').requires([
 			data = data || null;
 
 			var oldState = this.__state;
-			var newState = this.states[id] || null;
+			var newState = this.__states[id] || null;
 
 			// stupid called -.-
 			if (newState === null) {

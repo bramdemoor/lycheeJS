@@ -34,9 +34,22 @@ lychee.define('lychee.ui.Input').requires([
 		delete settings.value;
 
 
-		settings.width  = typeof settings.width === 'number'  ? settings.width  : 64 * 4;
-		settings.height = typeof settings.height === 'number' ? settings.height : 64;
+		settings.width  = typeof settings.width === 'number'  ? settings.width  : 0;
+		settings.height = typeof settings.height === 'number' ? settings.height : 0;
 		settings.shape  = lychee.ui.Entity.SHAPE.rectangle;
+
+		if (
+			settings.height === 0
+			&& this.__font instanceof _font
+		) {
+
+			var lineheight = this.__font.getSettings().lineheight;
+			if (lineheight !== 0) {
+				settings.height = lineheight;
+			}
+
+		}
+
 
 		lychee.ui.Entity.call(this, 'ui-input', settings);
 

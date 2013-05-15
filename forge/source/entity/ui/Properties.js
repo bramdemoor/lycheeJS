@@ -1,9 +1,12 @@
 
-lychee.define('game.entity.ui.Area').includes([
+lychee.define('game.entity.ui.Properties').includes([
 	'lychee.ui.Area'
 ]).exports(function(lychee, global) {
 
-	var Class = function(data) {
+	var Class = function(data, state) {
+
+		this.state = state;
+
 
 		var settings = lychee.extend({}, data);
 

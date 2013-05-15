@@ -7,7 +7,8 @@ lychee.define('game.Main').requires([
 	'game.entity.Font',
 	'game.state.Scene',
 	'game.state.Test',
-	'game.DeviceSpecificHacks'
+	'game.DeviceSpecificHacks',
+	'game.sandbox.Builder'
 ]).includes([
 	'lychee.game.Main'
 ]).exports(function(lychee, global) {
@@ -16,7 +17,7 @@ lychee.define('game.Main').requires([
 
 		lychee.game.Main.call(this, settings);
 
-		this.init();
+		this.load();
 
 	};
 
@@ -24,7 +25,6 @@ lychee.define('game.Main').requires([
 	Class.prototype = {
 
 		defaults: {
-			base: './asset',
 			fullscreen: true,
 			renderFps: 60,
 			updateFps: 60,
@@ -66,8 +66,8 @@ lychee.define('game.Main').requires([
 
 				state.leave && state.leave();
 
-				for (var id in this.states) {
-					this.states[id].reset();
+				for (var id in this.__states) {
+					this.__states[id].reset();
 				}
 
 				state.enter && state.enter();
@@ -76,7 +76,31 @@ lychee.define('game.Main').requires([
 
 		},
 
-		init: function() {
+		load: function() {
+
+			var urls = [
+				'/game/boilerplate/project.json'
+			];
+
+
+			this.preloader = new lychee.Preloader({
+				timeout: Infinity
+			});
+
+			this.preloader.bind('ready', function(assets) {
+
+				var blob = assets[urls[0]];
+				blob.project.path = urls[0];
+
+				this.init(blob);
+
+			}, this);
+
+			this.preloader.load(urls);
+
+		},
+
+		init: function(project) {
 
 			// Remove Preloader Progress Bar
 			lychee.Preloader.prototype._progress(null, null);
@@ -116,6 +140,8 @@ lychee.define('game.Main').requires([
 				fireSwipe:    true
 			});
 
+			this.builder = new game.sandbox.Builder(this);
+
 
 			this.fonts = {};
 			this.fonts.headline = new game.entity.Font('headline');
@@ -125,10 +151,14 @@ lychee.define('game.Main').requires([
 			this.fonts.label    = new game.entity.Font('label');
 
 
-			this.states.scene = new game.state.Scene(this);
-			this.states.test  = new game.state.Test(this);
+			this.addState('scene', new game.state.Scene(this));
+			this.addState('test',  new game.state.Test(this));
 
-			this.setState('scene');
+
+			this.setState(
+				'scene',
+				project
+			);
 
 			this.start();
 

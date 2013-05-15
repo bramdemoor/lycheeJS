@@ -25,7 +25,7 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 
 		var pointer = scope;
 
-		var ns = namespace.split('.');
+		var ns = identifier.split('.');
 		for (var n = 0, l = ns.length; n < l; n++) {
 
 			var name = ns[n];
@@ -614,7 +614,7 @@ lychee.define('lychee.data.BitON').exports(function(lychee, global) {
 					&& data.arguments instanceof Array
 				) {
 
-					var construct = _resolve_namespace(data.constructor, global);
+					var construct = _resolve_constructor(data.constructor, global);
 					if (typeof construct === 'function') {
 
 						var bindargs = data.arguments;

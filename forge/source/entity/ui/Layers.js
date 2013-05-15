@@ -1,5 +1,5 @@
 
-lychee.define('game.entity.ui.Widget').includes([
+lychee.define('game.entity.ui.Layers').includes([
 	'lychee.ui.Area'
 ]).exports(function(lychee, global) {
 

@@ -33,6 +33,7 @@ lychee.define('lychee.ui.Button').requires([
 		settings.width  = this.width;
 		settings.height = this.height;
 
+
 		lychee.ui.Entity.call(this, 'ui-button', settings);
 
 		settings = null;

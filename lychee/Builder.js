@@ -726,22 +726,22 @@
 
 		build: function(env, callback, scope) {
 
+			callback = callback instanceof Function ? callback : function() {};
+			scope    = scope !== undefined ? scope : global;
+
+
 			if (lychee.debug === true) {
 				console.group('lychee.Builder');
 			}
 
+
 			this.__clock = Date.now();
-
-			this.__tree = Object.prototype.toString.call(env.tree) === '[object Object]' ? env.tree : {};
-			this.__bases = Object.prototype.toString.call(env.bases) === '[object Object]' ? env.bases : {};
-			this.__tags = Object.prototype.toString.call(env.tags) === '[object Object]' ? env.tags : {};
-
-
-			callback = callback instanceof Function ? callback : function() {};
-			scope = scope !== undefined ? scope : global;
+			this.__tree  = env.tree instanceof Object  ? env.tree  : {};
+			this.__bases = env.bases instanceof Object ? env.bases : {};
+			this.__tags  = env.tags instanceof Object  ? env.tags  : {};
 
 			this.__buildCallback = callback;
-			this.__buildScope = scope;
+			this.__buildScope    = scope;
 
 
 			if (Object.keys(this.__tree).length === 1) {
@@ -752,6 +752,7 @@
 			if (lychee.debug === true) {
 				console.log('Loading Dependencies for ' + this.__buildStart);
 			}
+
 
 			// 1. Load Package Configurations
 			// (will automatically refresh afterwards)

@@ -32,7 +32,10 @@
 		"entity": {
 
 			"ui": {
-				"Area": [ "js" ],
+				"Layers": [ "js" ],
+				"Navigation": [ "js" ],
+				"Properties": [ "js" ],
+				"Sandbox": [ "js" ],
 				"Widget": [ "js" ]
 			},
 
@@ -48,13 +51,16 @@
 
 		},
 
+		"sandbox": {
+			"Builder": [ "js" ],
+			"Layer": [ "js" ],
+			"Main": [ "js" ],
+			"State": [ "js" ]
+		},
+
 		"state": {
 			"Scene": [ "js" ],
 			"Test": [ "js" ]
-		},
-
-		"ui": {
-			"Navigation": [ "js" ]
 		},
 
 		"webserver": {
