@@ -13,6 +13,8 @@ lychee.define('game.state.Game').requires([
 
 		this.__client = this.game.client;
 
+		this.__entities = {};
+
 		this.reset();
 
 	};
@@ -70,6 +72,7 @@ lychee.define('game.state.Game').requires([
 			}, this);
 
 			layer.addEntity(entity);
+			this.__entities.roll = entity;
 
 
 			entity = new lychee.ui.Slider({
@@ -102,6 +105,7 @@ lychee.define('game.state.Game').requires([
 			}, this);
 
 			layer.addEntity(entity);
+			this.__entities.pitch = entity;
 
 
 			entity = new lychee.ui.Slider({
@@ -134,6 +138,7 @@ lychee.define('game.state.Game').requires([
 			}, this);
 
 			layer.addEntity(entity);
+			this.__entities.yaw = entity;
 
 
 			entity = new lychee.ui.Slider({
@@ -166,6 +171,7 @@ lychee.define('game.state.Game').requires([
 			}, this);
 
 			layer.addEntity(entity);
+			this.__entities.heave = entity;
 
 
 
@@ -226,6 +232,14 @@ lychee.define('game.state.Game').requires([
 			});
 
 			entity.bind('touch', function() {
+
+				var entities = this.__entities;
+
+				entities.roll.setValue(0);
+				entities.pitch.setValue(0);
+				entities.yaw.setValue(0);
+				entities.heave.setValue(0);
+
 
 				this.__client.send({
 					method: 'stop',
