@@ -17,10 +17,13 @@ lychee.define('game.ar.command.CONFIG').exports(function(lychee, global) {
 			key = typeof key === 'string' ? key : this.key;
 
 
-			if (value instanceof Array) {
-				this.values = value;
-			} else if (typeof value === 'string') {
-				this.values = [ value ];
+			this.key = key;
+
+
+			if (values instanceof Array) {
+				this.values = values;
+			} else if (typeof values === 'string') {
+				this.values = [ values ];
 			}
 
 		},
@@ -51,7 +54,7 @@ lychee.define('game.ar.command.CONFIG').exports(function(lychee, global) {
 
 			str += sequence + ',';
 
-			str += '"' + this.key + '",';
+			str += '"' + key + '",';
 			str += '"' + value    + '"';
 
 			str += '\r';

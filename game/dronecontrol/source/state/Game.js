@@ -89,7 +89,7 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'heave',
-					value:  0.5
+					value:  1.0
 				});
 
 			}, this);
@@ -110,7 +110,7 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'heave',
-					value:  -0.5
+					value:  -1.0
 				});
 
 			}, this);
@@ -129,28 +129,39 @@ lychee.define('game.state.Game').requires([
 
 			entity.bind('touch', function() {
 
+
 				this.__client.send({
 					method: 'animateFlight',
-					type:   'flipAhead',
-					value:  1000
+					// type:   'flip-ahead',
+					// value:  1000
+					// type:   'wave',
+					// value:  10000
+					type:  'flip-ahead',
+					value: 700
 				});
 
-/*
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Button({
+				label: 'Stop!',
+				font:  this.game.fonts.normal,
+				position: {
+					x: 0,
+					y: 76
+				}
+			});
+
+			entity.bind('touch', function() {
+
+
 				this.__client.send({
-					method: 'animateLEDs',
-					type: 'blinkOrange',
-					value: 4000
+					method: 'stop',
+					value: null
 				});
-*/
 
-// animateLEDs('blinkOrange', 1000);
-
-/*
-				this.__client.send({
-					method: 'yaw',
-					value:  0.2
-				});
-*/
 			}, this);
 
 			layer.addEntity(entity);

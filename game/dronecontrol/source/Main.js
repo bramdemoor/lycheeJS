@@ -148,7 +148,7 @@ global.CLIENT = this.client;
 			this.fonts.normal = new game.entity.Font('normal');
 
 
-			this.states.game = new game.state.Game(this);
+			this.addState('game', new game.state.Game(this));
 
 			this.setState('game');
 

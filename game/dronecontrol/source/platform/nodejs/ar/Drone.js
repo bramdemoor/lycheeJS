@@ -69,13 +69,19 @@ lychee.define('game.ar.Drone').requires([
 
 
 	Class.FLIGHTANIMATION = {
-		'turnaround':       0,
-		'turnaroundGodown': 1,
-		'yawShake':         2,
-		'yawDance':         3,
-		'phiDance':         4,
-		'thetaDance':       5,
-		'wave':             6
+		'turn':         6,
+		'turn-down':    7,
+		'yaw-shake':    8,
+		'roll-dance':  10,
+		'pitch-dance': 11,
+		'yaw-dance':    9,
+
+		'wave':        13,
+
+		'flip-ahead':  16,
+		'flip-behind': 17,
+		'flip-left':   18,
+		'flip-right':  19
 	};
 
 
@@ -209,11 +215,35 @@ console.log('SENDING CONFIG', id, state.config[id]);
 		},
 
 		roll: function(speed) {
-			// TODO: Implement Roll
+
+			if (
+				typeof speed === 'number'
+				&& speed >= -1.0
+				&& speed <=  1.0
+			) {
+				this.__state.roll = speed;
+				return true;
+			}
+
+
+			return false;
+
 		},
 
 		pitch: function(speed) {
-			// TODO: Implement Pitch
+
+			if (
+				typeof speed === 'number'
+				&& speed >= -1.0
+				&& speed <=  1.0
+			) {
+				this.__state.pitch = speed;
+				return true;
+			}
+
+
+			return false;
+
 		},
 
 		yaw: function(speed) {
@@ -253,11 +283,13 @@ console.log('SENDING CONFIG', id, state.config[id]);
 			duration = typeof duration === 'number' ? duration : null;
 
 
-			var valid = false;
+			var valid   = false;
+			var enumval = 0;
 
 			for (var id in Class.FLIGHTANIMATION) {
 				if (id === type) {
-					valid = true;
+					enumval = Class.FLIGHTANIMATION[id];
+					valid   = true;
 					break;
 				}
 			}
@@ -267,7 +299,7 @@ console.log('SENDING CONFIG', id, state.config[id]);
 				valid === true
 				&& duration !== null
 			) {
-				this.__state.config['control:flight_anim'] = [ type, duration ];
+				this.__state.config['control:flight_anim'] = [ enumval, duration ];
 				return true;
 			}
 
@@ -298,11 +330,8 @@ console.log('SENDING CONFIG', id, state.config[id]);
 				valid === true
 				&& duration !== null
 			) {
-
 				this.__state.config['control:leds_anim'] = [ enumval, hertz, (duration / 1000) | 0 ];
-
 				return true;
-
 			}
 
 
