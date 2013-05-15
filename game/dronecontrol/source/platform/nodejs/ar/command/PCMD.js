@@ -50,14 +50,19 @@ lychee.define('game.ar.command.PCMD').exports(function(lychee, global) {
 			}
 
 
-			// TODO: pitch may be inverted, verify that
+
+			/*
+			 * Pitch is inverted, because the sensor's
+			 * top is actually the physical bottom side
+			 * of the mainboard
+			 */
 
 			var str = 'AT*PCMD=';
 
 			str += sequence + ',';
 			str += flag     + ',';
 			str += _floatToString(this.roll)   + ',';
-			str += _floatToString(this.pitch)  + ',';
+			str += _floatToString(-this.pitch)  + ',';
 			str += _floatToString(this.heave)  + ',';
 			str += _floatToString(this.yaw);
 
