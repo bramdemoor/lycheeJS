@@ -100,12 +100,6 @@ lychee.define('game.ar.Drone').requires([
 	};
 
 
-
-
-
-
-
-
 	Class.prototype = {
 
 		/*

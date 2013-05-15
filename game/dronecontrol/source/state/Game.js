@@ -1,6 +1,7 @@
 
 lychee.define('game.state.Game').requires([
 	'lychee.ui.Button',
+	'lychee.ui.Slider',
 	'game.entity.Circle'
 ]).includes([
 	'lychee.game.State'
@@ -34,12 +35,150 @@ lychee.define('game.state.Game').requires([
 			var layer = new lychee.game.Layer();
 
 
+
+			/*
+			 * STEERING CONTROLS
+			 */
+
+			entity = new lychee.ui.Slider({
+				width:  48,
+				height: 256,
+				shape: lychee.ui.Slider.SHAPE.rectangle,
+				range: {
+					from:      -1.0,
+					to:         1.0,
+					delta:      0.1
+				},
+				value: 0,
+				position: {
+					x: -1/2 * width + 48,
+					y: 0
+				}
+			});
+
+			entity.bind('change', function(value) {
+
+				value = value * 10;
+				value |= 0;
+				value = value / 10;
+
+				this.__client.send({
+					method: 'roll',
+					value: value
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Slider({
+				width:  48,
+				height: 256,
+				shape: lychee.ui.Slider.SHAPE.rectangle,
+				range: {
+					from:      -1.0,
+					to:         1.0,
+					delta:      0.1
+				},
+				value: 0,
+				position: {
+					x: -1/2 * width + 48 * 3,
+					y: 0
+				}
+			});
+
+			entity.bind('change', function(value) {
+
+				value = value * 10;
+				value |= 0;
+				value = value / 10;
+
+				this.__client.send({
+					method: 'pitch',
+					value: value
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Slider({
+				width:  48,
+				height: 256,
+				shape: lychee.ui.Slider.SHAPE.rectangle,
+				range: {
+					from:      -1.0,
+					to:         1.0,
+					delta:      0.1
+				},
+				value: 0,
+				position: {
+					x: -1/2 * width + 48 * 5,
+					y: 0
+				}
+			});
+
+			entity.bind('change', function(value) {
+
+				value = value * 10;
+				value |= 0;
+				value = value / 10;
+
+				this.__client.send({
+					method: 'yaw',
+					value: value
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Slider({
+				width:  48,
+				height: 256,
+				shape: lychee.ui.Slider.SHAPE.rectangle,
+				range: {
+					from:      -1.0,
+					to:         1.0,
+					delta:      0.1
+				},
+				value: 0,
+				position: {
+					x: -1/2 * width + 48 * 7,
+					y: 0
+				}
+			});
+
+			entity.bind('change', function(value) {
+
+				value = value * 10;
+				value |= 0;
+				value = value / 10;
+
+				this.__client.send({
+					method: 'heave',
+					value: value
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+
+			/*
+			 * EMERGENCY CONTROLS
+			 */
+
 			entity = new lychee.ui.Button({
 				label: 'Takeoff',
 				font:  this.game.fonts.normal,
 				position: {
-					x: -1/2 * width + 128,
-					y: 0
+					x: 0,
+					y: -128
 				}
 			});
 
@@ -47,7 +186,50 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'takeoff',
-					value:  null
+					value: null,
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Button({
+				label: '~ wave ~',
+				font:  this.game.fonts.normal,
+				position: {
+					x: 0,
+					y: -64
+				}
+			});
+
+			entity.bind('touch', function() {
+
+				this.__client.send({
+					method: 'animateFlight',
+					type:   'wave',
+					value:  10000
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Button({
+				label: 'Stop',
+				font:  this.game.fonts.normal,
+				position: {
+					x: 0,
+					y: 0
+				}
+			});
+
+			entity.bind('touch', function() {
+
+				this.__client.send({
+					method: 'stop',
+					value: null,
 				});
 
 			}, this);
@@ -59,8 +241,8 @@ lychee.define('game.state.Game').requires([
 				label: 'Land',
 				font:  this.game.fonts.normal,
 				position: {
-					x: -1/2 * width + 256,
-					y: 0
+					x: 0,
+					y: 64
 				}
 			});
 
@@ -68,7 +250,7 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'land',
-					value:  null
+					value: null,
 				});
 
 			}, this);
@@ -76,68 +258,26 @@ lychee.define('game.state.Game').requires([
 			layer.addEntity(entity);
 
 
+
+			/*
+			 * ANIMATIONS
+			 */
+
 			entity = new lychee.ui.Button({
-				label: 'Up',
+				label: 'flip-ahead',
 				font:  this.game.fonts.normal,
 				position: {
-					x: -1/2 * width + 512,
-					y: 0
+					x: 1/2 * width - 128 - 48,
+					y: -1/2 * height + 48
 				}
 			});
 
 			entity.bind('touch', function() {
-
-				this.__client.send({
-					method: 'heave',
-					value:  1.0
-				});
-
-			}, this);
-
-			layer.addEntity(entity);
-
-
-			entity = new lychee.ui.Button({
-				label: 'Down',
-				font:  this.game.fonts.normal,
-				position: {
-					x: -1/2 * width + 768,
-					y: 0
-				}
-			});
-
-			entity.bind('touch', function() {
-
-				this.__client.send({
-					method: 'heave',
-					value:  -1.0
-				});
-
-			}, this);
-
-			layer.addEntity(entity);
-
-
-			entity = new lychee.ui.Button({
-				label: 'Barrel Roll!',
-				font:  this.game.fonts.normal,
-				position: {
-					x: 0,
-					y: 128
-				}
-			});
-
-			entity.bind('touch', function() {
-
 
 				this.__client.send({
 					method: 'animateFlight',
-					// type:   'flip-ahead',
-					// value:  1000
-					// type:   'wave',
-					// value:  10000
-					type:  'flip-ahead',
-					value: 700
+					type:   'flip-ahead',
+					value:  700
 				});
 
 			}, this);
@@ -146,26 +286,69 @@ lychee.define('game.state.Game').requires([
 
 
 			entity = new lychee.ui.Button({
-				label: 'Stop!',
+				label: 'flip-behind',
 				font:  this.game.fonts.normal,
 				position: {
-					x: 0,
-					y: 76
+					x: 1/2 * width - 128 - 48,
+					y: -1/2 * height + 48 * 2
 				}
 			});
 
 			entity.bind('touch', function() {
 
-
 				this.__client.send({
-					method: 'stop',
-					value: null
+					method: 'animateFlight',
+					type:   'flip-behind',
+					value:  700
 				});
 
 			}, this);
 
 			layer.addEntity(entity);
 
+
+			entity = new lychee.ui.Button({
+				label: 'flip-left',
+				font:  this.game.fonts.normal,
+				position: {
+					x: 1/2 * width - 128 - 48,
+					y: -1/2 * height + 48 * 3
+				}
+			});
+
+			entity.bind('touch', function() {
+
+				this.__client.send({
+					method: 'animateFlight',
+					type:   'flip-left',
+					value:  700
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
+
+
+			entity = new lychee.ui.Button({
+				label: 'flip-right',
+				font:  this.game.fonts.normal,
+				position: {
+					x: 1/2 * width - 128 - 48,
+					y: -1/2 * height + 48 * 4
+				}
+			});
+
+			entity.bind('touch', function() {
+
+				this.__client.send({
+					method: 'animateFlight',
+					type:   'flip-right',
+					value:  700
+				});
+
+			}, this);
+
+			layer.addEntity(entity);
 
 
 			this.addLayer('ui', layer);

@@ -31,8 +31,7 @@ lychee.build(function(lychee, global) {
 	var settings = {
 		base: './asset',
 		host: 'localhost',
-		music: true,
-		sound: true
+		fullscreen: true
 	};
 
 	if (document && document.location) {

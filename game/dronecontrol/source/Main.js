@@ -26,9 +26,7 @@ lychee.define('game.Main').requires([
 		defaults: {
 			title: 'boilerplate',
 			base: './asset',
-			sound: true,
-			music: true,
-			fullscreen: false,
+			fullscreen: true,
 			renderFps: 60,
 			updateFps: 60,
 			width: 896,
@@ -117,23 +115,10 @@ lychee.define('game.Main').requires([
 				JSON.stringify, JSON.parse
 			);
 
-global.CLIENT = this.client;
-
-			this.client.bind('connect', function() {
-
-			}, this);
-
-			this.client.bind('disconnect', function(code, reason) {
-
-				console.warn('Disconnect', code, reason);
-
-			}, this);
-
 			this.client.listen(
 				1338,
 				this.settings.host
 			);
-
 
 
 			this.input = new lychee.Input({
