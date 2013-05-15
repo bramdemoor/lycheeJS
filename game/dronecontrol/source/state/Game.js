@@ -89,7 +89,7 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'heave',
-					value:  0.2
+					value:  0.5
 				});
 
 			}, this);
@@ -110,7 +110,7 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'heave',
-					value:  -0.2
+					value:  -0.5
 				});
 
 			}, this);
@@ -119,7 +119,7 @@ lychee.define('game.state.Game').requires([
 
 
 			entity = new lychee.ui.Button({
-				label: 'Turn Around!',
+				label: 'Barrel Roll!',
 				font:  this.game.fonts.normal,
 				position: {
 					x: 0,
@@ -131,10 +131,17 @@ lychee.define('game.state.Game').requires([
 
 				this.__client.send({
 					method: 'animateFlight',
-					type:   'turnaround',
+					type:   'flipAhead',
 					value:  1000
 				});
 
+/*
+				this.__client.send({
+					method: 'animateLEDs',
+					type: 'blinkOrange',
+					value: 4000
+				});
+*/
 
 // animateLEDs('blinkOrange', 1000);
 

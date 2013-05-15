@@ -101,6 +101,10 @@ lychee.define('game.Server').requires([
 					this.drone.animateFlight(type, value);
 				break;
 
+				case 'animateLEDs':
+					this.drone.animateLEDs(type, value);
+				break;
+
 			}
 
 console.log('SERVER RECEIVED DATA', data);

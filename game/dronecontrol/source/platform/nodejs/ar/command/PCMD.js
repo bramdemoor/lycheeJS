@@ -57,7 +57,7 @@ lychee.define('game.ar.command.PCMD').exports(function(lychee, global) {
 			str += sequence + ',';
 			str += flag     + ',';
 			str += _floatToString(this.roll)   + ',';
-			str += _floatToString(this.pitch) + ',';
+			str += _floatToString(this.pitch)  + ',';
 			str += _floatToString(this.heave)  + ',';
 			str += _floatToString(this.yaw);
 

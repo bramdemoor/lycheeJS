@@ -55,6 +55,7 @@ lychee.define('game.ar.command.Socket').tags({
 					this.__ip
 				);
 
+				console.log(JSON.stringify(commands));
 
 				this.__buffer = [];
 

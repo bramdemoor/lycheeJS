@@ -25,7 +25,6 @@ lychee.define('game.ar.Drone').requires([
 		this.__ref          = new _ref(false, false);
 		this.__pcmd         = new _pcmd(0, 0, 0, 0);
 		this.__config       = new _config();
-		this.__flightconfig = new _config();
 
 
 		var ip = settings.ip;
@@ -50,7 +49,7 @@ lychee.define('game.ar.Drone').requires([
 		this.__state.yaw   = 0;
 		this.__state.heave = 0;
 		this.__state.config = {
-			'general:navdata_demo': 'TRUE'
+			'general:navdata_demo': [ 'TRUE' ]
 		};
 
 
@@ -81,16 +80,24 @@ lychee.define('game.ar.Drone').requires([
 
 
 	Class.LEDANIMATION = {
-		'blinkGreenRed': 0,
-		'blinkGreen':    1,
-		'blinkRed':      2,
-		'blinkOrange':   3,
-		'fire':          4,
-		'standard':      5,
-		'red':           6,
-		'green':         7,
-		'blank':         8
+		'blinkGreenRed':  0,
+		'blinkGreen':     1,
+		'blinkRed':       2,
+		'blinkOrange':    3,
+		'snakeGreenRed':  4,
+		'fire':           5,
+		'standard':       6,
+		'red':            7,
+		'green':          8,
+		'redSnake':       9,
+		'blank':         10
 	};
+
+
+
+
+
+
 
 
 	Class.prototype = {
@@ -164,26 +171,6 @@ console.log('SENDING CONFIG', id, state.config[id]);
 				);
 
 				this.__commandSocket.add(this.__pcmd);
-
-/*
-				var flightani = this.__flightanimation;
-				if (flightani.active === true) {
-
-					if (flightani.sent === false) {
-
-						this.__flightconfig.set(
-							'control:flight_anim',
-						);
-
-
-						flightani.sent = true;
-
-					} else if (flightani.start + flightani.duration > clock) {
-						flightani.active = false;
-					}
-
-				}
-*/
 
 				this.__commandSocket.flush();
 
@@ -280,7 +267,7 @@ console.log('SENDING CONFIG', id, state.config[id]);
 				valid === true
 				&& duration !== null
 			) {
-				this.__state.config['control:flight_anim'] = type + ',' + duration;
+				this.__state.config['control:flight_anim'] = [ type, duration ];
 				return true;
 			}
 
@@ -289,16 +276,19 @@ console.log('SENDING CONFIG', id, state.config[id]);
 
 		},
 
-		animateLEDS: function(type, duration) {
+		animateLEDs: function(type, duration, hertz) {
 
 			duration = typeof duration === 'number' ? duration : null;
+			hertz    = typeof hertz === 'number' ? hertz : 2;
 
 
-			var valid = false;
+			var enumval = 0;
+			var valid   = false;
 
 			for (var id in Class.LEDANIMATION) {
 				if (id === type) {
-					valid = true;
+					enumval = Class.LEDANIMATION[id];
+					valid   = true;
 					break;
 				}
 			}
@@ -308,8 +298,11 @@ console.log('SENDING CONFIG', id, state.config[id]);
 				valid === true
 				&& duration !== null
 			) {
-				this.__state.config['control:leds_anim'] = type + ',' + duration;
+
+				this.__state.config['control:leds_anim'] = [ enumval, hertz, (duration / 1000) | 0 ];
+
 				return true;
+
 			}
 
 
