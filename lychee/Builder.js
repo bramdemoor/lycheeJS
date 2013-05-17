@@ -744,8 +744,18 @@
 			this.__buildScope    = scope;
 
 
-			if (Object.keys(this.__tree).length === 1) {
-				this.__buildStart = Object.keys(this.__tree)[0];
+			var candidates = Object.keys(this.__tree);
+
+			if (candidates.length === 1) {
+				this.__buildStart = candidates[0];
+			} else if (candidates.indexOf('game.Main') !== -1) {
+				this.__buildStart = 'game.Main';
+			} else {
+
+				console.warn('Could not determine build candidate automatically. (Expecting either 1 candidate or game.Main being loaded already)');
+				console.log(candidates);
+				return;
+
 			}
 
 

@@ -182,8 +182,7 @@ lychee.define('game.state.Scene').requires([
 
 		__processBuild: function(environment, sandbox) {
 
-
-console.log('BUILD READY', environment, sandbox);
+console.log('SANDBOXED BUILD READY', environment, sandbox);
 
 		},
 
