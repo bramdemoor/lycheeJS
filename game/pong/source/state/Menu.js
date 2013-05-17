@@ -206,29 +206,6 @@ lychee.define('game.state.Menu').requires([
 			settings.addEntity(entity);
 
 
-			entity = new lychee.ui.Button({
-				label: 'Music: ' + ((this.game.settings.music === true) ? 'On': 'Off'),
-				font:  this.game.fonts.normal,
-				position: {
-					x: 0,
-					y: 24
-				}
-
-			});
-
-			entity.bind('#touch', function(entity) {
-
-				var s = this.game.settings;
-				s.music = !s.music;
-
-				entity.setLabel('Music: ' + ((this.game.settings.music === true) ? 'On': 'Off'));
-
-			}, this);
-
-			settings.addEntity(entity);
-
-
-
 			this.addLayer('ui', layer);
 
 		},

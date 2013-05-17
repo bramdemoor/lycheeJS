@@ -120,8 +120,8 @@ lychee.define('game.Main').requires([
 			this.fonts.ubuntu20_bold = new game.entity.Font('ubuntu20_bold');
 
 
-			this.states.demo = new game.state.Demo(this);
-			this.states.menu = new game.state.Menu(this);
+			this.addState('demo', new game.state.Demo(this));
+			this.addState('menu', new game.state.Menu(this));
 
 			this.setState('menu');
 

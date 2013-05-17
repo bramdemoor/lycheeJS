@@ -25,9 +25,6 @@ lychee.define('game.Main').requires([
 
 		defaults: {
 			title: 'Pong Game',
-			base: './asset',
-			sound: true,
-			music: true,
 			fullscreen: false,
 			renderFps: 60,
 			updateFps: 60,
@@ -96,10 +93,10 @@ lychee.define('game.Main').requires([
 				this.reset(width, height, true);
 			}, this);
 			this.viewport.bind('hide', function() {
-				this.stop();
+				// this.stop();
 			}, this);
 			this.viewport.bind('show', function() {
-				this.start();
+				// this.start();
 			}, this);
 
 
@@ -121,8 +118,8 @@ lychee.define('game.Main').requires([
 			this.fonts.small    = new game.entity.Font('small');
 
 
-			this.states.game = new game.state.Game(this);
-			this.states.menu = new game.state.Menu(this);
+			this.addState('game', new game.state.Game(this));
+			this.addState('menu', new game.state.Menu(this));
 
 			this.setState('menu');
 
