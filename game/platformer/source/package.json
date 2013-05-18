@@ -3,6 +3,7 @@
 	"tree": {
 		"entity": {
 			"Tile": [ "js" ],
+			"Bullet": [ "js" ],
 			"Character": [ "js" ]
 		},
 		"state": {

@@ -5,11 +5,11 @@ lychee.define('game.Renderer').includes(['lychee.ui.Renderer']).exports(function
 	};
 
 	Class.prototype = {
-        renderCharacter: function(entity) {
+        renderEntity: function(entity) {
             var dx = entity.radius || entity.width / 2;
             var dy = entity.radius || entity.height / 2;
 
-            var pos = entity.getPosition();
+            var pos = entity.getPos();
             var image = entity.getImage();
 
             this.drawSprite(pos.x - dx, pos.y - dy, image);

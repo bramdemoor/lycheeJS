@@ -1,7 +1,8 @@
 lychee.define('game.state.Game')
     .requires([
         'game.entity.Character',
-        'game.scene.GameLevel'
+        'game.scene.GameLevel',
+        'game.entity.Bullet'
     ])
     .includes(['lychee.game.State']).exports(function(lychee, global) {
 
@@ -29,6 +30,7 @@ lychee.define('game.state.Game')
 
             this.__level = new game.scene.GameLevel(this.game, this.game.settings.game);
             this.__entities.player = new game.entity.Character(this.game.config.character);
+            this.__entities.bullet = new game.entity.Bullet(this.game.config.shot);
 		},
 
 		enter: function() {
@@ -81,7 +83,7 @@ lychee.define('game.state.Game')
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
-				this.__renderer.renderCharacter(this.__entities[e]);
+				this.__renderer.renderEntity(this.__entities[e]);
 			}
 
 			this.__renderer.flush();
