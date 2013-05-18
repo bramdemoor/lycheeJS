@@ -1,9 +1,6 @@
-
-lychee.define('game.state.Game').requires([
-	'game.entity.Text'
-]).includes([
-	'lychee.game.State'
-]).exports(function(lychee, global) {
+lychee.define('game.state.Game')
+    .requires(['game.entity.Text', 'game.entity.Character'])
+    .includes(['lychee.game.State']).exports(function(lychee, global) {
 
 	var Class = function(game) {
 
@@ -21,13 +18,15 @@ lychee.define('game.state.Game').requires([
 
 	};
 
-
 	Class.prototype = {
 
 		reset: function() {
 
 			var width = this.game.settings.width;
 			var height = this.game.settings.height;
+
+            console.log('creating player');
+            //this.__entities.player = new game.entity.Character(this.game.images.character);
 
 			this.__entities.intro = new game.entity.Text({
 				text: 'Game State active',
@@ -60,57 +59,9 @@ lychee.define('game.state.Game').requires([
 		},
 
 		enter: function() {
-
 			lychee.game.State.prototype.enter.call(this);
 
 			this.__locked = true;
-
-
-			var width = this.game.settings.width;
-			var height = this.game.settings.height;
-
-			this.__entities.intro.setPosition({
-				x: width / 2,
-				y: -200
-			});
-
-			this.__entities.noisehint.setPosition({
-				x: width / 2,
-				y: height + 24
-			});
-
-			this.__entities.exithint.setPosition({
-				x: width / 2,
-				y: height + 24
-			});
-
-
-			this.__loop.timeout(500, function() {
-
-				this.__entities.intro.setTween(1500, {
-					y: height / 2 - 50
-				}, lychee.game.Entity.TWEEN.easeOut);
-
-			}, this);
-
-			this.__loop.timeout(1000, function() {
-
-				this.__locked = false;
-
-				this.__entities.noisehint.setTween(500, {
-					y: height / 2 + 50
-				}, lychee.game.Entity.TWEEN.easeOut);
-
-			}, this);
-
-			this.__loop.timeout(3000, function() {
-
-				this.__entities.exithint.setTween(1000, {
-					y: height - 50
-				}, lychee.game.Entity.TWEEN.bounceEaseOut);
-
-			}, this);
-
 
 			this.__input.bind('touch', this.__processTouch, this);
 			this.__renderer.start();
@@ -122,9 +73,7 @@ lychee.define('game.state.Game').requires([
 			this.__renderer.stop();
 			this.__input.unbind('touch', this.__processTouch);
 
-
 			lychee.game.State.prototype.leave.call(this);
-
 		},
 
 		update: function(clock, delta) {
@@ -135,22 +84,17 @@ lychee.define('game.state.Game').requires([
 			}
 
 			this.__clock = clock;
-
 		},
 
 		render: function(clock, delta) {
-
 			this.__renderer.clear();
-
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
 				this.__renderer.renderText(this.__entities[e]);
 			}
 
-
 			this.__renderer.flush();
-
 		},
 
 		__processTouch: function(id, position, delta) {
@@ -176,9 +120,7 @@ lychee.define('game.state.Game').requires([
 		},
 
 		__getEntityByPosition: function(x, y) {
-
 			var found = null;
-
 			for (var e in this.__entities) {
 
 				if (this.__entities[e] === null) continue;
@@ -195,18 +137,12 @@ lychee.define('game.state.Game').requires([
 					found = entity;
 					break;
 				}
-
-
 			}
 
-
 			return found;
-
 		}
 
 	};
 
-
 	return Class;
-
 });

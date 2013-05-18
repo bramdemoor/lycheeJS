@@ -1,4 +1,3 @@
-
 lychee.define('game.entity.Text').requires([
 	'lychee.Font'
 ]).includes([

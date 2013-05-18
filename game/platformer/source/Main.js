@@ -1,4 +1,3 @@
-
 lychee.define('game.Main').requires([
 	'lychee.Font',
 	'lychee.Input',
@@ -8,27 +7,19 @@ lychee.define('game.Main').requires([
 	'game.state.Game',
 	'game.state.Menu',
 	'game.DeviceSpecificHacks'
-]).includes([
-	'lychee.game.Main'
-]).exports(function(lychee, global) {
+]).includes(['lychee.game.Main']).exports(function(lychee, global) {
 
 	var Class = function(settings) {
-
 		lychee.game.Main.call(this, settings);
-
 		this.fonts = {};
-
 		this.__offset = { x: 0, y: 0 };
-
 		this.load();
-
 	};
-
 
 	Class.prototype = {
 
 		defaults: {
-			title: 'boilerplate',
+			title: 'Platformer Demo',
 			base: './asset',
 			sound: true,
 			music: true,
@@ -40,22 +31,18 @@ lychee.define('game.Main').requires([
 		},
 
 		load: function() {
-
 			var base = this.settings.base;
 
 			var urls = [
 				base + '/img/font_48_white.png',
 				base + '/img/font_32_white.png',
-				base + '/img/font_16_white.png'
+				base + '/img/font_16_white.png',
+                base + '/img/jewel_32.png'
 			];
 
-
-			this.preloader = new lychee.Preloader({
-				timeout: 3000
-			});
+			this.preloader = new lychee.Preloader({ timeout: 3000 });
 
 			this.preloader.bind('ready', function(assets) {
-
 				this.assets = assets;
 
 				this.fonts.headline = new lychee.Font(assets[urls[0]], {
@@ -76,6 +63,9 @@ lychee.define('game.Main').requires([
 					map: [9,11,14,17,13,18,15,10,12,12,13,12,10,12,11,14,14,11,14,13,13,13,14,12,14,14,10,10,19,12,19,13,22,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,12,14,12,19,14,10,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,16,11,16,19]
 				});
 
+                this.images = {
+                    character: assets[urls[3]]
+                };
 
 				this.init();
 
@@ -88,24 +78,17 @@ lychee.define('game.Main').requires([
 			}, this);
 
 			this.preloader.load(urls);
-
 		},
 
 		reset: function(width, height) {
-
 			game.DeviceSpecificHacks.call(this);
-
 
 			var env = this.renderer.getEnvironment();
 
-			if (
-				typeof width === 'number'
-				&& typeof height === 'number'
-			) {
+			if (typeof width === 'number' && typeof height === 'number') {
 				env.screen.width  = width;
 				env.screen.height = height;
 			}
-
 
 			if (this.settings.fullscreen === true) {
 				this.settings.width = env.screen.width;
@@ -115,29 +98,19 @@ lychee.define('game.Main').requires([
 				this.settings.height = this.defaults.height;
 			}
 
-
 			this.renderer.reset(this.settings.width, this.settings.height, false);
 
-			this.__offset = env.offset; // Linked
-
+			this.__offset = env.offset;
 		},
 
 		init: function() {
-
-			// Remove Preloader Progress Bar
 			lychee.Preloader.prototype._progress(null, null);
-
 
 			lychee.game.Main.prototype.init.call(this);
 
 			this.renderer = new game.Renderer('game');
-			this.renderer.reset(
-				this.settings.width,
-				this.settings.height,
-				true
-			);
+			this.renderer.reset(this.settings.width, this.settings.height, true);
 			this.renderer.setBackground("#222222");
-
 
 			this.viewport = new lychee.Viewport();
 			this.viewport.bind('reshape', function(orientation, rotation, width, height) {
@@ -154,40 +127,28 @@ lychee.define('game.Main').requires([
 
 			}, this);
 			this.viewport.bind('hide', function() {
-
-				if (
-					this.jukebox
-					&& this.jukebox.isPlaying('music') === true
-				) {
+				if (this.jukebox && this.jukebox.isPlaying('music') === true) {
 					this.jukebox.stop('music');
 				}
 
 			}, this);
 			this.viewport.bind('show', function() {
-
-				if (
-					this.jukebox
-					&& this.jukebox.isPlaying('music')
-				) {
+				if (this.jukebox && this.jukebox.isPlaying('music')) {
 					this.jukebox.play('music');
 				}
-
 			}, this);
 
-
 			this.reset();
-
 
 			this.jukebox = new game.Jukebox(this);
 
 			this.input = new lychee.Input({
 				delay:        0,
 				fireModifier: false,
-				fireKey:      false, // change to true for NodeJS support
+				fireKey:      false,
 				fireTouch:    true,
 				fireSwipe:    false
 			});
-
 
 			this.states.game = new game.state.Game(this);
 			this.states.menu = new game.state.Menu(this);
@@ -195,15 +156,12 @@ lychee.define('game.Main').requires([
 			this.setState('menu');
 
 			this.start();
-
 		},
 
 		getOffset: function() {
 			return this.__offset;
 		}
-
 	};
-
 
 	return Class;
 
