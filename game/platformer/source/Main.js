@@ -28,7 +28,7 @@ lychee.define('game.Main').requires([
 			updateFps: 60,
 			width: 896,
 			height: 386,
-            tile: 64
+            tile: 16
 		},
 
 		load: function() {
