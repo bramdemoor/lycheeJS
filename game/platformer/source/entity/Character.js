@@ -1,13 +1,9 @@
 lychee.define('game.entity.Character')
-    .requires(['lychee.Font'])
     .includes(['lychee.game.Entity'])
 
     .exports(function(lychee, global) {
 
     var Class = function(image) {
-
-        console.log('creating character');
-
         var settings = {
             width:     32,
             height:    32,
@@ -27,4 +23,6 @@ lychee.define('game.entity.Character')
             return this.__image;
         }
     };
+
+    return Class;
 });

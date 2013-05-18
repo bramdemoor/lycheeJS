@@ -6,17 +6,14 @@ lychee.define('game.Renderer').includes(['lychee.ui.Renderer']).exports(function
 
 	Class.prototype = {
         renderCharacter: function(entity) {
-            var map = entity.getMap();
+            var dx = entity.radius || entity.width / 2;
+            var dy = entity.radius || entity.height / 2;
+
             var pos = entity.getPosition();
             var image = entity.getImage();
 
-            this.drawSprite(pos.x - entity.width / 2, pos.y - entity.height / 2, image, map);
-        },
-
-		renderText: function(entity) {
-			var pos = entity.getPosition();
-			this.drawText(pos.x, pos.y,	entity.getText(), entity.getFont(),	true);
-		}
+            this.drawSprite(pos.x - dx, pos.y - dy, image);
+        }
 	};
 
 	return Class;

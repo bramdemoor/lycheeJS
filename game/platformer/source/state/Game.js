@@ -1,5 +1,5 @@
 lychee.define('game.state.Game')
-    .requires(['game.entity.Text', 'game.entity.Character'])
+    .requires(['game.entity.Character'])
     .includes(['lychee.game.State']).exports(function(lychee, global) {
 
 	var Class = function(game) {
@@ -15,7 +15,6 @@ lychee.define('game.state.Game')
 		this.__locked = false;
 
 		this.reset();
-
 	};
 
 	Class.prototype = {
@@ -25,37 +24,7 @@ lychee.define('game.state.Game')
 			var width = this.game.settings.width;
 			var height = this.game.settings.height;
 
-            console.log('creating player');
-            //this.__entities.player = new game.entity.Character(this.game.images.character);
-
-			this.__entities.intro = new game.entity.Text({
-				text: 'Game State active',
-				font:  this.game.fonts.normal,
-				position: {
-					x: width / 2,
-					y: -200
-				}
-			});
-
-
-			this.__entities.noisehint = new game.entity.Text({
-				text: 'Touch to make Noise',
-				font:  this.game.fonts.small,
-				position: {
-					x: width / 2,
-					y: height + 24
-				}
-			});
-
-			this.__entities.exithint = new game.entity.Text({
-				text: 'Exit to Menu',
-				font:  this.game.fonts.small,
-				position: {
-					x: width / 2,
-					y: height + 24
-				}
-			});
-
+            this.__entities.player = new game.entity.Character(this.game.images.character);
 		},
 
 		enter: function() {
@@ -65,7 +34,6 @@ lychee.define('game.state.Game')
 
 			this.__input.bind('touch', this.__processTouch, this);
 			this.__renderer.start();
-
 		},
 
 		leave: function() {
@@ -91,14 +59,13 @@ lychee.define('game.state.Game')
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
-				this.__renderer.renderText(this.__entities[e]);
+				this.__renderer.renderCharacter(this.__entities[e]);
 			}
 
 			this.__renderer.flush();
 		},
 
 		__processTouch: function(id, position, delta) {
-
 			if (this.__locked === true) return;
 
 			var offset = this.game.getOffset();
@@ -106,17 +73,14 @@ lychee.define('game.state.Game')
 			position.x -= offset.x;
 			position.y -= offset.y;
 
-
 			var entity = this.__getEntityByPosition(position.x, position.y);
 			if (entity === this.__entities.exithint) {
 				this.game.setState('menu');
 			}
 
-
 			if (this.game.settings.sound === true) {
 				this.game.jukebox.play('click');
 			}
-
 		},
 
 		__getEntityByPosition: function(x, y) {
