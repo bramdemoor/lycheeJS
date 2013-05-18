@@ -24,11 +24,9 @@ lychee.define('game.state.Game').requires([
 
 		reset: function() {
 
+			var entity = null;
 			var width  = this.game.settings.width;
 			var height = this.game.settings.height;
-
-
-			var entity;
 
 
 			this.removeLayer('ui');

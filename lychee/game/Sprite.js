@@ -36,6 +36,38 @@ lychee.define('lychee.game.Sprite').includes([
 
 	Class.prototype = {
 
+		/*
+		 * ENTITY API
+		 */
+
+		render: function(renderer, offsetX, offsetY) {
+
+			var image = this.getImage();
+			var map   = this.getMap();
+			if (
+				image !== null
+				&& map !== null
+			) {
+
+				var position = this.getPosition();
+
+				renderer.drawSprite(
+					position.x - this.width / 2,
+					position.y - this.height / 2,
+					image,
+					map
+				);
+
+			}
+
+		},
+
+
+
+		/*
+		 * CUSTOM API
+		 */
+
 		setState: function(id) {
 
 			var result = lychee.game.Entity.prototype.setState.call(this, id);

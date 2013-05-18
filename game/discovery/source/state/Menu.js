@@ -28,9 +28,9 @@ lychee.define('game.state.Menu').requires([
 
 		reset: function() {
 
-			var entity   = null;
-			var width    = this.game.settings.width;
-			var height   = this.game.settings.height;
+			var entity = null;
+			var width  = this.game.settings.width;
+			var height = this.game.settings.height;
 
 
 			this.removeLayer('ui');

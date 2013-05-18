@@ -86,6 +86,7 @@ lychee.define('game.Main').requires([
 
 
 			var env = this.renderer.getEnvironment();
+			var settings = this.settings;
 
 			if (
 				typeof width === 'number'
@@ -96,16 +97,16 @@ lychee.define('game.Main').requires([
 			}
 
 
-			if (this.settings.fullscreen === true) {
-				this.settings.width = env.screen.width;
-				this.settings.height = env.screen.height;
+			if (settings.fullscreen === true) {
+				settings.width  = env.screen.width;
+				settings.height = env.screen.height;
 			} else {
-				this.settings.width = this.defaults.width;
-				this.settings.height = this.defaults.height;
+				settings.width  = this.defaults.width;
+				settings.height = this.defaults.height;
 			}
 
 
-			this.renderer.reset(this.settings.width, this.settings.height, false);
+			this.renderer.reset(settings.width, settings.height, false);
 
 
 			if (states === true) {
@@ -161,7 +162,7 @@ lychee.define('game.Main').requires([
 
 				if (
 					this.jukebox
-					&& this.jukebox.isPlaying('music')
+					&& this.jukebox.isPlaying('music') === true
 				) {
 					this.jukebox.play('music');
 				}
