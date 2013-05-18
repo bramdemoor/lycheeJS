@@ -27,7 +27,8 @@ lychee.define('game.Main').requires([
 			renderFps: 60,
 			updateFps: 60,
 			width: 896,
-			height: 386
+			height: 386,
+            tile: 64
 		},
 
 		load: function() {
@@ -178,8 +179,8 @@ lychee.define('game.Main').requires([
 		},
 
 		getOffset: function() {
-			return this.__offset;
-		}
+            return this.__offset;
+        }
 	};
 
 	return Class;

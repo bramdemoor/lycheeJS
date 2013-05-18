@@ -1,4 +1,6 @@
-lychee.define('game.scene.GameLevel').includes(['lychee.game.Graph']).exports(function(lychee, global) {
+lychee.define('game.scene.GameLevel').requires([
+        'game.entity.Tile'
+    ]).includes(['lychee.game.Graph']).exports(function(lychee, global) {
     var Class = function(game, settings) {
         this.game = game;
 
@@ -33,7 +35,6 @@ lychee.define('game.scene.GameLevel').includes(['lychee.game.Graph']).exports(fu
             this.__width   = data.width;
             this.__height  = data.height;
             this.__tile    = data.tile;
-            this.__minHits = data.hits;
 
             this.__size.x = (this.__width / this.__tile) | 0;
             this.__size.y = (this.__height / this.__tile) | 0;
@@ -62,6 +63,7 @@ lychee.define('game.scene.GameLevel').includes(['lychee.game.Graph']).exports(fu
             for (var x = 0; x < this.__size.x; x++) {
 
                 for (var y = 0; y < this.__size.y; y++) {
+
                     var entity = new game.entity.Tile({
                         position: { x: x * tile, y: y * tile }, image: image, states: states, state: state, map: map
                     });

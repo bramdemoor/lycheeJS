@@ -2,7 +2,7 @@
 	"tags": {},
 	"tree": {
 		"entity": {
-			"Text": [ "js" ],
+			"Tile": [ "js" ],
 			"Character": [ "js" ]
 		},
 		"state": {
