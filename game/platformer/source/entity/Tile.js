@@ -3,7 +3,9 @@
         lychee.game.Sprite.call(this, settings);
     };
 
-    Class.prototype = { };
+    Class.prototype = {
+    };
+
     return Class;
 });
 

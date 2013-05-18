@@ -5,14 +5,14 @@
     <ignored path="platformer.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368880215670" ignored="false" />
-    <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368887376805" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890445281" ignored="false" />
+    <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890564686" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890908486" ignored="false" />
     <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368888438196" ignored="false" />
     <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368888610571" ignored="false" />
     <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368886596593" ignored="false" />
     <file path="/init.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882321958" ignored="false" />
     <file path="/package.json" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890101816" ignored="false" />
-    <file path="/GameLevel.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368889997629" ignored="false" />
+    <file path="/GameLevel.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890740121" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,19 +32,55 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Main.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/Main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="20" selection-start="637" selection-end="637" vertical-scroll-proportion="0.34767443">
+            <state line="30" column="20" selection-start="637" selection-end="637" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="GameLevel.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="map_01.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/json/map_01.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="10" column="28" selection-start="138" selection-end="138" vertical-scroll-proportion="-6.5384617">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Renderer.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/Renderer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="22" selection-start="531" selection-end="531" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="tiles.json" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/asset/json/tiles.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="44" selection-start="216" selection-end="216" vertical-scroll-proportion="-8.5">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Tile.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/source/entity/Tile.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="5" column="23" selection-start="220" selection-end="220" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="GameLevel.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="1" column="26" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0">
+            <state line="59" column="0" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.51775485">
               <folding />
             </state>
           </provider>
@@ -73,12 +109,12 @@
         <option value="$PROJECT_DIR$/source/entity/Text.js" />
         <option value="$PROJECT_DIR$/init.js" />
         <option value="$PROJECT_DIR$/source/entity/Character.js" />
-        <option value="$PROJECT_DIR$/source/entity/Tile.js" />
-        <option value="$PROJECT_DIR$/source/Renderer.js" />
         <option value="$PROJECT_DIR$/source/state/Game.js" />
-        <option value="$PROJECT_DIR$/source/scene/GameLevel.js" />
         <option value="$PROJECT_DIR$/source/package.json" />
         <option value="$PROJECT_DIR$/source/Main.js" />
+        <option value="$PROJECT_DIR$/source/Renderer.js" />
+        <option value="$PROJECT_DIR$/source/entity/Tile.js" />
+        <option value="$PROJECT_DIR$/source/scene/GameLevel.js" />
       </list>
     </option>
   </component>
@@ -298,7 +334,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -430,37 +466,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/entity/Tile.js">
+    <entry file="file://$PROJECT_DIR$/source/state/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="69" selection-start="247" selection-end="247" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/Renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="24" selection-start="461" selection-end="461" vertical-scroll-proportion="0.0">
+        <state line="29" column="86" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/json/tiles.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="59" selection-start="216" selection-end="216" vertical-scroll-proportion="0.2609209">
+        <state line="13" column="44" selection-start="216" selection-end="216" vertical-scroll-proportion="-8.5">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/entity/Tile.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="23" selection-start="220" selection-end="220" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/Main.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="30" column="20" selection-start="637" selection-end="637" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/json/map_01.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="28" selection-start="138" selection-end="138" vertical-scroll-proportion="0.20070839">
+        <state line="10" column="28" selection-start="138" selection-end="138" vertical-scroll-proportion="-6.5384617">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/state/Game.js">
+    <entry file="file://$PROJECT_DIR$/source/Renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="86" selection-start="685" selection-end="685" vertical-scroll-proportion="0.0">
+        <state line="17" column="22" selection-start="531" selection-end="531" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -474,14 +517,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="1" column="26" selection-start="75" selection-end="75" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="20" selection-start="637" selection-end="637" vertical-scroll-proportion="0.34767443">
+        <state line="59" column="0" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.51775485">
           <folding />
         </state>
       </provider>
