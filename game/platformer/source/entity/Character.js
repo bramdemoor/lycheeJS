@@ -17,8 +17,8 @@ lychee.define('game.entity.Character')
 
         settings = null;
 
-        var velocity = this.getVelocity();
-        velocity.x = 50;
+        this.__position.y = 122;
+        this.__velocity.x = 50;
     };
 
     Class.prototype = {
@@ -27,9 +27,8 @@ lychee.define('game.entity.Character')
         },
 
         updateCustom: function() {
-            var velocity = this.getVelocity();
-            if(velocity.x > 1) {
-                velocity.x -= 1;
+            if(this.__velocity.x > 1) {
+                this.__velocity.x -= 1;
             }
         }
     };
