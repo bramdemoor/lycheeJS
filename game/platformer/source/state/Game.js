@@ -32,14 +32,16 @@ lychee.define('game.state.Game')
 
 			this.__locked = true;
 
-			this.__input.bind('touch', this.__processTouch, this);
+            this.__input.bind('key', this.__processKey, this);
+
 			this.__renderer.start();
 		},
 
 		leave: function() {
 
 			this.__renderer.stop();
-			this.__input.unbind('touch', this.__processTouch);
+
+			this.__input.unbind('key', this.__processKey);
 
 			lychee.game.State.prototype.leave.call(this);
 		},
@@ -67,23 +69,16 @@ lychee.define('game.state.Game')
 			this.__renderer.flush();
 		},
 
-		__processTouch: function(id, position, delta) {
-			if (this.__locked === true) return;
-
-			var offset = this.game.getOffset();
-
-			position.x -= offset.x;
-			position.y -= offset.y;
-
-			var entity = this.__getEntityByPosition(position.x, position.y);
-			if (entity === this.__entities.exithint) {
-				this.game.setState('menu');
-			}
-
-			if (this.game.settings.sound === true) {
-				this.game.jukebox.play('click');
-			}
-		},
+        __processKey: function(key, name, delta) {
+            if(key == 'up') {
+                console.log('jump');
+                if (this.game.settings.sound === true) {
+                    this.game.jukebox.play('click');
+                }
+            } else if (key == 'q') {
+                this.game.setState('menu');
+            }
+        },
 
 		__getEntityByPosition: function(x, y) {
 			var found = null;

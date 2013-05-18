@@ -22,6 +22,10 @@ lychee.define('game.entity.Character')
     };
 
     Class.prototype = {
+        spawn: function() {
+
+        },
+
         getImage: function() {
             return this.__image;
         },

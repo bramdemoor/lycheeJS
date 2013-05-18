@@ -6,10 +6,10 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368880215670" ignored="false" />
     <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368883066768" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368884244591" ignored="false" />
-    <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882435914" ignored="false" />
-    <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368883957322" ignored="false" />
-    <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368884241648" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368885348489" ignored="false" />
+    <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368885159144" ignored="false" />
+    <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368885315389" ignored="false" />
+    <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368884901933" ignored="false" />
     <file path="/init.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882321958" ignored="false" />
     <file path="/package.json" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882499144" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,10 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Character.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Character.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="19" column="32" selection-start="504" selection-end="504" vertical-scroll-proportion="0.36998853">
+            <state line="20" column="31" selection-start="536" selection-end="536" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -61,7 +61,7 @@
       <file leaf-file-name="Main.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/Main.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="39" column="34" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
+            <state line="147" column="34" selection-start="4246" selection-end="4246" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -76,10 +76,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Game.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/state/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="0" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0">
+            <state line="83" column="105" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.52577317">
               <folding />
             </state>
           </provider>
@@ -100,9 +100,9 @@
         <option value="$PROJECT_DIR$/init.js" />
         <option value="$PROJECT_DIR$/source/package.json" />
         <option value="$PROJECT_DIR$/source/Renderer.js" />
+        <option value="$PROJECT_DIR$/source/entity/Character.js" />
         <option value="$PROJECT_DIR$/source/Main.js" />
         <option value="$PROJECT_DIR$/source/state/Game.js" />
-        <option value="$PROJECT_DIR$/source/entity/Character.js" />
       </list>
     </option>
   </component>
@@ -286,7 +286,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -417,12 +417,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/Jukebox.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/DeviceSpecificHacks.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/state/Menu.js">
@@ -446,13 +450,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/Main.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="34" selection-start="839" selection-end="839" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="1" selection-start="262" selection-end="262" vertical-scroll-proportion="-10.461538">
@@ -460,16 +457,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/state/Game.js">
+    <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="0" selection-start="1088" selection-end="1088" vertical-scroll-proportion="0.0">
+        <state line="20" column="31" selection-start="536" selection-end="536" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
+    <entry file="file://$PROJECT_DIR$/source/Main.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="19" column="32" selection-start="504" selection-end="504" vertical-scroll-proportion="0.36998853">
+        <state line="147" column="34" selection-start="4246" selection-end="4246" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/state/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="83" column="105" selection-start="1916" selection-end="1916" vertical-scroll-proportion="0.52577317">
           <folding />
         </state>
       </provider>
