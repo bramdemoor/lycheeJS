@@ -26,6 +26,26 @@ lychee.define('game.entity.Character')
 
         },
 
+        jump: function() {
+            console.log('jump');
+        },
+
+        moveLeft: function() {
+            console.log('left');
+        },
+
+        moveRight: function() {
+            console.log('right');
+        },
+
+        moveDown: function() {
+            console.log('down');
+        },
+
+        action: function() {
+            console.log('action');
+        },
+
         getImage: function() {
             return this.__image;
         },

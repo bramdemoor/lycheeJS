@@ -71,10 +71,15 @@ lychee.define('game.state.Game')
 
         __processKey: function(key, name, delta) {
             if(key == 'up') {
-                console.log('jump');
-                if (this.game.settings.sound === true) {
-                    this.game.jukebox.play('click');
-                }
+                this.__entities.player.jump();
+            } else if (key == 'left') {
+                this.__entities.player.moveLeft();
+            } else if (key == 'right') {
+                this.__entities.player.moveRight();
+            } else if (key == 'down') {
+                this.__entities.player.moveDown();
+            }  else if (key == 'space') {
+                this.__entities.player.action();
             } else if (key == 'q') {
                 this.game.setState('menu');
             }
