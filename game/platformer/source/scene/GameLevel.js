@@ -89,8 +89,6 @@ lychee.define('game.scene.GameLevel').requires([
                 for (var b = 0, bl = this.__layers.tileLayer.length; b < bl; b++) {
                     this.__renderer.renderTile(this.__layers.tileLayer[b]);
                 }
-
-              //  this.__renderNode(this.__tree, this.__offset.x, this.__offset.y);
             }
         },
 

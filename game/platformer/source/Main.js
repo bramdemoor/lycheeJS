@@ -23,12 +23,12 @@ lychee.define('game.Main').requires([
 			base: './asset',
 			sound: true,
 			music: true,
-			fullscreen: true,
+			fullscreen: false,
 			renderFps: 60,
 			updateFps: 60,
-			width: 896,
-			height: 386,
-            tile: 16
+			width: 1024,
+			height: 768,
+            tile: 32
 		},
 
 		load: function() {
