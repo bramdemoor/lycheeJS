@@ -6,7 +6,7 @@
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368880215670" ignored="false" />
     <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890564686" ignored="false" />
-    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890908486" ignored="false" />
+    <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368891146523" ignored="false" />
     <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368888438196" ignored="false" />
     <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368888610571" ignored="false" />
     <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368886596593" ignored="false" />
@@ -80,7 +80,7 @@
       <file leaf-file-name="GameLevel.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="0" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.51775485">
+            <state line="88" column="14" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.6151203">
               <folding />
             </state>
           </provider>
@@ -517,7 +517,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="0" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.51775485">
+        <state line="88" column="14" selection-start="2446" selection-end="2446" vertical-scroll-proportion="0.6151203">
           <folding />
         </state>
       </provider>
