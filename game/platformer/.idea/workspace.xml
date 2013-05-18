@@ -9,7 +9,7 @@
     <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368885721174" ignored="false" />
     <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368885159144" ignored="false" />
     <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368886135602" ignored="false" />
-    <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368886118652" ignored="false" />
+    <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368886596593" ignored="false" />
     <file path="/init.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882321958" ignored="false" />
     <file path="/package.json" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882499144" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -31,10 +31,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Character.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Character.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="14" selection-start="926" selection-end="926" vertical-scroll-proportion="0.0">
+            <state line="19" column="28" selection-start="500" selection-end="500" vertical-scroll-proportion="0.36998853">
               <folding />
             </state>
           </provider>
@@ -49,10 +49,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Game.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/state/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="81" column="45" selection-start="1991" selection-end="1991" vertical-scroll-proportion="0.513173">
+            <state line="74" column="35" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -74,8 +74,8 @@
         <option value="$PROJECT_DIR$/source/package.json" />
         <option value="$PROJECT_DIR$/source/Renderer.js" />
         <option value="$PROJECT_DIR$/source/Main.js" />
-        <option value="$PROJECT_DIR$/source/entity/Character.js" />
         <option value="$PROJECT_DIR$/source/state/Game.js" />
+        <option value="$PROJECT_DIR$/source/entity/Character.js" />
       </list>
     </option>
   </component>
@@ -259,7 +259,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -430,13 +430,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="14" selection-start="926" selection-end="926" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/Main.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="139" column="44" selection-start="4081" selection-end="4081" vertical-scroll-proportion="0.0">
@@ -446,7 +439,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/state/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="81" column="45" selection-start="1991" selection-end="1991" vertical-scroll-proportion="0.513173">
+        <state line="74" column="35" selection-start="1664" selection-end="1664" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="28" selection-start="500" selection-end="500" vertical-scroll-proportion="0.36998853">
           <folding />
         </state>
       </provider>

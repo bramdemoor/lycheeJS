@@ -17,8 +17,8 @@ lychee.define('game.entity.Character')
 
         settings = null;
 
+        this.__position.x = 122;
         this.__position.y = 122;
-        this.__velocity.x = 50;
     };
 
     Class.prototype = {
@@ -31,11 +31,11 @@ lychee.define('game.entity.Character')
         },
 
         moveLeft: function() {
-            console.log('left');
+            this.__velocity.x = -50;
         },
 
         moveRight: function() {
-            console.log('right');
+            this.__velocity.x = 50;
         },
 
         moveDown: function() {
@@ -51,8 +51,12 @@ lychee.define('game.entity.Character')
         },
 
         updateCustom: function() {
-            if(this.__velocity.x > 1) {
-                this.__velocity.x -= 1;
+            if(this.__velocity.x > 2) {
+                this.__velocity.x -= 2;
+            } else if(this.__velocity.x < -2) {
+                this.__velocity.x += 2;
+            } else {
+                this.__velocity.x = 0;
             }
         }
     };
