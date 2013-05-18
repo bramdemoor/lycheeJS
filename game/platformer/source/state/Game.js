@@ -58,7 +58,13 @@ lychee.define('game.state.Game')
 
             this.__level.update(clock, delta);
 
-            this.__entities.player.updateCustom();
+            var tileX = ((this.__entities.player.getPos().x  / 32) | 0);
+            var tileY = ((this.__entities.player.getPos().y  / 32) | 0);
+
+            var canMoveLeft = tileX > 0;
+            var canMoveRight = tileX < 20;
+
+            this.__entities.player.updateCustom(canMoveLeft, canMoveRight);
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;

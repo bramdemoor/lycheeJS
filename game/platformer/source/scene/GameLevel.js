@@ -108,7 +108,15 @@ lychee.define('game.scene.GameLevel').requires([
             for (var c = 0, l = node.children.length; c < l; c++) {
                 this.__renderNode(node.children[c], offsetX, offsetY);
             }
+        },
+
+        __getEntityByGrid: function(x, y) {
+            if (this.__grid[x] !== undefined && this.__grid[x][y] != null) {
+                return this.__grid[x][y];
+            }
+            return null;
         }
+
     };
 
     return Class;
