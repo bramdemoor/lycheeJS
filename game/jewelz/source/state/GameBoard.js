@@ -1,7 +1,6 @@
 
 lychee.define('game.state.GameBoard').requires([
 	'game.scene.GameBoard',
-	'game.scene.Overlay',
 	'game.scene.UI'
 ]).includes([
 	'lychee.game.State'
@@ -28,6 +27,7 @@ lychee.define('game.state.GameBoard').requires([
 
 		reset: function() {
 
+return;
 			this.__game    = new game.scene.GameBoard(this.game, this.game.settings.game);
 			this.__overlay = new game.scene.Overlay(this.game, this.game.settings.game);
 			this.__ui      = new game.scene.UI(this.game, this.game.settings.ui);

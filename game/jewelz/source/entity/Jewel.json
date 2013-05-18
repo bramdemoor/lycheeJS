@@ -1,7 +1,5 @@
 {
 
-	"image": null,
-
 	"states": {
 		"red":    0,
 		"orange": 1,

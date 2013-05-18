@@ -5,17 +5,12 @@ lychee.define('game.state.Result').requires([
 	'lychee.game.State'
 ]).exports(function(lychee, global) {
 
-	var _entityId = 0;
-
 	var Class = function(game) {
 
 		lychee.game.State.call(this, game, 'result');
 
-		this.__input    = game.input;
-		this.__loop     = game.loop;
-		this.__renderer = game.renderer;
 
-		this.__locked   = true;
+		this.__entities = {};
 
 		this.reset();
 
@@ -26,52 +21,70 @@ lychee.define('game.state.Result').requires([
 
 		reset: function() {
 
-			this.__entities = {};
-
-			var hwidth = this.game.settings.width / 2;
-			var hheight = this.game.settings.height / 2;
-
-			var font = this.game.fonts.headline;
-			if (hwidth < 200) {
-				font = this.game.fonts.normal;
-			}
+			var entity = null;
+			var width  = this.game.settings.width;
+			var height = this.game.settings.height;
 
 
-			this.__entities.headline = new game.entity.Text({
+			this.removeLayer('ui');
+
+
+			var layer = new lychee.game.Layer();
+
+
+			entity = new lychee.ui.Button({
 				text: 'Game Over',
-				font: font,
+				font: this.game.fonts.normal,
 				position: {
-					x: 0, y: -hheight - 60
+					x: 0,
+					y: -1/2 * height - 42
 				}
 			});
 
-			this.__entities.points = new game.entity.Text({
+			layer.addEntity(entity);
+			this.__entities.headline = entity;
+
+
+			entity = new lychee.ui.Button({
 				text: '0 Points',
-				font: font,
+				font: this.game.fonts.normal,
 				position: {
-					x: 0, y: hheight + 50
+					x: 0,
+					y: 1/2 * height + 50
 				}
 			});
 
-			this.__entities.hint = new game.entity.Text({
+			layer.addEntity(entity);
+			this.__entities.points = entity;
+
+
+			entity = new lychee.ui.Button({
 				text: 'Touch to get back to Menu',
 				font: this.game.fonts.small,
 				position: {
 					x: 0,
-					y: hheight + 50
+					y: 1/2 * height - 24
 				}
 			});
+
+			layer.addEntity(entity);
+			this.__entities.hint = entity;
+
+
+			this.addLayer('ui', layer);
 
 		},
 
 		enter: function(data) {
 
-			if (Object.prototype.toString.call(data) === '[object Object]') {
-				data.points	= (data.points === null ? 0 : data.points) + '';
+			if (data instanceof Object) {
+				data.points = typeof data.points === 'number' ? data.points : 0;
 			}
 
 
 			lychee.game.State.prototype.enter.call(this);
+
+return;
 
 			this.__locked = true;
 
@@ -117,41 +130,11 @@ lychee.define('game.state.Result').requires([
 
 			}, this);
 
-			this.__input.bind('touch', this.__processTouch, this);
-			this.__renderer.start();
-
 		},
 
 		leave: function() {
 
-			this.__renderer.stop();
-			this.__input.unbind('touch', this.__processTouch);
-
 			lychee.game.State.prototype.leave.call(this);
-
-		},
-
-		update: function(clock, delta) {
-
-			for (var e in this.__entities) {
-				if (this.__entities[e] === null) continue;
-				this.__entities[e].update(clock, delta);
-			}
-
-		},
-
-		render: function(clock, delta) {
-
-			this.__renderer.clear();
-
-
-			for (var e in this.__entities) {
-				if (this.__entities[e] === null) continue;
-				this.__renderer.renderText(this.__entities[e], this.game.settings.width / 2, this.game.settings.height / 2);
-			}
-
-
-			this.__renderer.flush();
 
 		},
 

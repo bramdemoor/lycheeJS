@@ -13,7 +13,6 @@ lychee.define('game.scene.GameBoard').requires([
 		this.__loop = game.loop;
 		this.__renderer = game.renderer;
 
-		this.__config   = game.config.jewel;
 		this.__position = { x: 0, y: 0 };
 		this.__offset   = { x: 0, y: 0 };
 		this.__size     = { x: 5, y: 5 };
@@ -77,10 +76,7 @@ lychee.define('game.scene.GameBoard').requires([
 			this.__layers.background = [];
 
 
-			var tile   = this.__tile;
-			var image  = this.game.config.deco.image;
-			var states = this.game.config.deco.states;
-			var map    = this.game.config.deco.map;
+			var tile = this.__tile;
 
 
 			var state = 'default';
@@ -107,10 +103,7 @@ lychee.define('game.scene.GameBoard').requires([
 							x: x * tile,
 							y: y * tile
 						},
-						image: image,
-						states: states,
-						state: state,
-						map: map
+						state: state
 					});
 
 
@@ -149,9 +142,6 @@ lychee.define('game.scene.GameBoard').requires([
 					} else {
 
 						entity = new game.entity.Jewel({
-							image:  this.__config.image,
-							states: this.__config.states,
-							map:    this.__config.map,
 							width:  tile,
 							height: tile
 						});
