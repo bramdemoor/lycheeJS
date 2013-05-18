@@ -27,7 +27,7 @@ lychee.define('game.state.Game')
 			var width = this.game.settings.width;
 			var height = this.game.settings.height;
 
-            this.__level = new game.scene.GameLevel(this.game, {});
+            this.__level = new game.scene.GameLevel(this.game, this.game.settings.game);
             this.__entities.player = new game.entity.Character(this.game.config.character);
 		},
 

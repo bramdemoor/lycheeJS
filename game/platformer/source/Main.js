@@ -108,6 +108,15 @@ lychee.define('game.Main').requires([
 				this.settings.height = this.defaults.height;
 			}
 
+            this.settings.game = {};
+            this.settings.game.width = (Math.floor(this.settings.width / this.settings.tile) * 0.8 * this.settings.tile) | 0;
+            this.settings.game.height = this.settings.height;
+            this.settings.game.tile = this.settings.tile;
+            this.settings.game.position = {
+                x: (this.settings.game.width / 2) | 0,
+                y: (this.settings.game.height / 2) | 0
+            };
+
 			this.renderer.reset(this.settings.width, this.settings.height, false);
 
 			this.__offset = env.offset;
