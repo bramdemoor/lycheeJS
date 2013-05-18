@@ -1,7 +1,8 @@
 var Bullet = (function () {
     function Bullet(image) {
         if (typeof image === "undefined") { image = null; }
-        (this).__image = image;
+        var a = this;
+        a.__image = image;
         lychee.game.Entity.call(this, {
             width: 32,
             height: 32,

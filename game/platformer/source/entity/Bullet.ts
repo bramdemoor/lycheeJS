@@ -3,7 +3,8 @@
 class Bullet {
 
     constructor(image: any = null) {
-        (<any>this).__image = image;
+        var a: any = this;
+        a.__image = image;
 
         lychee.game.Entity.call(this, {
             width:     32,
