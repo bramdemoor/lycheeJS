@@ -1,0 +1,13 @@
+{
+	"image": null,
+
+	"states": {
+		"grass":		0,
+		"dirt":			1
+	},
+
+	"map": {
+		"grass": 	{"frames": [{ "x": 0, 	"y": 0, 	"w": 16, 	"h": 16 }] },
+		"dirt": 	{"frames": [{ "x": 16, 	"y": 0, 	"w": 16, 	"h": 16 }] }
+	}
+}

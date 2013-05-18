@@ -38,7 +38,9 @@ lychee.define('game.Main').requires([
 				base + '/img/font_32_white.png',
 				base + '/img/font_16_white.png',
                 base + '/img/bear1.png',
-                base + '/img/map.png'
+                base + '/img/map.png',
+                base + '/json/tiles.json',
+                base + '/json/map_01.json'
 			];
 
 			this.preloader = new lychee.Preloader({ timeout: 3000 });
@@ -64,9 +66,15 @@ lychee.define('game.Main').requires([
 					map: [9,11,14,17,13,18,15,10,12,12,13,12,10,12,11,14,14,11,14,13,13,13,14,12,14,14,10,10,19,12,19,13,22,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,12,14,12,19,14,10,12,13,12,13,12,12,14,13,9,11,13,11,16,13,14,12,14,12,13,12,13,12,15,12,12,14,16,11,16,19]
 				});
 
-                this.images = {
+                this.config = {
                     character: assets[urls[3]],
-                    map: assets[urls[4]]
+                    tiles:  assets[urls[5]]
+                };
+
+                this.config.tiles.image  = assets[urls[4]];
+
+                this.config.maps = {
+                    '01': assets[urls[6]]
                 };
 
 				this.init();

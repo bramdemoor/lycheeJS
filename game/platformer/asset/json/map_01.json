@@ -1,0 +1,18 @@
+{
+	"settings": {},
+	
+	"entities": [{
+	
+		"type":   "Tile",
+		"data": {
+			"state":    "grass",
+			"position": { "x": 0, "y": 0 }
+		}
+	}, {
+		"type":   "Tile",
+		"data": {
+			"state":    "dirt",
+			"position": { "x": 0, "y": 1 }
+		}
+	}]
+}
