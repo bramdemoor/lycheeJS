@@ -37,7 +37,7 @@ lychee.define('game.Main').requires([
 				base + '/img/font_48_white.png',
 				base + '/img/font_32_white.png',
 				base + '/img/font_16_white.png',
-                base + '/img/jewel_32.png'
+                base + '/img/bear1.png'
 			];
 
 			this.preloader = new lychee.Preloader({ timeout: 3000 });

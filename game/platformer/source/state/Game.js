@@ -46,10 +46,7 @@ lychee.define('game.state.Game')
 
 		update: function(clock, delta) {
 
-            var char = this.__entities.player;
-            var position = char.getPosition();
-            var velocity = char.getVelocity();
-            velocity.x = 150;
+            this.__entities.player.updateCustom();
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;

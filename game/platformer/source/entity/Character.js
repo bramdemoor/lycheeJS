@@ -16,11 +16,21 @@ lychee.define('game.entity.Character')
         lychee.game.Entity.call(this, settings);
 
         settings = null;
+
+        var velocity = this.getVelocity();
+        velocity.x = 50;
     };
 
     Class.prototype = {
         getImage: function() {
             return this.__image;
+        },
+
+        updateCustom: function() {
+            var velocity = this.getVelocity();
+            if(velocity.x > 1) {
+                velocity.x -= 1;
+            }
         }
     };
 
