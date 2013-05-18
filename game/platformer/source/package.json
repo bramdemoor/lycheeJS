@@ -9,6 +9,9 @@
 			"Game": [ "js" ],
 			"Menu": [ "js" ]
 		},
+        "scene": {
+            "GameLevel": [ "js" ]
+        },
 		"DeviceSpecificHacks": [ "js" ],
 		"Jukebox": [ "js" ],
 		"Main": [ "js", "css" ],

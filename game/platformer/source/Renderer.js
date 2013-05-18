@@ -13,6 +13,14 @@ lychee.define('game.Renderer').includes(['lychee.ui.Renderer']).exports(function
             var image = entity.getImage();
 
             this.drawSprite(pos.x - dx, pos.y - dy, image);
+        },
+
+        renderTile: function(entity) {
+            var map = entity.getMap();
+            var pos = entity.getPosition();
+            var image = entity.getImage();
+
+            this.drawSprite(pos.x - entity.width / 2, pos.y - entity.height / 2, image, map);
         }
 	};
 

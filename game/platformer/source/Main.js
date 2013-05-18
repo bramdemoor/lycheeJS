@@ -37,7 +37,8 @@ lychee.define('game.Main').requires([
 				base + '/img/font_48_white.png',
 				base + '/img/font_32_white.png',
 				base + '/img/font_16_white.png',
-                base + '/img/bear1.png'
+                base + '/img/bear1.png',
+                base + '/img/map.png'
 			];
 
 			this.preloader = new lychee.Preloader({ timeout: 3000 });
@@ -64,7 +65,8 @@ lychee.define('game.Main').requires([
 				});
 
                 this.images = {
-                    character: assets[urls[3]]
+                    character: assets[urls[3]],
+                    map: assets[urls[4]]
                 };
 
 				this.init();

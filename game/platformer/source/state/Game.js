@@ -1,5 +1,8 @@
 lychee.define('game.state.Game')
-    .requires(['game.entity.Character'])
+    .requires([
+        'game.entity.Character',
+        'game.scene.GameLevel'
+    ])
     .includes(['lychee.game.State']).exports(function(lychee, global) {
 
 	var Class = function(game) {
@@ -24,11 +27,14 @@ lychee.define('game.state.Game')
 			var width = this.game.settings.width;
 			var height = this.game.settings.height;
 
+            this.__level = new game.scene.GameLevel(this.game, {});
             this.__entities.player = new game.entity.Character(this.game.images.character);
 		},
 
 		enter: function() {
 			lychee.game.State.prototype.enter.call(this);
+
+            this.__level.enter();
 
 			this.__locked = true;
 
@@ -39,6 +45,8 @@ lychee.define('game.state.Game')
 
 		leave: function() {
 
+            this.__level.leave();
+
 			this.__renderer.stop();
 
 			this.__input.unbind('key', this.__processKey);
@@ -47,6 +55,8 @@ lychee.define('game.state.Game')
 		},
 
 		update: function(clock, delta) {
+
+            this.__level.update(clock, delta);
 
             this.__entities.player.updateCustom();
 
@@ -60,6 +70,8 @@ lychee.define('game.state.Game')
 
 		render: function(clock, delta) {
 			this.__renderer.clear();
+
+            this.__level.render(clock, delta);
 
 			for (var e in this.__entities) {
 				if (this.__entities[e] === null) continue;
