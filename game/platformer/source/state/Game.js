@@ -4,11 +4,16 @@ lychee.define('game.state.Game')
         'game.scene.GameLevel',
         'game.entity.Bullet'
     ])
-    .includes(['lychee.game.State']).exports(function(lychee, global) {
+    .includes([
+        'lychee.game.State',
+        'lychee.event.Emitter'
+    ]).exports(function(lychee, global) {
 
 	var Class = function(game) {
 
-		lychee.game.State.call(this, game, 'menu');
+        this.myBus = new lychee.event.Emitter('MainGameBus');
+
+        lychee.game.State.call(this, game, 'menu');
 
 		this.__input = this.game.input;
 		this.__loop = this.game.loop;
@@ -48,7 +53,13 @@ lychee.define('game.state.Game')
             this.__input.bind('key', this.__processKey, this);
 
 			this.__renderer.start();
+
+            this.myBus.bind('PlayerHitByBullet', this.onHitByBullet);
 		},
+
+        onHitByBullet: function() {
+            console.log('the player was hit by a bullet!');
+        },
 
 		leave: function() {
 
@@ -57,6 +68,8 @@ lychee.define('game.state.Game')
 			this.__renderer.stop();
 
 			this.__input.unbind('key', this.__processKey);
+
+            this.myBus.unbind('PlayerHitByBullet', this.onHitByBullet);
 
 			lychee.game.State.prototype.leave.call(this);
 		},
@@ -74,7 +87,11 @@ lychee.define('game.state.Game')
             this.__entities.player.updateCustom(canMoveLeft, canMoveRight);
             this.__entities.player.update(clock, delta);
 
+            var s = this;
             this.__entities.bullets.forEach(function(element, index, array) {
+                if (element.collidesWith(s.__entities.player)) {
+                    s.myBus.trigger('PlayerHitByBullet', [ 'MainGameBus', { bar: null }]);
+                }
                 element.update(clock, delta);
             });
 

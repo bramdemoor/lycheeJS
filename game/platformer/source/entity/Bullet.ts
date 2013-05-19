@@ -9,13 +9,12 @@ class Bullet {
         (<any>this).__dir = dir;
 
         lychee.game.Entity.call(this, {
-            width:     32,
-            height:    32,
+            radius:    11,
             collision: lychee.game.Entity.COLLISION.A,
-            shape:     lychee.game.Entity.SHAPE.rectangle
+            shape:     lychee.game.Entity.SHAPE.circle
         });
 
-        (<any>this).__position.x = startX;
+        (<any>this).__position.x = startX + (40 * dir);
         (<any>this).__position.y = startY;
 
         (<any>this).__velocity.x = 100 * dir;

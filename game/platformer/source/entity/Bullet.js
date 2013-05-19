@@ -8,12 +8,11 @@ var Bullet = (function () {
         a.__image = image;
         (this).__dir = dir;
         lychee.game.Entity.call(this, {
-            width: 32,
-            height: 32,
+            radius: 11,
             collision: lychee.game.Entity.COLLISION.A,
-            shape: lychee.game.Entity.SHAPE.rectangle
+            shape: lychee.game.Entity.SHAPE.circle
         });
-        (this).__position.x = startX;
+        (this).__position.x = startX + (40 * dir);
         (this).__position.y = startY;
         (this).__velocity.x = 100 * dir;
     }
