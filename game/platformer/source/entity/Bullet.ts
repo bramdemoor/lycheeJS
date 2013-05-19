@@ -2,7 +2,7 @@
 
 class Bullet {
 
-    constructor(image: any = null, startX: number = 0, startY: number = 0) {
+    constructor(image: any = null, startX: number = 0, startY: number = 0, dir: number = 1) {
         var a: any = this;
         a.__image = image;
 
@@ -16,7 +16,7 @@ class Bullet {
         (<any>this).__position.x = startX;
         (<any>this).__position.y = startY;
 
-        (<any>this).__velocity.x = 100;
+        (<any>this).__velocity.x = 100 * dir;
     }
 
     getImage() {

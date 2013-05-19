@@ -6,6 +6,9 @@ lychee.define('game.entity.Character')
     var Class = function(image) {
         this.__image = image || null;
 
+        this.__team = 0;
+        this.__dir = 0;
+
         lychee.game.Entity.call(this, {
             width:     32,
             height:    32,
@@ -31,6 +34,10 @@ lychee.define('game.entity.Character')
             return this.__position;
         },
 
+        getDir: function() {
+            return this.__dir;
+        },
+
         spawn: function() {
             this.__position.x = 122;
             this.__position.y = 122;
@@ -48,11 +55,15 @@ lychee.define('game.entity.Character')
         moveLeft: function() {
             if(this.__canMoveLeft === true)
                 this.__velocity.x = -this.MAX_MOVEMENTSPEED;
+
+            this.__dir = -1;
         },
 
         moveRight: function() {
             if(this.__canMoveRight === true)
                 this.__velocity.x = this.MAX_MOVEMENTSPEED;
+
+            this.__dir = 1;
         },
 
         moveDown: function() {
@@ -93,7 +104,6 @@ lychee.define('game.entity.Character')
                 var t = (clock - this.__animationClock) / this.__animationDuration;
 
                 if (t < 1) {
-                    // Note: Math.floor approach doesn't work for last frame index x.6-x.9
                     this.__animationFrame = Math.max(0, Math.ceil(t * this.__animationFrames) - 1);
                 } else if (this.__animationLoop === true) {
                     this.__animationClock = clock;
@@ -109,16 +119,13 @@ lychee.define('game.entity.Character')
          */
 
         __clearAnimation: function() {
-
             if (this.__animationClock !== null) {
                 this.__animationFrame = null;
                 this.__animationClock = null;
             }
-
         },
 
         __setAnimation: function(duration, frames, loop) {
-
             this.__animationDuration = duration;
             this.__animationFrames   = frames;
             this.__animationFrame    = 0;
