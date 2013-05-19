@@ -2,7 +2,8 @@ lychee.define('game.state.Game')
     .requires([
         'game.entity.Character',
         'game.scene.GameLevel',
-        'game.entity.Bullet'
+        'game.entity.Bullet',
+        'game.entity.Powerup'
     ])
     .includes([
         'lychee.game.State',
@@ -22,7 +23,8 @@ lychee.define('game.state.Game')
 		this.__clock = 0;
 
 		this.__entities = {
-            bullets: []
+            bullets: [],
+            powerups: []
         };
 
 		this.__locked = false;
@@ -41,6 +43,7 @@ lychee.define('game.state.Game')
 
             this.__level = new game.scene.GameLevel(this.game, this.game.settings.game);
             this.__entities.player = new game.entity.Character(this.game.config.character);
+            this.__entities.powerups.push(new game.entity.Powerup(this.game.config.powerup));
 		},
 
 		enter: function() {
@@ -107,6 +110,9 @@ lychee.define('game.state.Game')
 
             var s = this;
             this.__entities.bullets.forEach(function(element, index, array) {
+                s.__renderer.renderEntity(element);
+            });
+            this.__entities.powerups.forEach(function(element, index, array) {
                 s.__renderer.renderEntity(element);
             });
 

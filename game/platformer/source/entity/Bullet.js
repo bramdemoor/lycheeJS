@@ -32,4 +32,3 @@ lychee.define('game.entity.Bullet').includes([
 ]).exports(function (lychee, global) {
     return Bullet;
 });
-//@ sourceMappingURL=Bullet.js.map

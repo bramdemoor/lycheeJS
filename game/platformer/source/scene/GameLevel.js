@@ -64,7 +64,11 @@ lychee.define('game.scene.GameLevel').requires([
 
                 for (var y = 0; y < this.__size.y; y++) {
 
-                    state = 'grass';
+                    if (x % 2 === 0) {
+                        state = 'grass';
+                    } else {
+                        state = 'dirt';
+                    }
 
                     var entity = new game.entity.Tile({
                         position: { x: x * tile, y: y * tile }, image: image, states: states, state: state, map: map

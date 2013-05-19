@@ -42,7 +42,8 @@ lychee.define('game.Main').requires([
                 base + '/img/map.png',
                 base + '/json/tiles.json',
                 base + '/json/map_01.json',
-                base + '/img/shot.png'
+                base + '/img/shot.png',
+                base + '/img/powerup.png'
 			];
 
 			this.preloader = new lychee.Preloader({ timeout: 3000 });
@@ -71,7 +72,8 @@ lychee.define('game.Main').requires([
                 this.config = {
                     character: assets[urls[3]],
                     tiles:  assets[urls[5]],
-                    shot: assets[urls[7]]
+                    shot: assets[urls[7]],
+                    powerup: assets[urls[8]]
                 };
 
                 this.config.tiles.image  = assets[urls[4]];

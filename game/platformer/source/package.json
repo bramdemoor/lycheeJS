@@ -4,6 +4,7 @@
 		"entity": {
 			"Tile": [ "js" ],
 			"Bullet": [ "js" ],
+            "Powerup": [ "js" ],
 			"Character": [ "js" ]
 		},
 		"state": {
