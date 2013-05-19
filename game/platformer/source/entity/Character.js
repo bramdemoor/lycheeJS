@@ -49,10 +49,6 @@ lychee.define('game.entity.Character')
             console.log('down');
         },
 
-        action: function() {
-            console.log('action');
-        },
-
         getImage: function() {
             return this.__image;
         },

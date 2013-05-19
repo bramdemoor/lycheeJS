@@ -1,6 +1,8 @@
 var Bullet = (function () {
-    function Bullet(image) {
+    function Bullet(image, startX, startY) {
         if (typeof image === "undefined") { image = null; }
+        if (typeof startX === "undefined") { startX = 0; }
+        if (typeof startY === "undefined") { startY = 0; }
         var a = this;
         a.__image = image;
         lychee.game.Entity.call(this, {
@@ -9,8 +11,8 @@ var Bullet = (function () {
             collision: lychee.game.Entity.COLLISION.A,
             shape: lychee.game.Entity.SHAPE.rectangle
         });
-        (this).__position.x = 152;
-        (this).__position.y = 122;
+        (this).__position.x = startX;
+        (this).__position.y = startY;
         (this).__velocity.x = 100;
     }
     Bullet.prototype.getImage = function () {

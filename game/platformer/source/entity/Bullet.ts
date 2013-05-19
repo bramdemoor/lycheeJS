@@ -2,7 +2,7 @@
 
 class Bullet {
 
-    constructor(image: any = null) {
+    constructor(image: any = null, startX: number = 0, startY: number = 0) {
         var a: any = this;
         a.__image = image;
 
@@ -13,8 +13,8 @@ class Bullet {
             shape:     lychee.game.Entity.SHAPE.rectangle
         });
 
-        (<any>this).__position.x = 152;
-        (<any>this).__position.y = 122;
+        (<any>this).__position.x = startX;
+        (<any>this).__position.y = startY;
 
         (<any>this).__velocity.x = 100;
     }

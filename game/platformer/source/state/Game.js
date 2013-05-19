@@ -106,8 +106,7 @@ lychee.define('game.state.Game')
             } else if (key == 'down') {
                 this.__entities.player.moveDown();
             }  else if (key == 'space') {
-                this.__entities.player.action();
-                this.__entities.bullets.push(new game.entity.Bullet(this.game.config.shot));
+                this.__entities.bullets.push(new game.entity.Bullet(this.game.config.shot, this.__entities.player.getPos().x, this.__entities.player.getPos().y));
             } else if (key == 'q') {
                 this.game.setState('menu');
             }
