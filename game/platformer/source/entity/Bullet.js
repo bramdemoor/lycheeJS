@@ -6,6 +6,7 @@ var Bullet = (function () {
         if (typeof dir === "undefined") { dir = 1; }
         var a = this;
         a.__image = image;
+        (this).__dir = dir;
         lychee.game.Entity.call(this, {
             width: 32,
             height: 32,
@@ -21,6 +22,9 @@ var Bullet = (function () {
     };
     Bullet.prototype.getPos = function () {
         return (this).__position;
+    };
+    Bullet.prototype.getDir = function () {
+        return (this).__dir;
     };
     return Bullet;
 })();

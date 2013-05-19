@@ -12,6 +12,8 @@ lychee.define('game.Renderer').includes(['lychee.ui.Renderer']).exports(function
             var pos = entity.getPos();
             var image = entity.getImage();
 
+            var theDir = entity.getDir();
+
             this.drawSprite(pos.x - dx, pos.y - dy, image);
         },
 

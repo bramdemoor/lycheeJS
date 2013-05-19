@@ -5,7 +5,7 @@
     <ignored path="platformer.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/index.html" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368880215670" ignored="false" />
-    <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890564686" ignored="false" />
+    <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966654176" ignored="false" />
     <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368906914154" ignored="false" />
     <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368903266119" ignored="false" />
     <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966379818" ignored="false" />
@@ -13,7 +13,7 @@
     <file path="/init.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882321958" ignored="false" />
     <file path="/package.json" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368903327397" ignored="false" />
     <file path="/GameLevel.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368890740121" ignored="false" />
-    <file path="/Bullet.ts" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966394946" ignored="false" />
+    <file path="/Bullet.ts" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966642077" ignored="false" />
     <file path="/lychee.d.ts" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368906806810" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +46,7 @@
       <file leaf-file-name="Bullet.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="24" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0">
+            <state line="17" column="24" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -70,10 +70,19 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Bullet.ts" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Bullet.ts" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/entity/Bullet.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="23" selection-start="326" selection-end="326" vertical-scroll-proportion="0.2142039">
+            <state line="34" column="19" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Renderer.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/source/Renderer.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="14" column="41" selection-start="470" selection-end="470" vertical-scroll-proportion="0.27262315">
               <folding />
             </state>
           </provider>
@@ -82,7 +91,7 @@
       <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="3" column="57" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0">
+            <state line="3" column="57" selection-start="39" selection-end="39" vertical-scroll-proportion="-1.9615384">
               <folding />
             </state>
           </provider>
@@ -107,11 +116,11 @@
         <option value="$PROJECT_DIR$/source/entity/Bullet.js" />
         <option value="$PROJECT_DIR$/source/Main.js" />
         <option value="$PROJECT_DIR$/source/package.json" />
-        <option value="$PROJECT_DIR$/source/Renderer.js" />
         <option value="$PROJECT_DIR$/source/def/lychee.d.ts" />
         <option value="$PROJECT_DIR$/source/entity/Character.js" />
         <option value="$PROJECT_DIR$/source/state/Game.js" />
         <option value="$PROJECT_DIR$/source/entity/Bullet.ts" />
+        <option value="$PROJECT_DIR$/source/Renderer.js" />
       </list>
     </option>
   </component>
@@ -449,13 +458,6 @@
         <state line="5" column="23" selection-start="220" selection-end="220" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/Renderer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="27" selection-start="775" selection-end="775" vertical-scroll-proportion="0.48682705">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/source/def/lychee.d.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state line="11" column="50" selection-start="238" selection-end="238" vertical-scroll-proportion="0.2142039">
@@ -466,13 +468,6 @@
     <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="109" column="43" selection-start="3118" selection-end="3118" vertical-scroll-proportion="0.5910653">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="57" selection-start="39" selection-end="39" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -493,7 +488,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="24" selection-start="469" selection-end="469" vertical-scroll-proportion="0.0">
+        <state line="17" column="24" selection-start="694" selection-end="694" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -514,7 +509,21 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/source/entity/Bullet.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="23" selection-start="326" selection-end="326" vertical-scroll-proportion="0.2142039">
+        <state line="34" column="19" selection-start="780" selection-end="780" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/package.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="3" column="57" selection-start="39" selection-end="39" vertical-scroll-proportion="-1.9615384">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/Renderer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="41" selection-start="470" selection-end="470" vertical-scroll-proportion="0.27262315">
           <folding />
         </state>
       </provider>

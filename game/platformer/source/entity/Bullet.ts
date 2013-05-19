@@ -6,6 +6,8 @@ class Bullet {
         var a: any = this;
         a.__image = image;
 
+        (<any>this).__dir = dir;
+
         lychee.game.Entity.call(this, {
             width:     32,
             height:    32,
@@ -25,6 +27,10 @@ class Bullet {
 
     getPos() {
         return (<any>this).__position;
+    }
+
+    getDir() {
+        return (<any>this).__dir;
     }
 }
 
