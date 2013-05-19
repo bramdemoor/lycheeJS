@@ -15,8 +15,14 @@ lychee.define('game.state.Game')
 		this.__renderer = this.game.renderer;
 
 		this.__clock = 0;
-		this.__entities = {};
+
+		this.__entities = {
+            bullets: []
+        };
+
 		this.__locked = false;
+
+        this.__score = 0;
 
 		this.reset();
 	};
@@ -30,7 +36,6 @@ lychee.define('game.state.Game')
 
             this.__level = new game.scene.GameLevel(this.game, this.game.settings.game);
             this.__entities.player = new game.entity.Character(this.game.config.character);
-            this.__entities.bullet = new game.entity.Bullet(this.game.config.shot);
 		},
 
 		enter: function() {
@@ -67,11 +72,11 @@ lychee.define('game.state.Game')
             var canMoveRight = tileX < 20;
 
             this.__entities.player.updateCustom(canMoveLeft, canMoveRight);
+            this.__entities.player.update(clock, delta);
 
-			for (var e in this.__entities) {
-				if (this.__entities[e] === null) continue;
-				this.__entities[e].update(clock, delta);
-			}
+            this.__entities.bullets.forEach(function(element, index, array) {
+                element.update(clock, delta);
+            });
 
 			this.__clock = clock;
 		},
@@ -81,10 +86,12 @@ lychee.define('game.state.Game')
 
             this.__level.render(clock, delta);
 
-			for (var e in this.__entities) {
-				if (this.__entities[e] === null) continue;
-				this.__renderer.renderEntity(this.__entities[e]);
-			}
+            this.__renderer.renderEntity(this.__entities.player);
+
+            var s = this;
+            this.__entities.bullets.forEach(function(element, index, array) {
+                s.__renderer.renderEntity(element);
+            });
 
 			this.__renderer.flush();
 		},
@@ -100,6 +107,7 @@ lychee.define('game.state.Game')
                 this.__entities.player.moveDown();
             }  else if (key == 'space') {
                 this.__entities.player.action();
+                this.__entities.bullets.push(new game.entity.Bullet(this.game.config.shot));
             } else if (key == 'q') {
                 this.game.setState('menu');
             }

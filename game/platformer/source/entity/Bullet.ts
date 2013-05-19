@@ -15,6 +15,8 @@ class Bullet {
 
         (<any>this).__position.x = 152;
         (<any>this).__position.y = 122;
+
+        (<any>this).__velocity.x = 100;
     }
 
     getImage() {

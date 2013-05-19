@@ -11,6 +11,7 @@ var Bullet = (function () {
         });
         (this).__position.x = 152;
         (this).__position.y = 122;
+        (this).__velocity.x = 100;
     }
     Bullet.prototype.getImage = function () {
         return (this).__image;
