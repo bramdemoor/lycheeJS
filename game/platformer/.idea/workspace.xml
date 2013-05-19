@@ -8,7 +8,7 @@
     <file path="/Renderer.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966654176" ignored="false" />
     <file path="$PROJECT_DIR$/.idea/workspace.xml" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368906914154" ignored="false" />
     <file path="/Main.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368994526487" ignored="false" />
-    <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368994586104" ignored="false" />
+    <file path="/Game.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368995479753" ignored="false" />
     <file path="/Character.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368966357584" ignored="false" />
     <file path="/init.js" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368882321958" ignored="false" />
     <file path="/package.json" changelist="015371e7-280c-4ecb-81f0-890364570a6c" time="1368994400914" ignored="false" />
@@ -35,10 +35,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Powerup.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Powerup.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/entity/Powerup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="25" column="25" selection-start="656" selection-end="656" vertical-scroll-proportion="0.48682705">
+            <state line="11" column="54" selection-start="383" selection-end="383" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -47,7 +47,7 @@
       <file leaf-file-name="package.json" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/package.json">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="6" column="20" selection-start="104" selection-end="104" vertical-scroll-proportion="-3.9230769">
+            <state line="6" column="20" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -62,10 +62,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Game.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="Game.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/source/state/Game.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="28" selection-start="172" selection-end="172" vertical-scroll-proportion="0.0">
+            <state line="98" column="24" selection-start="2608" selection-end="2608" vertical-scroll-proportion="0.37558138">
               <folding />
             </state>
           </provider>
@@ -74,7 +74,7 @@
       <file leaf-file-name="Bullet.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="0" selection-start="704" selection-end="872" vertical-scroll-proportion="0.0">
+            <state line="10" column="0" selection-start="426" selection-end="555" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -103,15 +103,15 @@
         <option value="$PROJECT_DIR$/source/entity/Bullet.js" />
         <option value="$PROJECT_DIR$/source/package.json" />
         <option value="$PROJECT_DIR$/source/Main.js" />
-        <option value="$PROJECT_DIR$/source/state/Game.js" />
         <option value="$PROJECT_DIR$/source/entity/Powerup.js" />
+        <option value="$PROJECT_DIR$/source/state/Game.js" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="1936" />
+    <option name="width" value="1932" />
     <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
@@ -140,7 +140,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -229,6 +228,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -261,13 +261,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="7" />
+    <frame x="-8" y="-8" width="1932" height="1056" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24934107" sideWeight="0.67296994" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24933967" sideWeight="0.67296994" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -343,6 +343,20 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/source/state/Game.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="101" column="45" selection-start="2798" selection-end="2798" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="426" selection-end="555" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/state/Menu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
@@ -372,23 +386,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/asset/json/tiles.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="13" selection-start="50" selection-end="54" vertical-scroll-proportion="0.100354195">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="62" column="45" selection-start="1857" selection-end="1857" vertical-scroll-proportion="0.513173">
-          <folding />
-        </state>
+        <state line="5" column="13" selection-start="50" selection-end="54" vertical-scroll-proportion="0.100354195" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/Renderer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="41" selection-start="470" selection-end="470" vertical-scroll-proportion="0.27262315">
-          <folding />
-        </state>
+        <state line="14" column="41" selection-start="470" selection-end="470" vertical-scroll-proportion="0.27262315" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/entity/Character.js">
@@ -398,9 +401,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="10" column="0" selection-start="426" selection-end="555" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/source/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="20" selection-start="104" selection-end="104" vertical-scroll-proportion="-3.9230769">
+        <state line="6" column="20" selection-start="104" selection-end="104" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/source/entity/Powerup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="54" selection-start="383" selection-end="383" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -412,23 +429,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/source/entity/Bullet.js">
+    <entry file="file://$PROJECT_DIR$/source/scene/GameLevel.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="0" selection-start="704" selection-end="872" vertical-scroll-proportion="0.0">
+        <state line="38" column="33" selection-start="1037" selection-end="1037" vertical-scroll-proportion="0.2582547">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/source/state/Game.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="28" selection-start="172" selection-end="172" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/source/entity/Powerup.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="25" selection-start="656" selection-end="656" vertical-scroll-proportion="0.48682705">
+        <state line="98" column="24" selection-start="2608" selection-end="2608" vertical-scroll-proportion="0.37558138">
           <folding />
         </state>
       </provider>

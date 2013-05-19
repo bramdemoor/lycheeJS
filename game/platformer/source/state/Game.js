@@ -97,6 +97,13 @@ lychee.define('game.state.Game')
                 }
                 element.update(clock, delta);
             });
+            this.__entities.powerups.forEach(function(element, index, array) {
+                if (element.collidesWith(s.__entities.player)) {
+                    element.setState('destroy');
+                    s.__entities.powerups.splice(index);
+                    console.log('powerup picked up');
+                }
+            });
 
 			this.__clock = clock;
 		},

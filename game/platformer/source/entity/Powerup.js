@@ -7,10 +7,9 @@ lychee.define('game.entity.Powerup')
             this.__image = image || null;
 
             lychee.game.Entity.call(this, {
-                width:     16,
-                height:    16,
+                radius: 11,
                 collision: lychee.game.Entity.COLLISION.A,
-                shape:     lychee.game.Entity.SHAPE.rectangle
+                shape: lychee.game.Entity.SHAPE.circle
             });
 
             this.spawn();
