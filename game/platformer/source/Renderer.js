@@ -5,6 +5,19 @@ lychee.define('game.Renderer').includes(['lychee.ui.Renderer']).exports(function
 	};
 
 	Class.prototype = {
+        renderCharacter:function(entity) {
+            var dx = entity.radius || entity.width / 2;
+            var dy = entity.radius || entity.height / 2;
+
+            var pos = entity.getPos();
+            var image = entity.getImage();
+
+            var theDir = entity.getDir();
+
+            this.drawSprite(pos.x - dx, pos.y - dy, image);
+            this.drawText(pos.x, pos.y - 45,'Player 1', entity.getFont(),true);
+        },
+
         renderEntity: function(entity) {
             var dx = entity.radius || entity.width / 2;
             var dy = entity.radius || entity.height / 2;

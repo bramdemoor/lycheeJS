@@ -3,15 +3,17 @@ lychee.define('game.entity.Character')
 
     .exports(function(lychee, global) {
 
-    var Class = function(image) {
+    var Class = function(image, font) {
         this.__image = image || null;
 
         this.__team = 0;
         this.__dir = 0;
 
+        this.__font = font;
+
         lychee.game.Entity.call(this, {
-            width:     32,
-            height:    32,
+            width:     64,
+            height:    64,
             collision: lychee.game.Entity.COLLISION.A,
             shape:     lychee.game.Entity.SHAPE.rectangle
         });
@@ -29,6 +31,10 @@ lychee.define('game.entity.Character')
     };
 
     Class.prototype = {
+
+        getFont: function() {
+            return this.__font;
+        },
 
         getPos: function() {
             return this.__position;

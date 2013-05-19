@@ -42,7 +42,7 @@ lychee.define('game.state.Game')
 			var height = this.game.settings.height;
 
             this.__level = new game.scene.GameLevel(this.game, this.game.settings.game);
-            this.__entities.player = new game.entity.Character(this.game.config.character);
+            this.__entities.player = new game.entity.Character(this.game.config.character, this.game.fonts.small);
             this.__entities.powerups.push(new game.entity.Powerup(this.game.config.powerup));
 		},
 
@@ -113,7 +113,7 @@ lychee.define('game.state.Game')
 
             this.__level.render(clock, delta);
 
-            this.__renderer.renderEntity(this.__entities.player);
+            this.__renderer.renderCharacter(this.__entities.player);
 
             var s = this;
             this.__entities.bullets.forEach(function(element, index, array) {
