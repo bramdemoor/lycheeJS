@@ -86,8 +86,9 @@ lychee.define('game.state.Game')
 
             var canMoveLeft = tileX > 0;
             var canMoveRight = tileX < 20;
+            var canMoveDown = tileY < 20;
 
-            this.__entities.player.updateCustom(canMoveLeft, canMoveRight);
+            this.__entities.player.updateCustom(canMoveLeft, canMoveRight, canMoveDown);
             this.__entities.player.update(clock, delta);
 
             var s = this;

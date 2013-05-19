@@ -55,7 +55,9 @@ lychee.define('game.entity.Character')
         },
 
         jump: function() {
-            console.log('jump');
+            if(this.__canMoveDown === false) {
+                this.__velocity.y = -200;
+            }
         },
 
         moveLeft: function() {
@@ -80,9 +82,10 @@ lychee.define('game.entity.Character')
             return this.__image;
         },
 
-        updateCustom: function(canMoveLeft, canMoveRight) {
+        updateCustom: function(canMoveLeft, canMoveRight, canMoveDown) {
             this.__canMoveLeft = canMoveLeft;
             this.__canMoveRight = canMoveRight;
+            this.__canMoveDown = canMoveDown;
 
             if(this.__velocity.x < 0) {
                 if(canMoveLeft === false) {
@@ -94,6 +97,14 @@ lychee.define('game.entity.Character')
                 if(canMoveRight === false) {
                     this.__velocity.x = 0;
                 }
+            }
+
+            if(!canMoveDown) {
+                if(this.__velocity.y > 0) {
+                    this.__velocity.y = 0;
+                }
+            } else {
+                this.__velocity.y += 5;
             }
 
             if(this.__velocity.x > 2) {
